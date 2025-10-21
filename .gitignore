@@ -1,0 +1,37 @@
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS / VSCode settings
+.vs/
+.vscode/
+
+# ASP.NET logs and temporary data
+*.db
+*.log
+logs/
+wwwroot/lib/
+
+# Environment files
+.env
+appsettings.*.json
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Rider / JetBrains
+.idea/
+
+# Node modules (if you later add a JS build)
+node_modules/
+
+# Publish output
+/publish/
