@@ -18,7 +18,26 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult Kurssit()
+    {
+        return View();
+    }
+
+    public IActionResult Tilat()
+    {
+        return View();
+    }
+    
+    public IActionResult Opiskelijat()
+    {
+        return View();
+    }
+    public IActionResult Opettajat()
+    {
+        return View();
+    }
+
+    public IActionResult Kirjautumiset()
     {
         return View();
     }
