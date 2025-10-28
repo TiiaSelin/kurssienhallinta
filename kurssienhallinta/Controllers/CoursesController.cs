@@ -4,16 +4,21 @@ using kurssienhallinta.Models;
 
 namespace kurssienhallinta.Controllers;
 
-public class HomeController : Controller
+public class CoursesController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<CoursesController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public CoursesController(ILogger<CoursesController> logger)
     {
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult List()
+    {
+        return View();
+    }
+
+    public IActionResult Add_course()
     {
         return View();
     }

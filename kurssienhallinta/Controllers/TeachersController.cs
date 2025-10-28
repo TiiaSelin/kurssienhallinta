@@ -4,19 +4,24 @@ using kurssienhallinta.Models;
 
 namespace kurssienhallinta.Controllers;
 
-public class HomeController : Controller
+public class TeachersController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<TeachersController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public TeachersController(ILogger<TeachersController> logger)
     {
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult List()
     {
         return View();
     }
+    public IActionResult Add_teacher()
+    {
+        return View();
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
