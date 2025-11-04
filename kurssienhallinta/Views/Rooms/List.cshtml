@@ -1,6 +1,11 @@
-@{
-    ViewData["Title"] = "Tilat.";
-}
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-3">
 
-<p>Tänne tilat.</p>
+    @{
+        ViewData["Title"] = "Tilat";
+    }
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Tänne tilat.</p>
+
+    <a class="sidebar-nav" href="@Url.Action("Add_room", "Rooms")">Lisää tila</a>
+</div>

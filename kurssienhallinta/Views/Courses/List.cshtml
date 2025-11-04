@@ -1,6 +1,12 @@
-@{
-    ViewData["Title"] = "Kurssit.";
-}
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-3">
 
-<p>Tänne kurssit.</p>
+    @{
+        ViewData["Title"] = "Kurssit";
+    }
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Tänne kurssit.</p>
+
+    <a class="sidebar-nav" href="@Url.Action("Add_course", "Courses")">Lisää kurssi</a>
+
+</div>

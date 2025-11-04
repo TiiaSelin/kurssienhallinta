@@ -7,17 +7,7 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-a {
-  color: #0077cc;
-}
-
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
@@ -31,7 +21,7 @@ a {
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
 button.accept-policy {
@@ -45,4 +35,22 @@ button.accept-policy {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+}
+
+.sidebar {
+  background-color: rgba(41, 41, 41);
+  min-height: 100vh;
+}
+
+.sidebar-nav {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 1rem;
+  transition: 0.2s;
+}
+
+.sidebar-nav:hover {
+  transition: 0.2s;
+  background-color: rgba(255, 255, 255, 0.1);
 }

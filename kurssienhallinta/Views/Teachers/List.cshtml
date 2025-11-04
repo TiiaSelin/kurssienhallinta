@@ -1,6 +1,12 @@
-@{
-    ViewData["Title"] = "Opettajat.";
-}
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-3">
 
-<p>Tänne opettajat.</p>
+    @{
+        ViewData["Title"] = "Opettajat";
+    }
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Tänne opettajat.</p>
+
+    <a class="sidebar-nav" href="@Url.Action("Add_teacher", "Teachers")">Lisää opettaja</a>
+
+</div>

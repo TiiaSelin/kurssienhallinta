@@ -1,5 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,59 +12,31 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/kurssienhallinta.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kurssienhallinta.</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">Kurssinhallinta</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Kotisivu.</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kurssit.</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Courses" asp-action="Add_course">Lisää kurssi.</a></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Courses" asp-action="List">Kurssit.</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tilat.</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Rooms" asp-action="Add_room">Lisää tila.</a></li>
-                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Rooms" asp-action="List">Tilat.</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">Opiskelijat.</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Add_student">Lisää opiskelija.</a></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="List">Opiskelijat.</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">Opettajat.</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Teachers" asp-action="Add_teacher">Lisää opettaja.</a></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Teachers" asp-action="List">Opettajat.</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kurssikirjautumiset.</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Enrollments" asp-action="Add_enrollment">Lisää kirjautuminen.</a></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Enrollments" asp-action="List">Kurssikirjautumiset.</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
+        <div class="d-flex">
+            <nav class="sidebar">
+                <a class="sidebar-nav" href="@Url.Action("List", "Courses")">Kurssit</a>
+                <a class="sidebar-nav" href="@Url.Action("List", "Rooms")">Tilat</a>
+
+                <a class="sidebar-nav" href="@Url.Action("List", "Students")">Opiskelijat</a>
+                <a class="sidebar-nav" href="@Url.Action("List", "Teachers")">Opettajat</a>
+                <a class="sidebar-nav" href="@Url.Action("List", "Enrollments")">Kurssikirjautumiset</a>
+            </nav>
+            <main class="flex-grow-1">
+                @RenderBody()
+            </main>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -79,4 +54,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

@@ -6,12 +6,6 @@ namespace kurssienhallinta.Controllers;
 
 public class CoursesController : Controller
 {
-    private readonly ILogger<CoursesController> _logger;
-
-    public CoursesController(ILogger<CoursesController> logger)
-    {
-        _logger = logger;
-    }
 
     public IActionResult List()
     {
@@ -23,9 +17,11 @@ public class CoursesController : Controller
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    private readonly ILogger<CoursesController> _logger;
+
+    public CoursesController(ILogger<CoursesController> logger)
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        _logger = logger;
     }
+
 }
