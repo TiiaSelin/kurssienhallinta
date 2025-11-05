@@ -1,6 +1,90 @@
-@{
-    ViewData["Title"] = "Lisää opettaja.";
-}
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Lisää uusi opettaja</h2>
+    <p> Täytä alla olevat tiedot lisätäksesi uuden opettajan järjestelmään. </p>
 
-<p>Tänne lisää opettajia.</p>
+    <form>
+
+        <div class="mb-3">
+            <label for="teacherForeName" class="form-label fw-semibold">Opettajan etunimi</label>
+            <input type="text" class="form-control" id="teacherForeName" rows="3">
+        </div>
+
+        <div class="mb-3">
+            <label for="teacherSurName" class="form-label fw-semibold">Opettajan sukunimi</label>
+            <input type="text" class="form-control" id="teacherSurName" rows="3">
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="birthDate" class="form-label fw-semibold">Syntymäaika</label>
+                <input type="date" class="form-control" id="birthDate">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col">
+                <label for="startDate" class="form-label fw-semibold">Töiden aloituspäivämäärä</label>
+                <input type="date" class="form-control" id="studyStartDate">
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <div>
+                <label>
+                    <input type="checkbox" id="showExtra">
+                    Määräaikainen työ
+                </label>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+
+            <div id="extraSection" class="col" style="display: none">
+                <div class="form-group">
+                    <label for="employmentEndDate" class="form-label fw-semibold">Töiden lopetuspäivämäärä</label>
+                    <input type="date" class="form-control" id="employmentEndDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="vocationName" class="form-label fw-semibold">Opetusala</label>
+            <select id="vocation" class="from-select">
+                <option selected disabled>Valitse opetusala</option>
+                <option>Tieto- ja viestintätekniikka</option>
+                <option>Media-ala</option>
+                <option>Rakennusala</option>
+                <option>Laboratorioala</option>
+                <option>Liikunnanohjaus</option>
+                <option>Liiketoiminta</option>
+                <option>Sosiaali- ja terveysala</option>
+                <option>Maanmittausala</option>
+                <option>Lääkeala</option>
+            </select>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Lisää opiskelija
+                </button>
+                <a asp-action="index" class="btn btn-secondary ms-2">Peruuta</a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+
+<!-- ==== JS MÄÄRÄAIKAISUUDEN SELVITTÄMISEEN ==== -->
+
+@section Scripts {
+    <script>
+
+        const checkbox = document.getElementById('showExtra');
+        const extraSection = document.getElementById('extraSection');
+
+        checkbox.addEventListener('change', function () {
+            extraSection.style.display = this.checked ? 'block' : 'none';
+        });
+    </script>
+}
