@@ -16,9 +16,9 @@
         <div class="infoCard">
             <p><strong>@k.Kurssitunnus</strong></p>
             <p>@k.Kurssinimi</p>
-            <p>@k.Kurssikuvaus</p>
-            <p>Aloituspäivä: @k.Kurssialoituspaiva</p>
-            <p>Lopetuspäivä: @k.Kurssilopetuspaiva</p>
+            <p>@(char.ToUpper(k.Kurssikuvaus[0]) + k.Kurssikuvaus.Substring(1).ToLower())</p>
+            <p>Aloituspäivä: @(k.Kurssialoituspaiva.ToString("d.M.yyyy"))</p>
+            <p>Lopetuspäivä: @(k.Kurssilopetuspaiva.ToString("d.M.yyyy"))</p>
             <p>Opettajatunnus: @k.Opettajatunnus</p>
             <p>Tila: @k.Tilatunnus</p>
 

@@ -34,18 +34,18 @@ public class CoursesController : Controller
         return View();
     }
 
-   public IActionResult ModifyCourse()
-{
-    string connectionString = _configuration.GetConnectionString("DatabaseNameDB") 
-                              ?? throw new InvalidOperationException("Connection string not found.");
+    public IActionResult ModifyCourse()
+    {
+        string connectionString = _configuration.GetConnectionString("DatabaseNameDB")
+                                  ?? throw new InvalidOperationException("Connection string not found.");
 
-    using var conn = new NpgsqlConnection(connectionString);
+        using var conn = new NpgsqlConnection(connectionString);
 
-    var kurssit = conn.Query<Kurssi>(
-        "SELECT kurssitunnus, kurssinimi, kurssikuvaus, kurssialoituspaiva, kurssilopetuspaiva, opettajatunnus, tilatunnus FROM kurssit"
-    ).ToList();
+        var kurssit = conn.Query<Kurssi>(
+            "SELECT kurssitunnus, kurssinimi, kurssikuvaus, kurssialoituspaiva, kurssilopetuspaiva, opettajatunnus, tilatunnus FROM kurssit"
+        ).ToList();
 
-    // Pass the list to the view
-    return View(kurssit);
-}
+        // Pass the list to the view
+        return View(kurssit);
+    }
 }
