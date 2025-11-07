@@ -7,6 +7,26 @@
 
     <p>Tänne kurssit.</p>
 
-    <a class="sidebar-nav" href="@Url.Action("Add_course", "Courses")">Lisää kurssi</a>
+</div>
 
+<div class="kurssiInfo">
+
+    @foreach (var k in Model)
+    {
+        <div class="infoCard">
+            <p><strong>@k.Kurssitunnus</strong></p>
+            <p>@k.Kurssinimi</p>
+            <p>@k.Kurssikuvaus</p>
+            <p>Aloituspäivä: @k.Kurssialoituspaiva</p>
+            <p>Lopetuspäivä: @k.Kurssilopetuspaiva</p>
+            <p>Opettajatunnus: @k.Opettajatunnus</p>
+            <p>Tila: @k.Tilatunnus</p>
+
+        </div>
+    }
+</div>
+
+<div class="linkContainer">
+    <a href="@Url.Action("AddCourse", "Courses")">Lisää kurssi</a>
+    <a href="@Url.Action("ModifyCourse", "Courses")">Muokkaa kursseja</a>
 </div>

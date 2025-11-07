@@ -3,13 +3,24 @@
     <p> Täytä alla olevat tiedot lisätäksesi uuden tilan järjestelmään. </p>
 
     <form>
-    
+
+        <div class="mb-3">
+            <label for="roomName" class="form-label fw-semibold">Tilatunnus</label>
+            <input type="text" class="form-control" id="roomName" rows="3">
+        </div>
+
         <div class="mb-3">
             <label for="roomName" class="form-label fw-semibold">Tilan nimi</label>
             <input type="text" class="form-control" id="roomName" rows="3">
         </div>
 
-        <div class="mb-3">
+          <div class="mb-3">
+            <label for="roomName" class="form-label fw-semibold">Kapasiteetti</label>
+            <input type="number" class="form-control" id="roomName" rows="3">
+        </div>
+
+
+        <div class="mb-3" hidden>
             <label for="roomName" class="form-label fw-semibold">Rakennus</label>
             <select id="building" class="from-select">
                 <option selected disabled>Valitse rakennus</option>

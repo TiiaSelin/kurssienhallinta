@@ -6,12 +6,6 @@ namespace kurssienhallinta.Controllers;
 
 public class RoomsController : Controller
 {
-    private readonly ILogger<RoomsController> _logger;
-
-    public RoomsController(ILogger<RoomsController> logger)
-    {
-        _logger = logger;
-    }
 
     public IActionResult List()
     {
@@ -21,4 +15,12 @@ public class RoomsController : Controller
     {
         return View();
     }
+    private readonly ILogger<RoomsController> _logger;
+
+    public RoomsController(ILogger<RoomsController> logger)
+    {
+        _logger = logger;
+    }
+
+
 }

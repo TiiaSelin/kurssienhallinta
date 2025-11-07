@@ -4,6 +4,11 @@
 
     <form>
 
+      <div class="mb-3">
+            <label for="teacherForeName" class="form-label fw-semibold">Opettajatunnus</label>
+            <input type="text" class="form-control" id="teacherForeName" rows="3">
+        </div>
+
         <div class="mb-3">
             <label for="teacherForeName" class="form-label fw-semibold">Opettajan etunimi</label>
             <input type="text" class="form-control" id="teacherForeName" rows="3">
@@ -14,14 +19,14 @@
             <input type="text" class="form-control" id="teacherSurName" rows="3">
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" hidden>
             <div class="col">
                 <label for="birthDate" class="form-label fw-semibold">Syntymäaika</label>
                 <input type="date" class="form-control" id="birthDate">
             </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" hidden>
 
             <div class="col">
                 <label for="startDate" class="form-label fw-semibold">Töiden aloituspäivämäärä</label>
@@ -30,7 +35,7 @@
 
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" hidden>
             <div>
                 <label>
                     <input type="checkbox" id="showExtra">
@@ -50,9 +55,9 @@
         </div>
 
         <div class="mb-3">
-            <label for="vocationName" class="form-label fw-semibold">Opetusala</label>
+            <label for="vocationName" class="form-label fw-semibold">Opetusaine</label>
             <select id="vocation" class="from-select">
-                <option selected disabled>Valitse opetusala</option>
+                <option selected disabled>Valitse opetusaine</option>
                 <option>Tieto- ja viestintätekniikka</option>
                 <option>Media-ala</option>
                 <option>Rakennusala</option>

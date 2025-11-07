@@ -1,0 +1,95 @@
+@model List<VertinDb.Models.Kurssi>
+
+@{
+    ViewData["Title"] = "";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Muokkaa kursseja</h2>
+    <p> Valitse kurssi muokattavaksi.</p>
+
+    <form>
+
+        <div class="mb-3">
+            <label for="modifySelected" class="form-label fw-semibold">Valitse kurssi</label>
+            <select id="modifySelected" class="from-select">
+                <option selected disabled>Valitse kurssi</option>
+                @foreach (var k in Model)
+                {
+                    <option value="@k.Kurssitunnus">@k.Kurssitunnus</option>
+                }
+            </select>
+        </div>
+
+        <div id="courseForm" class="mt-4" style="display: none;">
+
+
+            <div class="mb-3">
+                <label for="courseCode" class="form-label fw-semibold">Kurssitunnus</label>
+                <input type="text" id="courseName" class="form-control" placeholder="Syötä uusi kurssitunnus" />
+            </div>
+
+            <div class="mb-3">
+                <label for="courseName" class="form-label fw-semibold">Kurssin nimi</label>
+                <input type="text" id="courseName" class="form-control" placeholder="Syötä kurssin uusi nimi" />
+            </div>
+
+            <div class="mb-3">
+                <label for="courseName" class="form-label fw-semibold">Kurssin kuvaus</label>
+                <input type="text" id="courseDescription" class="form-control"
+                    placeholder="Syötä kurssin uusi kuvaus" />
+            </div>
+
+            <div class="row mb-3">
+
+                <div class="col">
+                    <label for="courseName" class="form-label fw-semibold">Kurssin uusi aloituspäivämäärä</label>
+                    <input type="date" id="courseStartDate" class="form-control"
+                        placeholder="Syötä kurssin uusi aloituspäivämäärä" />
+                </div>
+
+                <div class="col">
+                    <label for="courseName" class="form-label fw-semibold">Kurssin uusi lopetuspäivämäärä</label>
+                    <input type="date" id="courseEndDate" class="form-control"
+                        placeholder="Syötä kurssin uusi lopetuspäivämäärä" />
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="modifySelected" class="form-label fw-semibold">Valitse opettaja</label>
+                <select id="modifySelected" class="from-select">
+                    <option selected disabled>Valitse uusi opettaja kurssille</option>
+                    <option>Martti Ahtisaari</option>
+                    <option>Marie Curie</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="credits" class="form-label fw-semibold">Opintopisteet</label>
+                <input type="number" id="credits" class="form-control"
+                    placeholder="Syötä kurssin uusi opintopistemäärä" />
+            </div>
+
+            <div class="mb-3">
+                <label for="modifySelected" class="form-label fw-semibold">Valitse tila</label>
+                <select id="modifySelected" class="from-select">
+                    <option selected disabled>Valitse uusi tila kurssille</option>
+                    <option>A101</option>
+                    <option>A102</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Tallenna muutokset
+                </button>
+                <a class="btn btn-danger ms-2 delete-data-btn">Poista kurssi</a>
+                <a class="btn btn-secondary ms-2" href="/Courses/Modify_course">Peruuta</a>
+            </div>
+
+        </div>
+        
+    </form>
+</div>
