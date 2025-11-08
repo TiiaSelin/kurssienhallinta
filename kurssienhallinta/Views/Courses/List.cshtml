@@ -1,3 +1,6 @@
+@using VertinDb.Models
+@model List<Kurssi>
+
 <div class="container mt-3">
 
     @{
@@ -9,24 +12,31 @@
 
 </div>
 
-<div class="kurssiInfo">
+<div class="kurssiContainer">
 
-    @foreach (var k in Model)
-    {
-        <div class="infoCard">
-            <p><strong>@k.Kurssitunnus</strong></p>
-            <p>@k.Kurssinimi</p>
-            <p>@(char.ToUpper(k.Kurssikuvaus[0]) + k.Kurssikuvaus.Substring(1).ToLower())</p>
-            <p>Aloituspäivä: @(k.Kurssialoituspaiva.ToString("d.M.yyyy"))</p>
-            <p>Lopetuspäivä: @(k.Kurssilopetuspaiva.ToString("d.M.yyyy"))</p>
-            <p>Opettajatunnus: @k.Opettajatunnus</p>
-            <p>Tila: @k.Tilatunnus</p>
+    <div class="kurssiInfo">
 
-        </div>
-    }
-</div>
+        @foreach (var kurssi in Model)
+        {
+            <div class="infoCard">
+                <p><strong>@kurssi.kurssitunnus</strong></p>
+                <p>@kurssi.kurssinimi</p>
+                <p>@(string.IsNullOrEmpty(kurssi.kurssikuvaus) ? "" : char.ToUpper(kurssi.kurssikuvaus[0]) +
+                                    kurssi.kurssikuvaus.Substring(1).ToLower())</p>
+                <p>Aloituspäivä: @(kurssi.kurssialoituspaiva?.ToString("d.M.yyyy") ?? "Ei asetettu")</p>
+                <p>Lopetuspäivä: @(kurssi.kurssilopetuspaiva?.ToString("d.M.yyyy") ?? "Ei asetettu")</p>
+                <p>Opettajatunnus: @kurssi.opettajatunnus</p>
+                <p>Tila: @kurssi.tilatunnus</p>
+                <a asp-action="ModifyCourse" asp-route-kurssitunnus="@kurssi.kurssitunnus" class="btn btn-primary">
+                    Muokkaa
+                </a>
 
-<div class="linkContainer">
-    <a href="@Url.Action("AddCourse", "Courses")">Lisää kurssi</a>
-    <a href="@Url.Action("ModifyCourse", "Courses")">Muokkaa kursseja</a>
+            </div>
+        }
+    </div>
+
+    <div class="linkContainer">
+        <a href="@Url.Action("AddCourse", "Courses")">Lisää kurssi</a>
+        <a href="@Url.Action("ModifyCourse", "Courses")">Muokkaa kursseja</a>
+    </div>
 </div>
