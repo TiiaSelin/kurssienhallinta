@@ -5,96 +5,81 @@
     <h2 class="mb-4">Muokkaa kursseja</h2>
 
     <form method="post" asp-action="ModifyCourse">
+
         <input asp-for="Kurssi.kurssitunnus" type="hidden" />
 
-        <div id="courseForm" class="mt-4" style="display: none;">
+        <div id="courseForm" class="mt-4"">
 
-            <div class="mb-3">
-                <label asp-for="Kurssi.kurssinimi" class="form-label fw-semibold">Kurssin nimi</label>
-                <input asp-for="Kurssi.kurssinimi" class="form-control" />
+            <div class=" mb-3">
+            <label asp-for="Kurssi.kurssinimi" class="form-label fw-semibold">Kurssin nimi</label>
+            <input asp-for="Kurssi.kurssinimi" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Kurssi.kurssikuvaus" class="form-label fw-semibold">Kurssin kuvaus</label>
+            <input asp-for="Kurssi.kurssikuvaus" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Kurssi.opettajatunnus" class="form-label fw-semibold">Opettaja</label>
+            <select asp-for="Kurssi.opettajatunnus" class="form-select">
+                <option selected disabled>Valitse opettaja</option>
+                @foreach (var opettaja in Model.Opettajat)
+                {
+                    <option value="@opettaja.opettajatunnus"
+                        selected="@(Model.Kurssi.opettajatunnus == opettaja.opettajatunnus)">
+                        @opettaja.opettajaetunimi @opettaja.opettajasukunimi
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Kurssi.tilatunnus" class="form-label fw-semibold">Tila</label>
+            <select asp-for="Kurssi.tilatunnus" class="form-select">
+                <option selected disabled>Valitse tila</option>
+                @foreach (var tila in Model.Tilat)
+                {
+                    <option value="@tila.tilatunnus" selected="@(Model.Kurssi.tilatunnus == tila.tilatunnus)">
+                        @tila.tilanimi
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col">
+                <label for="courseStartDate" class="form-label fw-semibold">Kurssin uusi aloituspäivämäärä</label>
+                <input asp-for="Kurssi.kurssialoituspaiva" type="date" id="courseStartDate" class="form-control"
+                    placeholder="Syötä kurssin uusi aloituspäivämäärä" />
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Kurssi.kurssikuvaus" class="form-label fw-semibold">Kurssin kuvaus</label>
-                <input asp-for="Kurssi.kurssikuvaus" class="form-control" />
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Kurssi.opettajatunnus" class="form-label fw-semibold">Opettaja</label>
-                <select asp-for="Kurssi.opettajatunnus" class="form-select">
-                    <option value="">Valitse opettaja</option>
-                    @foreach (var opettaja in Model.Opettajat)
-                    {
-                        <option value="@opettaja.opettajatunnus"
-                            selected="@(Model.Kurssi.opettajatunnus == opettaja.opettajatunnus)">
-                            @opettaja.opettajaetunimi
-                        </option>
-                    }
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Kurssi.tilatunnus" class="form-label fw-semibold">Tila</label>
-                <select asp-for="Kurssi.tilatunnus" class="form-select">
-                    <option value="">Valitse tila</option>
-                    @foreach (var tila in Model.Tilat)
-                    {
-                        <option value="@tila.tilatunnus" selected="@(Model.Kurssi.tilatunnus == tila.tilatunnus)">
-                            @tila.tilanimi
-                        </option>
-                    }
-                </select>
-            </div>
-
-            <div class="row mb-3">
-
-                <div class="col">
-                    <label for="courseStartDate" class="form-label fw-semibold">Kurssin uusi aloituspäivämäärä</label>
-                    <input asp-for="Kurssi.kurssialoituspaiva" type="date" id="courseStartDate" class="form-control"
-                        placeholder="Syötä kurssin uusi aloituspäivämäärä" />
-                </div>
-
-                <div class="col">
-                    <label for="courseEndDate" class="form-label fw-semibold">Kurssin uusi lopetuspäivämäärä</label>
-                    <input asp-for="Kurssi.kurssilopetuspaiva" type="date" id="courseEndDate" class="form-control"
-                        placeholder="Syötä kurssin uusi lopetuspäivämäärä" />
-                </div>
-
-            </div>
-
-            <div class="mb-3">
-                <label for="modifySelected" class="form-label fw-semibold">Valitse opettaja</label>
-                <select id="modifySelected" class="from-select">
-                    <option selected disabled>Valitse uusi opettaja kurssille</option>
-                    <option>Martti Ahtisaari</option>
-                    <option>Marie Curie</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="credits" class="form-label fw-semibold">Opintopisteet</label>
-                <input type="number" id="credits" class="form-control"
-                    placeholder="Syötä kurssin uusi opintopistemäärä" />
-            </div>
-
-            <div class="mb-3">
-                <label for="modifySelected" class="form-label fw-semibold">Valitse tila</label>
-                <select id="modifySelected" class="from-select">
-                    <option selected disabled>Valitse uusi tila kurssille</option>
-                    <option>A101</option>
-                    <option>A102</option>
-                </select>
-            </div>
-
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Tallenna muutokset
-                </button>
-                <a class="btn btn-danger ms-2 delete-data-btn">Poista kurssi</a>
-                <a class="btn btn-secondary ms-2" href="/Courses/ModifyCourse">Peruuta</a>
+            <div class="col">
+                <label for="courseEndDate" class="form-label fw-semibold">Kurssin uusi lopetuspäivämäärä</label>
+                <input asp-for="Kurssi.kurssilopetuspaiva" type="date" id="courseEndDate" class="form-control"
+                    placeholder="Syötä kurssin uusi lopetuspäivämäärä" />
             </div>
 
         </div>
 
-    </form>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Tallenna muutokset
+            </button>
+            <a asp-controller="Courses" asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+        </div>
+
+        </form>
+
+         <div class="deleteBtn">
+            <form method="post" asp-action="DeleteCourse">
+                <input name="kurssitunnus" type="hidden" asp-for="Kurssi.kurssitunnus" />
+                <button type="submit" class="btn btn-danger btn-sm"
+                    onclick="return confirm('Haluatko varmasti poistaa kurssin @Model.Kurssi.kurssitunnus, @Model.Kurssi.kurssinimi? Tämä toiminto on peruuttamaton.');">
+                    <strong class="bi bi-trash"> Poista kurssi </strong>
+                </button>
+            </form>
+        </div>
 </div>
+

@@ -79,3 +79,7 @@ body {
 .linkContainer a:hover {
   transition: 0.5;
 }
+
+.deleteBtn {
+  margin-top: 1rem;
+}
