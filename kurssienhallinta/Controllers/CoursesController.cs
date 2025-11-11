@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using Dapper;
-using VertinDb.Models;
-using VertinDb.Models.ViewModels;
+using kurssienhallinta.Models;
+using kurssienhallinta.Models.ViewModels;
 
 namespace kurssienhallinta.Controllers;
 
@@ -31,6 +31,8 @@ public class CoursesController : Controller
         return View(kurssit);
     }
 
+    // ==== ADD COURSE ====
+
     [HttpGet]
     public IActionResult AddCourse(string kurssitunnus)
     {
@@ -57,7 +59,7 @@ public class CoursesController : Controller
 
         var viewModel = new AddCourseViewModel
         {
-            Kurssi = new Kurssi(), // ViewModel -> VertinDb -> Kurssi-luokkaa käyetään luomaan uusi kurssi
+            Kurssi = new Kurssi(), // ViewModel -> Kurssi.cs -> Kurssi-luokkaa käyetään luomaan uusi kurssi
             Opettajat = opettajat,
             Tilat = tilat
         };

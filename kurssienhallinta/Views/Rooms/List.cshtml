@@ -1,3 +1,5 @@
+@model List<Tila>
+
 <div class="container mt-3">
 
     @{
@@ -7,10 +9,23 @@
 
     <p>Tänne tilat.</p>
 
-
 </div>
 
-<div class="linkContainer">
-    <a class="sidebar-nav" href="@Url.Action("Add_room", "Rooms")">Lisää tila</a>
-    <a class="sidebar-nav" href="@Url.Action("Add_room", "Rooms")">Muokkaa tiloja</a>
+<div class="subjectContainer">
+
+    <div class="subjectInfo">
+
+        @foreach (var tila in Model)
+        {
+            <div class="infoCard">
+                <p>Tilatunnus: <strong>@tila.tilatunnus</strong></p>
+                <p>Tilan nimi: @tila.tilanimi</p>
+                <p>Tilan maksimikapasiteetti: @tila.tilakapasiteetti</p>
+            </div>
+        }
+    </div>
+
+    <div class="linkContainer">
+        <a href="@Url.Action("AddRoom", "Rooms")">Lisää tila</a>
+    </div>
 </div>

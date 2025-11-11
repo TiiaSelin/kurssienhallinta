@@ -1,4 +1,6 @@
-namespace VertinDb.Models.ViewModels
+using kurssienhallinta.Models;
+
+namespace kurssienhallinta.Models.ViewModels
 {
     public class ModifyCourseViewModel
     {

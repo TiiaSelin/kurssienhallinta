@@ -1,4 +1,3 @@
-@using VertinDb.Models
 @model List<Kurssi>
 
 <div class="container mt-3">
@@ -12,9 +11,9 @@
 
 </div>
 
-<div class="kurssiContainer">
+<div class="subjectContainer">
 
-    <div class="kurssiInfo">
+    <div class="subjectInfo">
 
         @foreach (var kurssi in Model)
         {
@@ -22,7 +21,7 @@
                 <p><strong>@kurssi.kurssitunnus</strong></p>
                 <p>@kurssi.kurssinimi</p>
                 <p>@(string.IsNullOrEmpty(kurssi.kurssikuvaus) ? "" : char.ToUpper(kurssi.kurssikuvaus[0]) +
-                                    kurssi.kurssikuvaus.Substring(1).ToLower())</p>
+                                    kurssi.kurssikuvaus.Substring(1).ToLower())</p> <!-- Tulostaa ison alkukirjaimen -->
                 <p>Aloituspäivä: @(kurssi.kurssialoituspaiva?.ToString("d.M.yyyy") ?? "Ei asetettu")</p>
                 <p>Lopetuspäivä: @(kurssi.kurssilopetuspaiva?.ToString("d.M.yyyy") ?? "Ei asetettu")</p>
                 <p>Opettajatunnus: @kurssi.opettajatunnus</p>

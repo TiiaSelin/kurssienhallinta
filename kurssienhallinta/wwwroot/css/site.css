@@ -40,12 +40,12 @@ body {
   display: inline !important;
 }
 
-.kurssiContainer {
+.subjectContainer {
   display: flex;
   flex-direction: row;
 }
 
-.kurssiInfo {
+.subjectInfo {
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
