@@ -1,0 +1,42 @@
+@model AddTeacherViewModel
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Lisää opettaja</h2>
+
+    <form method="post" asp-action="AddTeacher">
+       <div id="courseForm" class="mt-4">
+
+            <div class=" mb-3">
+            <label asp-for="Opettaja.opettajatunnus" class="form-label fw-semibold">Opettajan tunnus</label>
+            <input asp-for="Opettaja.opettajatunnus" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Opettaja.opettajaetunimi" class="form-label fw-semibold">Opettajan etunimi</label>
+            <input asp-for="Opettaja.opettajaetunimi" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Opettaja.opettajasukunimi" class="form-label fw-semibold">Opettajan sukunimi</label>
+            <input asp-for="Opettaja.opettajasukunimi" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Opettaja.opettajaaine" class="form-label fw-semibold">Opettajan aine</label>
+           <select asp-for="Opettaja.opettajaaine" class="form-select">
+                <option selected disabled>Valitse opetettava aine</option>
+                <option value="TAIKAJUOMAT">Taikajuomat</option>
+                <option value="PIMEYDEN VOIMILTA SUOJAUTUMINEN">Pimeyden voimilta suojautuminen</option>
+                <option value="TAIKUUDEN HISTORIA">Taikuuden historia</option>
+                <option value="ENNUSTAMINEN">Ennustaminen</option>
+            </select>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Luo opettaja
+            </button>
+            <a asp-controller="Courses" asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+        </div>
+    </form>
+</div>

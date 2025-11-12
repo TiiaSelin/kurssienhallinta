@@ -1,3 +1,5 @@
+@model List<Opettaja>
+
 <div class="container mt-3">
 
     @{
@@ -9,7 +11,25 @@
 
 </div>
 
-<div class="linkContainer">
-    <a class="sidebar-nav" href="@Url.Action("Add_teacher", "Teachers")">Lisää opettaja</a>
-    <a class="sidebar-nav" href="@Url.Action("Add_teacher", "Teachers")">Muokkaa opettajia</a>
+<div class="subjectContainer">
+
+    <div class="subjectInfo">
+
+        @foreach (var opettaja in Model)
+        {
+            <div class="infoCard">
+                <p>Opettajan tunnus: <strong>@opettaja.opettajatunnus</strong></p>
+                <p>Etunimi: @opettaja.opettajaetunimi</p>
+                <p>Sukunimi: @opettaja.opettajasukunimi</p>
+                <p>Aine: @opettaja.opettajaaine</p>
+                <a asp-action="ModifyTeacher" asp-route-opettajatunnus="@opettaja.opettajatunnus" class="btn btn-primary">
+                    Muokkaa
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="linkContainer">
+        <a href="@Url.Action("AddTeacher", "Teachers")">Lisää opettaja</a>
+    </div>
 </div>
