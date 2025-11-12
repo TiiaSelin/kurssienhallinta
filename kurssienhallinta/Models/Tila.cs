@@ -4,7 +4,7 @@ namespace kurssienhallinta.Models
     {
         public string? tilatunnus { get; set; }
         public string? tilanimi { get; set; }
-        public string? tilakapasiteetti { get; set; }
+        public int? tilakapasiteetti { get; set; }
     }
 
 

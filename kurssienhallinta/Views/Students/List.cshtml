@@ -1,3 +1,5 @@
+@model List<Opiskelija>
+
 <div class="container mt-3">
 
     @{
@@ -9,7 +11,26 @@
 
 </div>
 
-<div class="linkContainer">
-    <a class="sidebar-nav" href="@Url.Action("Add_student", "Students")">Lisää opiskelija</a>
-    <a class="sidebar-nav" href="@Url.Action("Add_student", "Students")">Muokkaa opiskelijoita</a>
+<div class="subjectContainer">
+
+    <div class="subjectInfo">
+
+        @foreach (var opiskelija in Model)
+        {
+            <div class="infoCard">
+                <p>Opiskelijan tunnus: <strong>@opiskelija.opiskelijatunnus</strong></p>
+                <p>Etunimi: @opiskelija.opiskelijaetunimi</p>
+                <p>Sukunimi: @opiskelija.opiskelijasukunimi</p>
+                <p>Syntymäaika: @(opiskelija.syntymaaika?.ToString("d.M.yyyy") ?? "Ei asetettu")</p>
+                <p>Vuosikurssi: @opiskelija.vuosikurssi</p>
+                <a asp-action="ModifyStudent" asp-route-opiskelijatunnus="@opiskelija.opiskelijatunnus" class="btn btn-primary">
+                    Muokkaa
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="linkContainer">
+        <a href="@Url.Action("AddStudent", "Students")">Lisää opiskelija</a>
+    </div>
 </div>

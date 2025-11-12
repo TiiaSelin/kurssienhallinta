@@ -1,0 +1,47 @@
+@model ModifyRoomViewModel
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Muokkaa kursseja</h2>
+
+    <form method="post" asp-action="ModifyRoom">
+
+        <input asp-for="Tila.tilatunnus" type="hidden" />
+
+        <div id="courseForm" class="mt-4"">
+
+            <div class=" mb-3">
+            <label asp-for="Tila.tilatunnus" class="form-label fw-semibold">Tilan tunnus</label>
+            <input asp-for="Tila.tilatunnus" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Tila.tilanimi" class="form-label fw-semibold">Tilan nimi</label>
+            <input asp-for="Tila.tilanimi" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Tila.tilakapasiteetti" class="form-label fw-semibold">Tilan nimi</label>
+            <input asp-for="Tila.tilakapasiteetti" type="number" class="form-control" />
+        </div>
+
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Tallenna muutokset
+            </button>
+            <a asp-controller="Courses" asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+        </div>
+
+        </form>
+
+         <div class="deleteBtn">
+            <form method="post" asp-action="DeleteRoom">
+                <input name="tilatunnus" type="hidden" asp-for="Tila.tilatunnus" />
+                <button type="submit" class="btn btn-danger btn-sm"
+                    onclick="return confirm('Haluatko varmasti poistaa tilan @Model.Tila.tilatunnus, @Model.Tila.tilanimi? Tämä toiminto on peruuttamaton.');">
+                    <strong class="bi bi-trash"> Poista kurssi </strong>
+                </button>
+            </form>
+        </div>
+</div>
+

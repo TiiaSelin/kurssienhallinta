@@ -1,5 +1,3 @@
-using kurssienhallinta.Models;
-
 namespace kurssienhallinta.Models.ViewModels
 {
     public class ModifyCourseViewModel
