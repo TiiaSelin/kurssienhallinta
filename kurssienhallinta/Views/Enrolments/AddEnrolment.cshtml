@@ -1,0 +1,42 @@
+@model AddEnrolmentViewModel
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Kirjaudu kurssille</h2>
+
+    <form method="post" asp-action="AddEnrolment">
+        <div id="courseForm" class="mt-4">
+
+      <div class="mb-3">
+            <label asp-for="Kirjautuminen.kurssitunnus" class="form-label fw-semibold">Kurssitunnus</label>
+            <select asp-for="Kirjautuminen.kurssitunnus" class="form-select">
+                <option selected disabled>Valitse kurssi</option>
+                @foreach (var kurssi in Model.Kurssit)
+                {
+                    <option value="@kurssi.kurssitunnus">
+                        @kurssi.kurssitunnus
+                    </option>
+                }
+            </select>
+        </div>
+
+      <div class="mb-3">
+            <label asp-for="Kirjautuminen.opiskelijatunnus" class="form-label fw-semibold">Opiskelijatunnus</label>
+            <select asp-for="Kirjautuminen.opiskelijatunnus" class="form-select">
+                <option selected disabled>Valitse opiskelija</option>
+                @foreach (var opiskelija in Model.Opiskelijat)
+                {
+                    <option value="@opiskelija.opiskelijatunnus">
+                        @opiskelija.opiskelijatunnus
+                    </option>
+                }
+            </select>
+        </div>
+        
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Kirjaa opiskelija kurssille
+                </button>
+                <a asp-controller="Courses" asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+            </div>
+    </form>
+</div>

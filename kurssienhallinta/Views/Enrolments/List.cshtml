@@ -1,0 +1,35 @@
+@model List<Kirjautuminen>
+
+<div class="container mt-3">
+
+    @{
+        ViewData["Title"] = "Kirjautumiset";
+    }
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Tänne kirjautumiset.</p>
+
+</div>
+
+<div class="subjectContainer">
+
+    <div class="subjectInfo">
+
+        @foreach (var kirjautuminen in Model)
+        {
+            <div class="infoCard">
+                <p>Kirjautumisen id: <strong>@kirjautuminen.enroltunnus</strong></p>
+                <p>Opiskelija : @kirjautuminen.opiskelijatunnus</p>
+                <p>Kurssi: @kirjautuminen.kurssitunnus</p>
+                <p>Kirjautumispäivä: @(kirjautuminen.enroldate?.ToString("d.M.yyyy") ?? "Ei asetettu")</p>
+                <a asp-action="ModifyEnrolment" asp-route-enroltunnus="@kirjautuminen.enroltunnus" class="btn btn-primary">
+                    Muokkaa
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="linkContainer">
+        <a href="@Url.Action("AddEnrolment", "Enrolments")">Kirjaudu kurssille</a>
+    </div>
+</div>
