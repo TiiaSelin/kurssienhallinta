@@ -1,0 +1,30 @@
+@model KurssinOpiskelijatViewModel
+
+<div class="container mt-3">
+
+    @{
+        ViewData["Title"] = "Kirjautumiset";
+    }
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Tänne opiskelijoiden kurssikirjautumiset.</p>
+
+</div>
+
+<div class="subjectContainer">
+
+    <div class="subjectInfo">
+
+        @foreach (var kurssi in Model.Kurssit)
+        {
+            <div class="infoCard">
+                <p>Kurssin nimi: @kurssi.kurssinimi</p>
+                @foreach (var opiskelija in Model.Opiskelijat)
+                {
+                    <p>@opiskelija.opiskelijaetunimi @opiskelija.opiskelijasukunimi</p>
+                }
+            </div>
+        }
+    </div>
+
+</div>

@@ -33,6 +33,34 @@ public class EnrolmentsController : Controller
         return View(kirjautumiset);
     }
 
+    // ==== LIST ENROLMENTS ====
+
+      public IActionResult ListCourseEnrolments()
+    {
+        string connectionString = _configuration.GetConnectionString("DatabaseNameDB")
+                                  ?? throw new InvalidOperationException("Connection string not found.");
+
+        using var conn = new NpgsqlConnection(connectionString);
+
+        var kurssit = conn.Query<Kurssi>(
+            "SELECT kurssitunnus FROM kurssit"
+        ).ToList();
+
+        
+        var opiskelijat = conn.Query<Opiskelija>(
+            "SELECT opiskelijatunnus FROM opiskelijat"
+        ).ToList();
+
+         var viewModel = new KurssinOpiskelijatViewModel
+        {
+            Kurssit = kurssit,
+            Opiskelijat = opiskelijat
+        };
+
+        return View(viewModel);
+    }
+    
+
     // ==== ADD ====
 
     [HttpGet]
@@ -111,4 +139,94 @@ public class EnrolmentsController : Controller
         return RedirectToAction("List");
     }
 
+    // ==== MODIFY =====
+
+    [HttpGet]
+    public IActionResult ModifyEnrolment(int enroltunnus)
+    {
+        string connectionString = _configuration.GetConnectionString("DatabaseNameDB")
+                                  ?? throw new InvalidOperationException("Connection string not found.");
+
+        using var conn = new NpgsqlConnection(connectionString);
+
+        var kirjautuminen = conn.QuerySingle<Kirjautuminen>(
+            "SELECT * FROM kirjautumiset WHERE enroltunnus = @enroltunnus",
+            new { enroltunnus }
+        );
+
+        // Null check 
+
+        if (kirjautuminen == null)
+
+        {
+            return NotFound($"Data with ID {kirjautuminen} not found.");
+        }
+
+        var kurssit = conn.Query<Kurssi>(
+             "SELECT kurssitunnus, kurssinimi FROM kurssit"
+         ).ToList();
+
+        var opiskelijat = conn.Query<Opiskelija>(
+            "SELECT opiskelijatunnus, opiskelijaetunimi, opiskelijasukunimi FROM opiskelijat"
+        ).ToList();
+
+
+
+        var viewModel = new ModifyEnrolmentViewModel
+        {
+            Kirjautuminen = kirjautuminen,
+            Kurssit = kurssit,
+            Opiskelijat = opiskelijat
+        };
+
+
+
+        return View(viewModel);
+
+
+    }
+
+    [HttpPost]
+    [ActionName("ModifyEnrolment")]
+    public IActionResult ModifyEnrolment(ModifyEnrolmentViewModel viewModel)
+    {
+        var model = viewModel.Kirjautuminen;
+
+        _logger.LogInformation("POST triggered for ID {Id}", model.enroltunnus);
+
+        string connectionString = _configuration.GetConnectionString("DatabaseNameDB")
+                                  ?? throw new InvalidOperationException("Connection string not found.");
+
+        using var conn = new NpgsqlConnection(connectionString);
+
+        if (model == null)
+        {
+            throw new ArgumentNullException(nameof(model), "Kurssi model was null. Check your form field names.");
+        }
+
+        conn.Execute(
+            @"UPDATE kirjautumiset 
+          SET 
+              opiskelijatunnus = @opiskelijatunnus,
+              kurssitunnus = @kurssitunnus,
+              enroldate = @enroldate
+          WHERE enroltunnus = @enroltunnus",
+            model
+        );
+
+        return RedirectToAction("List");
+    }
+
+
+
+    // ==== DELETE ====
+
+    [HttpPost]
+    public IActionResult DeleteEnrolment(int enroltunnus)
+    {
+        using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DatabaseNameDB"));
+        conn.Execute("DELETE FROM kirjautumiset WHERE enroltunnus = @enroltunnus", new { enroltunnus });
+
+        return RedirectToAction("List");
+    }
 }

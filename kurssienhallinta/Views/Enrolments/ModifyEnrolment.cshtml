@@ -1,0 +1,51 @@
+@model ModifyEnrolmentViewModel
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Muokkaa kurssikirjautumista</h2>
+
+    <form method="post" asp-action="ModifyEnrolment">
+        <div id="courseForm" class="mt-4">
+
+            <div class="mb-3">
+                <label asp-for="Kirjautuminen.enroldate">Muokkaat kirjautumista nro:
+                    @Model.Kirjautuminen.enroltunnus</label>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Kirjautuminen.kurssitunnus" class="form-label fw-semibold">Kurssitunnus</label>
+                <select asp-for="Kirjautuminen.kurssitunnus" class="form-select">
+                    <option selected disabled>Valitse kurssi</option>
+                    @foreach (var kurssi in Model.Kurssit)
+                    {
+                        <option value="@kurssi.kurssitunnus">
+                            @kurssi.kurssitunnus
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Kirjautuminen.opiskelijatunnus" class="form-label fw-semibold">Opiskelijatunnus</label>
+                <select asp-for="Kirjautuminen.opiskelijatunnus" class="form-select">
+                    <option selected disabled>Valitse opiskelija</option>
+                    @foreach (var opiskelija in Model.Opiskelijat)
+                    {
+                        <option value="@opiskelija.opiskelijatunnus">
+                            @opiskelija.opiskelijatunnus
+                        </option>
+                    }
+                </select>
+            </div>
+
+    </form>
+
+    <div class="deleteBtn">
+        <form method="post" asp-action="DeleteEnrolment">
+            <input name="enroltunnus" type="hidden" asp-for="Kirjautuminen.enroltunnus" />
+            <button type="submit" class="btn btn-danger btn-sm"
+                onclick="return confirm('Haluatko varmasti poistaa opiskelijan kurssilta? Tämä toiminto on peruuttamaton.');">
+                <strong class="bi bi-trash"> Poista opiskelija kurssilta</strong>
+            </button>
+        </form>
+    </div>
+</div>
