@@ -1,30 +1,35 @@
 @model KurssinOpiskelijatViewModel
 
 <div class="container mt-3">
-
     @{
         ViewData["Title"] = "Kirjautumiset";
     }
     <h1>@ViewData["Title"]</h1>
-
     <p>Tänne opiskelijoiden kurssikirjautumiset.</p>
-
 </div>
 
 <div class="subjectContainer">
-
     <div class="subjectInfo">
-
-        @foreach (var kurssi in Model.Kurssit)
+        @foreach (var kurssinOpiskelijat in Model.KurssinOpiskelijatList)
         {
             <div class="infoCard">
-                <p>Kurssin nimi: @kurssi.kurssinimi</p>
-                @foreach (var opiskelija in Model.Opiskelijat)
+                <p>Kurssin nimi: @kurssinOpiskelijat.Kurssi.kurssinimi</p>
+                <p>Opiskelijat:</p>
+                @if (kurssinOpiskelijat.Opiskelijat.Any())
                 {
-                    <p>@opiskelija.opiskelijaetunimi @opiskelija.opiskelijasukunimi</p>
+                    @foreach (var opiskelija in kurssinOpiskelijat.Opiskelijat)
+                    {
+                        <p>@opiskelija.opiskelijaetunimi @opiskelija.opiskelijasukunimi</p>
+                    }
+                }
+                else
+                {
+                    <p><em>Ei kirjautuneita opiskelijoita</em></p>
                 }
             </div>
         }
     </div>
-
+    <div class="linkContainer">
+        <a class="sidebar-nav" href="@Url.Action("List", "Enrolments")">Lista kurssikirjautumistapahtumista</a>
+    </div>
 </div>

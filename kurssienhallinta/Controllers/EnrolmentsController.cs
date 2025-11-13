@@ -35,31 +35,48 @@ public class EnrolmentsController : Controller
 
     // ==== LIST ENROLMENTS ====
 
-      public IActionResult ListCourseEnrolments()
+    public IActionResult ListCourseEnrolments()
     {
         string connectionString = _configuration.GetConnectionString("DatabaseNameDB")
-                                  ?? throw new InvalidOperationException("Connection string not found.");
+                                      ?? throw new InvalidOperationException("Connection string not found.");
 
         using var conn = new NpgsqlConnection(connectionString);
 
+        // First, get all courses that have enrollments
+
         var kurssit = conn.Query<Kurssi>(
-            "SELECT kurssitunnus FROM kurssit"
+            "SELECT DISTINCT kurssit.* FROM kurssit INNER JOIN kirjautumiset ON kurssit.kurssitunnus = kirjautumiset.kurssitunnus"
         ).ToList();
 
-        
-        var opiskelijat = conn.Query<Opiskelija>(
-            "SELECT opiskelijatunnus FROM opiskelijat"
-        ).ToList();
+        // Create the list to hold course-student relationships
+        var kurssinOpiskelijatList = new List<KurssinOpiskelijat>();
 
-         var viewModel = new KurssinOpiskelijatViewModel
+        // For each course, get the enrolled students
+        foreach (var kurssi in kurssit)
         {
-            Kurssit = kurssit,
-            Opiskelijat = opiskelijat
+            var opiskelijat = conn.Query<Opiskelija>(
+                @"SELECT opiskelijat.* 
+              FROM opiskelijat 
+              INNER JOIN kirjautumiset ON opiskelijat.opiskelijatunnus = kirjautumiset.opiskelijatunnus
+              WHERE kirjautumiset.kurssitunnus = @Kurssitunnus
+              ORDER BY opiskelijat.opiskelijasukunimi, opiskelijat.opiskelijaetunimi",
+                new { Kurssitunnus = kurssi.kurssitunnus }
+            ).ToList();
+
+            kurssinOpiskelijatList.Add(new KurssinOpiskelijat
+            {
+                Kurssi = kurssi,
+                Opiskelijat = opiskelijat
+            });
+        }
+
+        var viewModel = new KurssinOpiskelijatViewModel
+        {
+            KurssinOpiskelijatList = kurssinOpiskelijatList
         };
 
         return View(viewModel);
     }
-    
 
     // ==== ADD ====
 
