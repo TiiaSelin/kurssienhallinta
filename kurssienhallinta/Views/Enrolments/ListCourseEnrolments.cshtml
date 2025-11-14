@@ -13,8 +13,9 @@
         @foreach (var kurssinOpiskelijat in Model.KurssinOpiskelijatList)
         {
             <div class="infoCard">
-                <p>Kurssin nimi: @kurssinOpiskelijat.Kurssi.kurssinimi</p>
-                <p>Opiskelijat:</p>
+                <p>@kurssinOpiskelijat.Kurssi.kurssinimi <strong>@kurssinOpiskelijat.Kurssi.kurssitunnus</strong></p>
+                <p></p>
+                <p>_______________________________________________________________</p>
                 @if (kurssinOpiskelijat.Opiskelijat.Any())
                 {
                     @foreach (var opiskelija in kurssinOpiskelijat.Opiskelijat)
@@ -24,7 +25,7 @@
                 }
                 else
                 {
-                    <p><em>Ei kirjautuneita opiskelijoita</em></p>
+                    <p><em>Ei kirjautuneita opiskelijoita.</em></p>
                 }
             </div>
         }

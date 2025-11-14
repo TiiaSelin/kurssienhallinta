@@ -19,8 +19,7 @@
         {
             <div class="infoCard">
                 <p>Opiskelijan tunnus: <strong>@opiskelija.opiskelijatunnus</strong></p>
-                <p>Etunimi: @opiskelija.opiskelijaetunimi</p>
-                <p>Sukunimi: @opiskelija.opiskelijasukunimi</p>
+                <p>Nimi: @opiskelija.opiskelijaetunimi @opiskelija.opiskelijasukunimi</p>
                 <p>Syntymäaika: @(opiskelija.syntymaaika?.ToString("d.M.yyyy") ?? "Ei asetettu")</p>
                 <p>Vuosikurssi: @opiskelija.vuosikurssi</p>
                 <a asp-action="ModifyStudent" asp-route-opiskelijatunnus="@opiskelija.opiskelijatunnus" class="btn btn-primary">
