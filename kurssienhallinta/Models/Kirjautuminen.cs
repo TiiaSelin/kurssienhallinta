@@ -7,6 +7,9 @@ namespace kurssienhallinta.Models
         public string? opiskelijatunnus { get; set; }
         public string? kurssitunnus { get; set; }
         public DateTime? enroldate { get; set; } = DateTime.Today;
+        public Opiskelija? Opiskelija { get; set; }
+        public Kurssi? Kurssi { get; set; }
+
     }
 
 }

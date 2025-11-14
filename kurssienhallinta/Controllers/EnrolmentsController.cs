@@ -66,7 +66,7 @@ public class EnrolmentsController : Controller
             kurssinOpiskelijatList.Add(new KurssinOpiskelijat
             {
                 Kurssi = kurssi,
-                Opiskelijat = opiskelijat
+                Opiskelijat = opiskelijat,
             });
         }
 
