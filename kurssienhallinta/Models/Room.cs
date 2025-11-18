@@ -8,7 +8,7 @@ namespace kurssienhallinta.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Capacity { get; set; }
+        public int Capacity { get; set; }
         [Required]
         public string Room_code { get; set; }
     }
