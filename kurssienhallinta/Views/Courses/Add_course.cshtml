@@ -1,53 +1,55 @@
 @{
-    ViewData["Title"] = "";
+    ViewData["Title"] = "Lisää kurssi.";
 }
-<h1>@ViewData["Title"]</h1>
-
-<div class = "container mt-5" style = "max-width: 700px;">
-<h2 class = "mb-4">Lisää uusi kurssi</h2>
-<p> Täytä alla olevat tiedot lisätäksesi uuden kurssin järjestelmään. </p>
- 
+<div class="container mt-5" style="max-width: 700px;">
+<h2 class="mb-4">Lisää uusi kurssi</h2>
+<p>Täytä alla olevat tiedot lisätäksesi uuden kurssin järjestelmään.</p>
 
 <form>
-    <div class = "mb-3">
-        <label for = "courseName" class = "form-label fw-semibold">Kurssin nimi</label>
-        <input type = "text" class = "form-control" id = "courseName" rows = "3">   
-    </div> 
+    <div class="mb-3">
+        <label for="courseName" class="form-label fw-semibold">Kurssin nimi</label>
+        <input type="text" class="form-control" id="courseName" rows="3">   
+    </div>
 
-    <div class = "row mb-3">
-        <div class = "col">
-            <label for = "startDate" class = "form-label fw-semibold">Aloituspäivämäärä</label>
-            <input type = "date" class = "form-control" id = "startDate">
+    <div class="mb-3">
+        <label for="course_cname" class="form-label fw-semibold">Kurssin tunnus</label>
+        <input type="text" class="form-control" id="course_cname" rows="3">
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <label for="startDate" class="form-label fw-semibold">Aloituspäivämäärä</label>
+            <input type="date" class="form-control" id="startDate">
         </div>
-        <div class = "col">
-            <label for = "endDate" class = "form-label fw-semibold">Lopetuspäivämäärä</label>
-            <input type = "date" class = "form-control" id = "endDate">
+        <div class="col">
+            <label for="endDate" class="form-label fw-semibold">Lopetuspäivämäärä</label>
+            <input type="date" class="form-control" id="endDate">
         </div>
     </div>
 
-    <div class = "mb-3">
-        <label for="teacher" class = "form-label fw-semibold">Kurssin opettaja</label>
-        <select id="teacher" class = "from-select">
+    <div class="mb-3">
+        <label for="teacher" class="form-label fw-semibold">Kurssin opettaja</label>
+        <select id="teacher" class="from-select">
         <option selected disabled>Valitse opettaja</option>
         <option>Jorma</option>
         <option>Jukka</option>
         </select>
     </div>
 
-    <div class = "mb-3">
-        <label for="room" class = "from-label fw-semibold">Tila</label>
-        <select id="room" class = "from-select">
+    <div class="mb-3">
+        <label for="room" class="from-label fw-semibold">Tila</label>
+        <select id="room" class="from-select">
         <option selected disabled>Valitse tila</option>
         <option>Luokka 111</option>
         <option>Luokka 222</option>
         </select>
     </div>
 
-    <div class = "mt-4">
-        <button type = "submit" class = "btn btn-primary">
-            <i class = "bi bi-plus-circle"></i> Lisää kurssi
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>Lisää kurssi
         </button>
-        <a asp-action = "index" class = "btn btn-secondary ms-2">Peruuta</a>
+        <a asp-action="index" class="btn btn-secondary ms-2">Peruuta</a>
     </div>
 </form>
 </div>
