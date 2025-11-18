@@ -7,6 +7,7 @@ namespace kurssienhallinta.Models
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<Course> Courses { get; set; }
+    public DbSet<Room> Rooms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
