@@ -1,6 +1,32 @@
 @{
     ViewData["Title"] = "Lisää opettaja.";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-5" style="max-width: 700px;">
+<h2 class="mb-4">Lisää uusi opettaja.</h2>
+<p>Täytä alla olevat tiedot lisätäksesi uuden opettajan järjestelmään.</p>
 
-<p>Tänne lisää opettajia.</p>
+<form>
+    <div class="row mb-3">
+        <section class="col">
+            <label for="teacher_fname" class="form-label fw-semibold">Opettajan etunimi.</label>
+            <input type="text" class="form-control" id="teacher_fname" rows="3">
+        </section>
+        <section class="col">
+            <label for="teacher_lname" class="form-label fw-semibold">Opettajan sukunimi.</label>
+            <input type="text" class="form-control" id="teacher_lname" rows="3">
+        </section>
+    </div>
+
+    <div class="mb-3">
+        <label for="teacher_subject" class="form-label fw-semibold">Opettajan aine.</label>
+        <input type="text" class="form-control" id="teacher_subject" rows="3">
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>Lisää opettaja
+        </button>
+        <a asp-action="index" class="btn btn-secondary ms-2">Peruuta</a>
+    </div>
+</form>
+</div>

@@ -1,6 +1,40 @@
 @{
     ViewData["Title"] = "Lisää kirjautuminen.";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-5" style="max-width: 700px;">
+<h2 class="mb-4">Lisää uusi kurssikirjautuminen</h2>
+<p>Täytä alla olevat tiedot lisätäksesi uuden kurssikirjautumisen järjestelmään.</p>
 
-<p>Tänne lisää kirjautumisia.</p>
+<form>
+    <div class="mb-3">
+        <label for="student" class="form-label fw-semibold">Kirjautuva opiskelija.</label>
+        <select id="student" class="from-select">
+        <option selected disabled>Valitse opiskelija</option>
+        <option>Opiskelija_0</option>
+        <option>Opiskelija_1</option>
+        <option>Opiskelija_2</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="course" class="from-label fw-semibold">Kurssi jolle kirjaudutaan.</label>
+        <select id="course" class="from-select">
+        <option selected disabled>Valitse kurssi</option>
+        <option>C# kurssi</option>
+        <option>Sienestyskurssi</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="enrollment_start" class="form-label fw-semibold">Kirjautumispäivä.</label>
+        <input type="date" class="form-control" id="enrollment_start">
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>Lisää kurssikirjautuminen
+        </button>
+        <a asp-action="index" class="btn btn-secondary ms-2">Peruuta</a>
+    </div>
+</form>
+</div>
