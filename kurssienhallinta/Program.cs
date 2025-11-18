@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using kurssienhallinta.Models;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Env.Load();
+builder.Configuration.AddEnvironmentVariables();
+var connectionString = Environment.GetEnvironmentVariable("Connection__Norsu") ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Console.WriteLine($"DB: {connectionString}");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
