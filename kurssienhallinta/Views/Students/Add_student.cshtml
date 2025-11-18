@@ -1,6 +1,47 @@
 @{
     ViewData["Title"] = "Lisää opiskelija.";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="container mt-5" style="max-width: 700px;">
+<h2 class="mb-4">Lisää uusi opiskelija.</h2>
+<p>Täytä alla olevat tiedot lisätäksesi uuden opiskelijan järjestelmään.</p>
 
-<p>Tänne lisää opiskelijoita.</p>
+<form>
+    <div class="mb-3">
+        <label for="student_number" class = "form-label fw-semibold">Opiskelijanumero.</label>
+        <input type="text" class="form-control" id="student_number">
+    </div>
+
+    <div class="row mb-3">
+        <section class="col">
+            <label for="student_fname" class="form-label fw-semibold">Opiskelijan etunimi.</label>
+            <input type="text" class="form-control" id="student_fname" rows="3">
+        </section>
+        <section class="col">
+            <label for="student_lname" class="form-label fw-semibold">Opiskelijan sukunimi.</label>
+            <input type="text" class="form-control" id="student_lname" rows="3">
+        </section>
+    </div>
+
+    <div class="mb-3">
+        <label for="student_bday" class = "form-label fw-semibold">Opiskelijan syntymäpäivä.</label>
+        <input type="date" class="form-control" id="student_bday">
+    </div>
+
+    <div class="mb-3">
+        <label for="student" class="form-label fw-semibold">Opiskelijan vuosikurssi.</label>
+        <select id="student" class="from-select">
+        <option selected disabled>Valitse vuosikurssi.</option>
+        <option>1.</option>
+        <option>2.</option>
+        <option>3.</option>
+        </select>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>Lisää opiskelija
+        </button>
+        <a asp-action="index" class="btn btn-secondary ms-2">Peruuta</a>
+    </div>
+</form>
+</div>
