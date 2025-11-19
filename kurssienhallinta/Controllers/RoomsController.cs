@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using kurssienhallinta.Models;
 
 namespace kurssienhallinta.Controllers;
@@ -15,9 +16,11 @@ public class RoomsController : Controller
         _logger = logger;
     }
 
-    public IActionResult List()
+    [HttpGet]
+    public IActionResult List_rooms()
     {
-        return View();
+        var rooms = _context.Rooms.ToList();
+        return View(rooms);
     }
     [HttpGet]
     public IActionResult Add_room()
