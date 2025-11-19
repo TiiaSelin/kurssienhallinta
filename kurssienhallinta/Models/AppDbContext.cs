@@ -4,10 +4,11 @@ namespace kurssienhallinta.Models
 {
     public class AppDbContext : DbContext
     {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<Course> Courses { get; set; }
-    public DbSet<Room> Rooms { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +47,27 @@ namespace kurssienhallinta.Models
                     Room_code = "Kp0"
                 }
             );
+
+            modelBuilder.Entity<Teacher>().HasData(
+                new Teacher
+                {
+                    Id = 1,
+                    Teacher_code = "A10",
+                    First_name = "Ville",
+                    Last_name = "Virtanen",
+                    Subject = "Matematiikka"
+                },
+                new Teacher
+                {
+                    Id = 2,
+                    Teacher_code = "B10",
+                    First_name = "Anna",
+                    Last_name = "Korhonen",
+                    Subject = "Web-ohjelmointi"
+                }
+
+            );
+
         }
 
     }
