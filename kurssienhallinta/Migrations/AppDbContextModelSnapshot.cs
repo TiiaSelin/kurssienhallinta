@@ -22,137 +22,201 @@ namespace kurssienhallinta.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            // =====================
+            // Courses
+            // =====================
             modelBuilder.Entity("kurssienhallinta.Models.Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Day_of_end")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("Day_of_end")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Day_of_start")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("Day_of_start")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                b.ToTable("Courses");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Day_of_end = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Day_of_start = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Näe terävästi ja opettele hianoo kieltä.",
-                            Name = "C# kurssi."
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Day_of_end = new DateTime(9001, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Day_of_start = new DateTime(1900, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Opetellaan tunnistamaan sieniä, syömään sieniä, arvostamaan sieniä, rihmastoitumaan.",
-                            Name = "Sienestyskurssi"
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        Day_of_end = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        Day_of_start = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        Description = "Näe terävästi ja opettele hianoo kieltä.",
+                        Name = "C# kurssi."
+                    },
+                    new
+                    {
+                        Id = 2,
+                        Day_of_end = new DateTime(9001, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        Day_of_start = new DateTime(1900, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        Description = "Opetellaan tunnistamaan sieniä, syömään sieniä, arvostamaan sieniä, rihmastoitumaan.",
+                        Name = "Sienestyskurssi"
+                    });
+            });
 
+            // =====================
+            // Rooms
+            // =====================
             modelBuilder.Entity("kurssienhallinta.Models.Room", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Capacity")
-                        .HasColumnType("integer");
+                b.Property<int>("Capacity")
+                    .HasColumnType("integer");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Room_code")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Room_code")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                b.ToTable("Rooms");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 100,
-                            Name = "Opetus Tila_0",
-                            Room_code = "OpT0"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 1,
-                            Name = "Kapselihotelli",
-                            Room_code = "Kp0"
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        Capacity = 100,
+                        Name = "Opetus Tila_0",
+                        Room_code = "OpT0"
+                    },
+                    new
+                    {
+                        Id = 2,
+                        Capacity = 1,
+                        Name = "Kapselihotelli",
+                        Room_code = "Kp0"
+                    });
+            });
 
+            // =====================
+            // Teachers
+            // =====================
             modelBuilder.Entity("kurssienhallinta.Models.Teacher", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("First_name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("First_name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Last_name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Last_name")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Subject")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.Property<string>("Teacher_code")
-                        .IsRequired()
-                        .HasColumnType("text");
+                b.Property<string>("Teacher_code")
+                    .IsRequired()
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                b.ToTable("Teachers");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            First_name = "Ville",
-                            Last_name = "Virtanen",
-                            Subject = "Matematiikka",
-                            Teacher_code = "A10"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            First_name = "Anna",
-                            Last_name = "Korhonen",
-                            Subject = "Web-ohjelmointi",
-                            Teacher_code = "B10"
-                        });
-                });
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        First_name = "Ville",
+                        Last_name = "Virtanen",
+                        Subject = "Matematiikka",
+                        Teacher_code = "A10"
+                    },
+                    new
+                    {
+                        Id = 2,
+                        First_name = "Anna",
+                        Last_name = "Korhonen",
+                        Subject = "Web-ohjelmointi",
+                        Teacher_code = "B10"
+                    });
+            });
+
+            // =====================
+            // Students
+            // =====================
+            modelBuilder.Entity("kurssienhallinta.Models.Student", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
+
+                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                b.Property<DateTime>("Birthday")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("F_Name")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.Property<string>("L_Name")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.Property<string>("Student_code")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.Property<int>("Year")
+                    .HasColumnType("integer");
+
+                b.HasKey("Id");
+
+                b.ToTable("Students");
+
+                b.HasData(
+                    new
+                    {
+                        Id = 1,
+                        Birthday = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        F_Name = "Sieni",
+                        L_Name = "Mies",
+                        Student_code = "SM0",
+                        Year = 1
+                    },
+                    new
+                    {
+                        Id = 2,
+                        Birthday = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                        F_Name = "Fun",
+                        L_Name = "Guy",
+                        Student_code = "FG0",
+                        Year = 2
+                    });
+            });
+
 #pragma warning restore 612, 618
         }
     }

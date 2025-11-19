@@ -1,0 +1,32 @@
+@model IEnumerable<kurssienhallinta.Models.Room>
+@{
+    ViewData["Title"] = "Tilat.";
+}
+<div class="container mt-5" style="max-width: 700px;">
+<h2 class="mb-4">Tilat.</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nimi.
+            </th>
+            <th>
+                Kapasiteetti.
+            </th>
+            <th>
+                Tunnus.
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var room in Model)
+    {
+        <tr>
+            <td>@room.Name</td>
+            <td>@room.Capacity</td>
+            <td>@room.Room_code</td>
+        </tr>
+    }
+    </tbody>
+</table>
