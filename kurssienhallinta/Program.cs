@@ -9,6 +9,18 @@ Env.Load();
 builder.Configuration.AddEnvironmentVariables();
 var connectionString = Environment.GetEnvironmentVariable("Connection__Norsu") ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
+
+try
+{
+    using var conn = new Npgsql.NpgsqlConnection(connectionString);
+    conn.Open();
+    Console.WriteLine("Connected successfully! 🎉");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"❌ {ex.GetType().Name}: {ex.Message}");
+}
+
 // Console.WriteLine($"DB: {connectionString}");
 
 // Add services to the container.
