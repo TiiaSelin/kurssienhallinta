@@ -8,6 +8,7 @@ namespace kurssienhallinta.Models
 
     public DbSet<Course> Courses { get; set; }
     public DbSet<Room> Rooms { get; set; }
+    public DbSet<Student> Students {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,6 +45,26 @@ namespace kurssienhallinta.Models
                     Name = "Kapselihotelli",
                     Capacity = 1,
                     Room_code = "Kp0"
+                }
+            );
+            modelBuilder.Entity<Student>().HasData(
+                new Student
+                {
+                    Id = 1,
+                    Student_code = "SM0",
+                    F_Name = "Sieni",
+                    L_Name = "Mies",
+                    Birthday = DateTime.SpecifyKind(new DateTime(2000, 1, 1), DateTimeKind.Utc),
+                    Year = 1
+                },
+                new Student
+                {
+                    Id = 2,
+                    Student_code = "FG0",
+                    F_Name = "Fun",
+                    L_Name = "Guy",
+                    Birthday = DateTime.SpecifyKind(new DateTime(1990, 1, 1), DateTimeKind.Utc),
+                    Year= 2
                 }
             );
         }
