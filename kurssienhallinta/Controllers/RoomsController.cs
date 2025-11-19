@@ -19,10 +19,12 @@ public class RoomsController : Controller
     {
         return View();
     }
+    [HttpGet]
     public IActionResult Add_room()
     {
         return View();
     }
+    [HttpPost]
     public IActionResult Add_room(Room room)
     {
         if (ModelState.IsValid)
