@@ -5,10 +5,12 @@ namespace kurssienhallinta.Models
 {
     public class AppDbContext : DbContext
     {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-    public DbSet<Course> Courses { get; set; }
-    public DbSet<Room> Rooms { get; set; }
-    public DbSet<EnrollmentsController> Enrollments { get; set; }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,7 +49,49 @@ namespace kurssienhallinta.Models
                     Room_code = "Kp0"
                 }
             );
+
+            modelBuilder.Entity<Teacher>().HasData(
+                new Teacher
+                {
+                    Id = 1,
+                    Teacher_code = "A10",
+                    First_name = "Ville",
+                    Last_name = "Virtanen",
+                    Subject = "Matematiikka"
+                },
+                new Teacher
+                {
+                    Id = 2,
+                    Teacher_code = "B10",
+                    First_name = "Anna",
+                    Last_name = "Korhonen",
+                    Subject = "Web-ohjelmointi"
+                }
+
+            );
+
+            modelBuilder.Entity<Student>().HasData(
+                new Student
+                {
+                    Id = 1,
+                    Student_code = "SM0",
+                    F_Name = "Sieni",
+                    L_Name = "Mies",
+                    Birthday = DateTime.SpecifyKind(new DateTime(2000, 1, 1), DateTimeKind.Utc),
+                    Year = 1
+                },
+                new Student
+                {
+                    Id = 2,
+                    Student_code = "FG0",
+                    F_Name = "Fun",
+                    L_Name = "Guy",
+                    Birthday = DateTime.SpecifyKind(new DateTime(1990, 1, 1), DateTimeKind.Utc),
+                    Year = 2
+                }
+            );
         }
+
     }
 }
 
