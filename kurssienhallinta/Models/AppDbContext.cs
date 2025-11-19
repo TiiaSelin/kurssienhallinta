@@ -1,3 +1,4 @@
+using kurssienhallinta.Controllers;
 using Microsoft.EntityFrameworkCore;
 
 namespace kurssienhallinta.Models
@@ -5,9 +6,9 @@ namespace kurssienhallinta.Models
     public class AppDbContext : DbContext
     {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
     public DbSet<Course> Courses { get; set; }
     public DbSet<Room> Rooms { get; set; }
+    public DbSet<EnrollmentsController> Enrollments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,7 +48,6 @@ namespace kurssienhallinta.Models
                 }
             );
         }
-
     }
 }
 

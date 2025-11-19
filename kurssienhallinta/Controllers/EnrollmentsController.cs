@@ -6,10 +6,12 @@ namespace kurssienhallinta.Controllers;
 
 public class EnrollmentsController : Controller
 {
+    private readonly AppDbContext _context;
     private readonly ILogger<EnrollmentsController> _logger;
 
-    public EnrollmentsController(ILogger<EnrollmentsController> logger)
+    public EnrollmentsController(AppDbContext context, ILogger<EnrollmentsController> logger)
     {
+        _context = context;
         _logger = logger;
     }
 
@@ -17,9 +19,21 @@ public class EnrollmentsController : Controller
     {
         return View();
     }
+    [HttpGet]
     public IActionResult Add_enrollment()
     {
         return View();
+    }
+    [HttpPost]
+    public IActionResult Add_enrollment(Enrollment enrollment)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Enrollments.Add(enrollment);
+            _context.SaveChanges();
+            return RedirectToAction("List");
+        }
+        return View(enrollment);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
