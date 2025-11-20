@@ -11,6 +11,7 @@ namespace kurssienhallinta.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -89,7 +90,40 @@ namespace kurssienhallinta.Models
                     Birthday = DateTime.SpecifyKind(new DateTime(1990, 1, 1), DateTimeKind.Utc),
                     Year = 2
                 }
+
+
+
             );
+
+            modelBuilder.Entity<Enrollment>()
+          .HasOne(e => e.Student)
+          .WithMany()
+          .HasForeignKey(e => e.StudentId)
+          .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrollment>()
+          .HasOne(e => e.Course)
+          .WithMany()
+          .HasForeignKey(e => e.CourseId)
+          .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrollment>().HasData(
+          new Enrollment
+          {
+              Id = 1,
+              StudentId = 1,  // Sieni Mies
+              CourseId = 2,   // Sienestyskurssi
+              EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 15), DateTimeKind.Utc)
+          },
+          new Enrollment
+          {
+              Id = 2,
+              StudentId = 2,  // Fun Guy
+              CourseId = 1,   // C# kurssi
+              EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 10), DateTimeKind.Utc)
+          }
+      );
+      
         }
 
     }
