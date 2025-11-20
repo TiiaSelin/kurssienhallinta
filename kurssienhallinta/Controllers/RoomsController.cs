@@ -61,6 +61,30 @@ public class RoomsController : Controller
         _context.SaveChanges();
         return RedirectToAction("List_rooms");
     }
+    [HttpGet]
+    public IActionResult Delete_room(int id)
+    {
+        var selected_room = _context.Rooms.FirstOrDefault(room => room.Id == id);
+
+        if (selected_room == null)
+        {
+            return NotFound();
+        }
+        return View(selected_room);
+    }
+    [HttpPost]
+    public IActionResult Delete_room(int id, bool confirm = false)
+    {
+        var selected_room = _context.Rooms.FirstOrDefault(room => room.Id == id);
+
+        if (selected_room == null)
+        {
+            return NotFound();
+        }
+        _context.Rooms.Remove(selected_room);
+        _context.SaveChanges();
+        return RedirectToAction("List_rooms");
+    }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
