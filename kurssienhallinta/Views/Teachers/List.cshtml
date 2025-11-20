@@ -4,6 +4,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Tänne opettajat.</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -11,6 +12,7 @@
             <th>Sukunimi</th>
             <th>Aine</th>
             <th>Tunnus</th>
+            <th>Muokkaa</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +23,12 @@
                 <td>@teacher.Last_name</td>
                 <td>@teacher.Subject</td>
                 <td>@teacher.Teacher_code</td>
+                <td>
+                    <a asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Id"
+                        class="btn btn-sm btn-primary">
+                        Muokkaa
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
