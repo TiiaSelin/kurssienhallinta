@@ -4,3 +4,24 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Tänne opettajat.</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Etunimi</th>
+            <th>Sukunimi</th>
+            <th>Aine</th>
+            <th>Tunnus</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teacher in Model)
+        {
+            <tr>
+                <td>@teacher.First_name</td>
+                <td>@teacher.Last_name</td>
+                <td>@teacher.Subject</td>
+                <td>@teacher.Teacher_code</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -34,7 +34,7 @@ public class RoomsController : Controller
         {
             _context.Rooms.Add(room);
             _context.SaveChanges();
-            return RedirectToAction("List");
+            return RedirectToAction("List_rooms");
         }
         return View(room);
     }

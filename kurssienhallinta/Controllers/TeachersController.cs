@@ -6,20 +6,42 @@ namespace kurssienhallinta.Controllers;
 
 public class TeachersController : Controller
 {
+    private readonly AppDbContext _context;
     private readonly ILogger<TeachersController> _logger;
 
-    public TeachersController(ILogger<TeachersController> logger)
+    public TeachersController(AppDbContext context, ILogger<TeachersController> logger)
     {
+        _context = context;
         _logger = logger;
     }
 
+
+    [HttpGet]
     public IActionResult List()
     {
-        return View();
+        var teachers = _context.Teachers.ToList();
+        return View(teachers);
     }
+
+
+    [HttpGet]
     public IActionResult Add_teacher()
     {
         return View();
+    }
+
+
+    [HttpPost]
+    public IActionResult Add_teacher(Teacher teacher)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Teachers.Add(teacher);
+            _context.SaveChanges();
+            return RedirectToAction("List");
+        }
+
+        return View(teacher);
     }
 
 
