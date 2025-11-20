@@ -44,6 +44,33 @@ public class TeachersController : Controller
         return View(teacher);
     }
 
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var teacher = _context.Teachers.Find(id);
+
+        if (teacher == null)
+        {
+            return NotFound();
+        }
+
+        return View(teacher);
+    }
+
+
+    [HttpPost]
+    public IActionResult Edit(Teacher teacher)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Teachers.Update(teacher);
+            _context.SaveChanges();
+            return RedirectToAction("List");
+        }
+
+        return View(teacher);
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
