@@ -12,7 +12,7 @@
         <div class="mb-3">
             <label asp-for="StudentId" class="form-label fw-semibold">Opiskelija</label>
             <select asp-for="StudentId" class="form-control">
-                <option value="">-- Valitse opiskelija --</option>
+                <option value="0">-- Valitse opiskelija --</option>
                 @foreach (var student in (SelectList)ViewBag.Students)
                 {
                     <option value="@student.Value">@student.Text</option>
