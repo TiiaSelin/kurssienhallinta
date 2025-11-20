@@ -72,6 +72,23 @@ public class TeachersController : Controller
     }
 
 
+
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var teacher = _context.Teachers.Find(id);
+        if (teacher == null)
+            return NotFound();
+
+        _context.Teachers.Remove(teacher);
+        _context.SaveChanges();
+
+        return RedirectToAction("List");
+    }
+
+
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
