@@ -38,7 +38,29 @@ public class RoomsController : Controller
         }
         return View(room);
     }
+    [HttpGet]
+    public IActionResult Edit_room(int id)
+    {
+        var selected_room = _context.Rooms.FirstOrDefault(room => room.Id == id);
 
+        if (selected_room == null)
+        {
+            return NotFound();
+        }
+        return View(selected_room);
+    }
+    [HttpPost]
+    public IActionResult Edit_room(Room room)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(room);
+        }
+
+        _context.Rooms.Update(room);
+        _context.SaveChanges();
+        return RedirectToAction("List_rooms");
+    }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
