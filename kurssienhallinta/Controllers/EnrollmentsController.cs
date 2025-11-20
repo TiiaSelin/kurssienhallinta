@@ -25,7 +25,7 @@ namespace kurssienhallinta.Controllers
                 .Include(e => e.Student)
                 .Include(e => e.Course)
                 .ToList();
-            
+
             return View(enrollments);
         }
 
@@ -36,7 +36,7 @@ namespace kurssienhallinta.Controllers
             // Populate dropdown lists for the form
             ViewBag.Students = new SelectList(_context.Students.ToList(), "Id", "Student_code");
             ViewBag.Courses = new SelectList(_context.Courses.ToList(), "Id", "Name");
-            
+
             return View();
         }
 
@@ -45,7 +45,7 @@ namespace kurssienhallinta.Controllers
         public IActionResult Add_enrollment(Enrollment enrollment)
         {
             ViewBag.Students = new SelectList(_context.Students.ToList(), "Id", "Student_code");
-            ViewBag.Courses  = new SelectList(_context.Courses.ToList(), "Id", "Name");
+            ViewBag.Courses = new SelectList(_context.Courses.ToList(), "Id", "Name");
 
             if (ModelState.IsValid)
             {
@@ -54,6 +54,39 @@ namespace kurssienhallinta.Controllers
                     DateTimeKind.Unspecified
                 );
                 _context.Enrollments.Add(enrollment);
+                _context.SaveChanges();
+                return RedirectToAction("List");
+            }
+
+            return View(enrollment);
+        }
+
+        // === EDIT ====
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var enrollment = _context.Enrollments
+                .Include(e => e.Student)
+                .Include(e => e.Course)
+                .FirstOrDefault(e => e.Id == id);
+
+
+            if (enrollment == null)
+            {
+                return NotFound();
+            }
+
+            return View(enrollment);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(Enrollment enrollment)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Enrollments.Update(enrollment);
                 _context.SaveChanges();
                 return RedirectToAction("List");
             }

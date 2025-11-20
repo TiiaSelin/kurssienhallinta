@@ -1,0 +1,41 @@
+@model kurssienhallinta.Models.Enrollment
+
+@{
+    ViewData["Title"] = "Muokkaa ilmoittautumista";
+}
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Muokkaa ilmoittautumista</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row mb-3">
+            <section class="col">
+                <label class="form-label fw-semibold">Opiskelija</label>
+                <input type="text" class="form-control" 
+                    value="@Model.Student.F_Name @Model.Student.L_Name" disabled />
+            </section>
+        </div>
+
+        <div class="row mb-3">
+            <section class="col">
+                <label class="form-label fw-semibold">Kurssi</label>
+                <input type="text" class="form-control" 
+                    value="@Model.Course.Name" disabled />
+            </section>
+        </div>
+
+        <div class="row mb-3">
+            <section class="col">
+                <label asp-for="EnrollmentDate" class="form-label fw-semibold">Ilmoittautumispäivä</label>
+                <input asp-for="EnrollmentDate" type="date" class="form-control" />
+            </section>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
+            <a asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+        </div>
+    </form>
+</div>
