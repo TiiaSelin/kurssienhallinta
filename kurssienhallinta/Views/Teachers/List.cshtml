@@ -3,7 +3,6 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Tänne opettajat.</p>
 <table class="table">
     <thead>
         <tr>
@@ -11,6 +10,7 @@
             <th>Sukunimi</th>
             <th>Aine</th>
             <th>Tunnus</th>
+            <th>Toiminnot</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,25 @@
                 <td>@teacher.Last_name</td>
                 <td>@teacher.Subject</td>
                 <td>@teacher.Teacher_code</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">Muokkaa</a>
+                    <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal-@teacher.Id">Poista</button>
+                </td>
             </tr>
+            <partial name="Delete_teacher_modal" model="teacher" />
+
         }
     </tbody>
 </table>
+
+
+<style>
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .modal-footer {
+        border-top: none;
+    }
+</style>
