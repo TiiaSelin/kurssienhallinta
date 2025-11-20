@@ -11,16 +11,24 @@
     <form asp-action="Add_enrollment" method="post">
         <div class="mb-3">
             <label asp-for="StudentId" class="form-label fw-semibold">Opiskelija</label>
-            <select asp-for="StudentId" class="form-select" asp-items="ViewBag.Students">
+            <select asp-for="StudentId" class="form-control">
                 <option value="">-- Valitse opiskelija --</option>
+                @foreach (var student in (SelectList)ViewBag.Students)
+                {
+                    <option value="@student.Value">@student.Text</option>
+                }
             </select>
             <span asp-validation-for="StudentId" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="CourseId" class="form-label fw-semibold">Kurssi</label>
-            <select asp-for="CourseId" class="form-select" asp-items="ViewBag.Courses">
+            <select asp-for="CourseId" class="form-control">
                 <option value="">-- Valitse kurssi --</option>
+                @foreach (var course in (SelectList)ViewBag.Courses)
+                {
+                    <option value="@course.Value">@course.Text</option>
+                }
             </select>
             <span asp-validation-for="CourseId" class="text-danger"></span>
         </div>
