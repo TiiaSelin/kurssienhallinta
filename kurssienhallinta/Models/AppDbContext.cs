@@ -104,6 +104,11 @@ namespace kurssienhallinta.Models
           .HasForeignKey(e => e.CourseId)
           .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Enrollment>()
+          .Property(e => e.EnrollmentDate)
+          .HasColumnType("timestamp without time zone");
+          
+
             modelBuilder.Entity<Enrollment>().HasData(
           new Enrollment
           {

@@ -44,17 +44,20 @@ namespace kurssienhallinta.Controllers
         [HttpPost]
         public IActionResult Add_enrollment(Enrollment enrollment)
         {
+            ViewBag.Students = new SelectList(_context.Students.ToList(), "Id", "Student_code");
+            ViewBag.Courses  = new SelectList(_context.Courses.ToList(), "Id", "Name");
+
             if (ModelState.IsValid)
             {
+                enrollment.EnrollmentDate = DateTime.SpecifyKind(
+                    enrollment.EnrollmentDate,
+                    DateTimeKind.Unspecified
+                );
                 _context.Enrollments.Add(enrollment);
                 _context.SaveChanges();
                 return RedirectToAction("List");
             }
 
-            // Re-populate dropdowns if validation fails
-            ViewBag.Students = new SelectList(_context.Students.ToList(), "Id", "Student_code");
-            ViewBag.Courses = new SelectList(_context.Courses.ToList(), "Id", "Name");
-            
             return View(enrollment);
         }
     }
