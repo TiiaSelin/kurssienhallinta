@@ -1,40 +1,41 @@
+@model kurssienhallinta.Models.Enrollment
+
 @{
-    ViewData["Title"] = "Lisää kirjautuminen.";
+    ViewData["Title"] = "Lisää ilmoittautuminen";
 }
+
 <div class="container mt-5" style="max-width: 700px;">
-<h2 class="mb-4">Lisää uusi kurssikirjautuminen</h2>
-<p>Täytä alla olevat tiedot lisätäksesi uuden kurssikirjautumisen järjestelmään.</p>
+    <h2 class="mb-4">Lisää uusi ilmoittautuminen</h2>
+    <p>Täytä alla olevat tiedot lisätäksesi uuden ilmoittautumisen järjestelmään.</p>
 
-<form>
-    <div class="mb-3">
-        <label for="student" class="form-label fw-semibold">Kirjautuva opiskelija.</label>
-        <select id="student" class="from-select">
-        <option selected disabled>Valitse opiskelija</option>
-        <option>Opiskelija_0</option>
-        <option>Opiskelija_1</option>
-        <option>Opiskelija_2</option>
-        </select>
-    </div>
+    <form asp-action="Add_enrollment" method="post">
+        <div class="mb-3">
+            <label asp-for="StudentId" class="form-label fw-semibold">Opiskelija</label>
+            <select asp-for="StudentId" class="form-select" asp-items="ViewBag.Students">
+                <option value="">-- Valitse opiskelija --</option>
+            </select>
+            <span asp-validation-for="StudentId" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label for="course" class="from-label fw-semibold">Kurssi jolle kirjaudutaan.</label>
-        <select id="course" class="from-select">
-        <option selected disabled>Valitse kurssi</option>
-        <option>C# kurssi</option>
-        <option>Sienestyskurssi</option>
-        </select>
-    </div>
+        <div class="mb-3">
+            <label asp-for="CourseId" class="form-label fw-semibold">Kurssi</label>
+            <select asp-for="CourseId" class="form-select" asp-items="ViewBag.Courses">
+                <option value="">-- Valitse kurssi --</option>
+            </select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label for="enrollment_start" class="form-label fw-semibold">Kirjautumispäivä.</label>
-        <input type="date" class="form-control" id="enrollment_start">
-    </div>
+        <div class="mb-3">
+            <label asp-for="EnrollmentDate" class="form-label fw-semibold">Ilmoittautumispäivä</label>
+            <input asp-for="EnrollmentDate" type="date" class="form-control" />
+            <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+        </div>
 
-    <div class="mt-4">
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i>Lisää kurssikirjautuminen
-        </button>
-        <a asp-action="index" class="btn btn-secondary ms-2">Peruuta</a>
-    </div>
-</form>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Lisää ilmoittautuminen
+            </button>
+            <a asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+        </div>
+    </form>
 </div>

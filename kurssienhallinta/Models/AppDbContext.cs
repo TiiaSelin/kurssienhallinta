@@ -90,9 +90,6 @@ namespace kurssienhallinta.Models
                     Birthday = DateTime.SpecifyKind(new DateTime(1990, 1, 1), DateTimeKind.Utc),
                     Year = 2
                 }
-
-
-
             );
 
             modelBuilder.Entity<Enrollment>()
