@@ -1,0 +1,22 @@
+@model kurssienhallinta.Models.Teacher
+
+<div class="modal fade" id="deleteModal-@Model.Id" aria-labelledby="deleteModalLabel-@Model.Id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel-@Model.Id">Poista opettaja</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Haluatko varmasti poistaa opettajan @Model.First_name @Model.Last_name?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Peruuta</button>
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger">Poista</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
