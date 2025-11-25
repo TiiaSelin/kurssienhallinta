@@ -46,6 +46,30 @@ public class StudentsController : Controller
         return View(student);
     }
 
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var student = _context.Students.FirstOrDefault(s => s.Id == id);
+        if (student == null)
+            return NotFound();
+
+        return View(student);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Student student)
+    {
+        if (!ModelState.IsValid)
+            return View(student);
+
+        student.Birthday = DateTime.SpecifyKind(student.Birthday, DateTimeKind.Utc);
+
+        _context.Students.Update(student);
+        _context.SaveChanges();
+        return RedirectToAction("List");
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
