@@ -1,0 +1,48 @@
+@model kurssienhallinta.Models.Student
+
+@{
+    ViewData["Title"] = "Muokkaa opiskelijaa";
+}
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Muokkaa opiskelijaa</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Student_code" class="form-label fw-semibold">Opiskelijanumero</label>
+            <input asp-for="Student_code" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+            <section class="col">
+                <label asp-for="F_Name" class="form-label fw-semibold">Opiskelijan etunimi</label>
+                <input asp-for="F_Name" class="form-control" />
+            </section>
+            <section class="col">
+                <label asp-for="L_Name" class="form-label fw-semibold">Opiskelijan sukunimi</label>
+                <input asp-for="L_Name" class="form-control" />
+            </section>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Birthday" class="form-label fw-semibold">Opiskelijan syntymäpäivä</label>
+            <input asp-for="Birthday" type="date" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Year" class="form-label fw-semibold">Opiskelijan vuosikurssi</label>
+            <select asp-for="Year" class="form-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
+            <a asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+        </div>
+    </form>
+</div>
