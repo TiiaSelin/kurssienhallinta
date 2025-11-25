@@ -70,6 +70,22 @@ public class StudentsController : Controller
     }
 
 
+
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+        var student = _context.Students.Find(id);
+
+        if (student == null)
+            return NotFound();
+
+        _context.Students.Remove(student);
+        _context.SaveChanges();
+
+        return RedirectToAction("List");
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
