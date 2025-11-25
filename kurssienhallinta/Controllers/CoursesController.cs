@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using kurssienhallinta.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace kurssienhallinta.Controllers;
 
@@ -18,7 +19,10 @@ public class CoursesController : Controller
 [HttpGet]
 public IActionResult List_courses()
     {
-        var courses = _context.Courses.ToList();
+        var courses = _context.Courses
+        .Include(c => c.Teacher)
+        .Include(c => c.Room)
+        .ToList();
         return View(courses);
     }
 
@@ -49,6 +53,7 @@ public IActionResult Add_course(Course course)
         return View(course);
     }
 
+[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

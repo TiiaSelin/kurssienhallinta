@@ -13,6 +13,18 @@ namespace kurssienhallinta.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Course>()
+          .HasOne(e => e.Teacher)
+          .WithMany()
+          .HasForeignKey(e => e.TeacherId)
+          .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Course>()
+          .HasOne(e => e.Room)
+          .WithMany()
+          .HasForeignKey(e => e.RoomId)
+          .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Course>().HasData(
                 new Course
                 {

@@ -1,0 +1,51 @@
+@model IEnumerable<kurssienhallinta.Models.Course>
+@{
+    ViewData["Title"] = "Kurssit.";
+}
+
+<div class="container mt-5" style="max-width: 700px;">
+<h2 class="mb-4">Kurssit.</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Nimi.
+                </th>
+                <th>
+                    Kuvaus.
+                </th>
+                <th>
+                    Aloituspäivämäärä.
+                </th>
+                <th>
+                    Lopetuspäivämäärä.
+                </th>
+                <th>
+                    Opettaja.
+                </th>
+                <th>
+                    Tila.
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Name</td>
+                <td>@course.Description</td>
+                <td>@course.Day_of_start.ToShortDateString()</td>
+                <td>@course.Day_of_end.ToShortDateString()</td>
+                <td>@course.Teacher.First_name</td>
+                <td>@course.Room.Name</td>
+                <td><a asp-controller="Courses" asp-action="Edit_course" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Muokkaa</a></td>
+                <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=#deleteModal-@course.Id>Poista</button></td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+
