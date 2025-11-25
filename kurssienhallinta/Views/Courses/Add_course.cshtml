@@ -1,3 +1,4 @@
+@model kurssienhallinta.Models.Course
 @{
     ViewData["Title"] = "Lisää kurssi.";
 }
@@ -5,25 +6,25 @@
 <h2 class="mb-4">Lisää uusi kurssi</h2>
 <p>Täytä alla olevat tiedot lisätäksesi uuden kurssin järjestelmään.</p>
 
-<form>
+<form asp-action="Add_course" method = "post"> 
     <div class="mb-3">
-        <label for="courseName" class="form-label fw-semibold">Kurssin nimi</label>
-        <input type="text" class="form-control" id="courseName" rows="3">   
+        <label asp-for = "Name" for="courseName" class="form-label fw-semibold">Kurssin nimi</label>
+        <input asp-for = "Name" type="text" class="form-control" rows="3">   
     </div>
 
     <div class="mb-3">
-        <label for="course_cname" class="form-label fw-semibold">Kurssin tunnus</label>
-        <input type="text" class="form-control" id="course_cname" rows="3">
+        <label asp-for = "Description" class="form-label fw-semibold">Kurssin kuvaus</label>
+        <input asp-for = "Description" type="text" class="form-control" rows="3">
     </div>
 
     <div class="row mb-3">
         <div class="col">
-            <label for="startDate" class="form-label fw-semibold">Aloituspäivämäärä</label>
-            <input type="date" class="form-control" id="startDate">
+            <label asp-for = "Day_of_start" class="form-label fw-semibold">Aloituspäivämäärä</label>
+            <input asp-for = "Day_of_start" type="date" class="form-control">
         </div>
         <div class="col">
-            <label for="endDate" class="form-label fw-semibold">Lopetuspäivämäärä</label>
-            <input type="date" class="form-control" id="endDate">
+            <label asp-for = "Day_of_end" class="form-label fw-semibold">Lopetuspäivämäärä</label>
+            <input asp-for = "Day_of_end" type="date" class="form-control">
         </div>
     </div>
 
@@ -31,8 +32,6 @@
         <label for="teacher" class="form-label fw-semibold">Kurssin opettaja</label>
         <select id="teacher" class="from-select">
         <option selected disabled>Valitse opettaja</option>
-        <option>Jorma</option>
-        <option>Jukka</option>
         </select>
     </div>
 
@@ -40,8 +39,6 @@
         <label for="room" class="from-label fw-semibold">Tila</label>
         <select id="room" class="from-select">
         <option selected disabled>Valitse tila</option>
-        <option>Luokka 111</option>
-        <option>Luokka 222</option>
         </select>
     </div>
 
