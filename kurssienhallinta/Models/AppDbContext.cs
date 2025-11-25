@@ -16,13 +16,13 @@ namespace kurssienhallinta.Models
             modelBuilder.Entity<Course>()
           .HasOne(e => e.Teacher)
           .WithMany()
-          .HasForeignKey(e => e.Teacher)
+          .HasForeignKey(e => e.TeacherId)
           .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Room>()
-          .HasOne(e => e.Room_code)
+            modelBuilder.Entity<Course>()
+          .HasOne(e => e.Room)
           .WithMany()
-          .HasForeignKey(e => e.Room_code)
+          .HasForeignKey(e => e.RoomId)
           .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Course>().HasData(
