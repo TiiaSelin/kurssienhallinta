@@ -34,7 +34,9 @@ namespace kurssienhallinta.Models
                     Name = "C# kurssi.",
                     Description = "Näe terävästi ja opettele hianoo kieltä.",
                     Day_of_start = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
-                    Day_of_end = DateTime.SpecifyKind(new DateTime(2025, 2, 1), DateTimeKind.Utc)
+                    Day_of_end = DateTime.SpecifyKind(new DateTime(2025, 2, 1), DateTimeKind.Utc),
+                    TeacherId = 1,
+                    RoomId = 1
                 },
 
                 new Course
@@ -43,7 +45,9 @@ namespace kurssienhallinta.Models
                     Name = "Sienestyskurssi",
                     Description = "Opetellaan tunnistamaan sieniä, syömään sieniä, arvostamaan sieniä, rihmastoitumaan.",
                     Day_of_start = DateTime.SpecifyKind(new DateTime(1900, 1, 1), DateTimeKind.Utc),
-                    Day_of_end = DateTime.SpecifyKind(new DateTime(9001, 1, 1), DateTimeKind.Utc)
+                    Day_of_end = DateTime.SpecifyKind(new DateTime(9001, 1, 1), DateTimeKind.Utc),
+                    TeacherId = 1,
+                    RoomId = 1
                 }
             );
             modelBuilder.Entity<Room>().HasData(
@@ -119,7 +123,7 @@ namespace kurssienhallinta.Models
             modelBuilder.Entity<Enrollment>()
           .Property(e => e.EnrollmentDate)
           .HasColumnType("timestamp without time zone");
-          
+
 
             modelBuilder.Entity<Enrollment>().HasData(
           new Enrollment
@@ -137,7 +141,7 @@ namespace kurssienhallinta.Models
               EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 10), DateTimeKind.Utc)
           }
       );
-      
+
         }
 
     }
