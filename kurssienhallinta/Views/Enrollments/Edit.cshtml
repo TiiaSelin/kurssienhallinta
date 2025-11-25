@@ -12,17 +12,18 @@
 
         <div class="row mb-3">
             <section class="col">
-                <label class="form-label fw-semibold">Opiskelija</label>
-                <input type="text" class="form-control" 
-                    value="@Model.Student.F_Name @Model.Student.L_Name" disabled />
+                <select asp-for="StudentId" class="form-select" asp-items="ViewBag.Students">
+                    <option value="">-- Valitse opiskelija --</option>
+                </select>
             </section>
         </div>
 
         <div class="row mb-3">
             <section class="col">
                 <label class="form-label fw-semibold">Kurssi</label>
-                <input type="text" class="form-control" 
-                    value="@Model.Course.Name" disabled />
+                <select asp-for="CourseId" class="form-select" asp-items="ViewBag.Courses">
+                    <option value="">-- Valitse kurssi --</option>
+                </select>
             </section>
         </div>
 

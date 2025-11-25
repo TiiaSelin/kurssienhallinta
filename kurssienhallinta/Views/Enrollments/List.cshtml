@@ -6,7 +6,7 @@
 
 <div class="container mt-5">
     <h2 class="mb-4">Ilmoittautumiset</h2>
-    
+
     <a asp-action="Add_enrollment" class="btn btn-primary mb-3">
         <i class="bi bi-plus-circle"></i> Lisää uusi ilmoittautuminen
     </a>
@@ -31,10 +31,18 @@
                     <td>@enrollment.Course.Name</td>
                     <td>@enrollment.EnrollmentDate.ToShortDateString()</td>
                     <td>
-                    <a asp-action="Edit" asp-route-id="@enrollment.Id" class="btn btn-sm btn-primary">Muokkaa</a>
-                    <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
-                        data-bs-target="#deleteModal-@enrollment.Id">Poista kurssilta</button>
-                </td>
+
+                        <a asp-action="Edit" asp-route-id="@enrollment.Id" class="btn btn-sm btn-primary">Muokkaa</a>
+
+                        <form asp-action="Delete_enrollment" asp-controller="Enrollments" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@enrollment.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Oletko varma, että haluat poistaa opiskelijan @enrollment.Student.F_Name @enrollment.Student.L_Name (@enrollment.StudentId) kurssilta @enrollment.CourseId – @enrollment.Course.Name ?');">
+                                Poista kurssilta
+                            </button>
+                        </form>
+
+                    </td>
                 </tr>
             }
         </tbody>

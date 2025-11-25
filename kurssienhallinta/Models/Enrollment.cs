@@ -17,6 +17,9 @@ namespace kurssienhallinta.Models
         [Required]
         public DateTime EnrollmentDate { get; set; }
 
+        // Kurssi-ilmoittautumisiin tarvitaan kaksi tietoa muista tauluista: 
+        // StudentId (students) ja CourseId (courses)
+        
         [ForeignKey("StudentId")]
         [ValidateNever]
         public Student Student { get; set; } = null!;

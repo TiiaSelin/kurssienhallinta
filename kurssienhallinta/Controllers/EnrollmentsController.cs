@@ -49,10 +49,7 @@ namespace kurssienhallinta.Controllers
 
             if (ModelState.IsValid)
             {
-                enrollment.EnrollmentDate = DateTime.SpecifyKind(
-                    enrollment.EnrollmentDate,
-                    DateTimeKind.Unspecified
-                );
+                enrollment.EnrollmentDate = DateTime.Now; // Tämän kanssa ei tarvitse erikseen laittaa formissa ilmoittautumispäivämäärää
                 _context.Enrollments.Add(enrollment);
                 _context.SaveChanges();
                 return RedirectToAction("List");
@@ -77,9 +74,12 @@ namespace kurssienhallinta.Controllers
                 return NotFound();
             }
 
+            // Populate dropdown lists for the form
+            ViewBag.Students = new SelectList(_context.Students.ToList(), "Id", "Student_code");
+            ViewBag.Courses = new SelectList(_context.Courses.ToList(), "Id", "Name");
+
             return View(enrollment);
         }
-
 
         [HttpPost]
         public IActionResult Edit(Enrollment enrollment)
@@ -92,6 +92,22 @@ namespace kurssienhallinta.Controllers
             }
 
             return View(enrollment);
+        }
+
+        // ==== DELETE ====
+
+        [HttpPost]
+        public IActionResult Delete_enrollment(int id, bool confirm = false)
+        {
+            var selected_enrollment = _context.Enrollments.FirstOrDefault(enrollment => enrollment.Id == id);
+
+            if (selected_enrollment == null)
+            {
+                return NotFound();
+            }
+            _context.Enrollments.Remove(selected_enrollment);
+            _context.SaveChanges();
+            return RedirectToAction("List");
         }
     }
 }
