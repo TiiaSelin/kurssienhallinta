@@ -25,6 +25,9 @@
                 <td>@student.Student_code</td>
                 <td>@student.Birthday.ToShortDateString()</td>
                 <td>@student.Year</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-primary">Muokkaa</a>
+                </td>
             </tr>
         }
     </tbody>
