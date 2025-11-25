@@ -1,6 +1,31 @@
-@{
-    ViewData["Title"] = "Opiskelijat.";
-}
-<h1>@ViewData["Title"]</h1>
+@model IEnumerable<kurssienhallinta.Models.Student>
 
-<p>Tänne opiskelijat.</p>
+@{
+    ViewData["Title"] = "Opiskelijat";
+}
+
+<h2>Opiskelijat</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Etunimi</th>
+            <th>Sukunimi</th>
+            <th>Opiskelijanumero</th>
+            <th>Syntymäpäivä</th>
+            <th>Vuosikurssi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.F_Name</td>
+                <td>@student.L_Name</td>
+                <td>@student.Student_code</td>
+                <td>@student.Birthday.ToShortDateString()</td>
+                <td>@student.Year</td>
+            </tr>
+        }
+    </tbody>
+</table>
