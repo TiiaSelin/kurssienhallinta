@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace kurssienhallinta.Models
 {
@@ -9,5 +11,14 @@ namespace kurssienhallinta.Models
         public string Description { get; set; }
         public DateTime Day_of_start { get; set; }
         public DateTime Day_of_end { get; set; }
+        
+        [ForeignKey("TeacherId")]
+        [ValidateNever]
+        public Teacher Teacher { get; set; }
+
+        [ForeignKey("RoomId")]
+        [ValidateNever]
+        public Room Room { get; set; }
+
     }
 }
