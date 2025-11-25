@@ -33,14 +33,9 @@
                     <td>
 
                         <a asp-action="Edit" asp-route-id="@enrollment.Id" class="btn btn-sm btn-primary">Muokkaa</a>
-
-                        <form asp-action="Delete_enrollment" asp-controller="Enrollments" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@enrollment.Id" />
-                            <button type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('Oletko varma, että haluat poistaa opiskelijan @enrollment.Student.F_Name @enrollment.Student.L_Name (@enrollment.StudentId) kurssilta @enrollment.CourseId – @enrollment.Course.Name ?');">
-                                Poista kurssilta
-                            </button>
-                        </form>
+                    <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal-@enrollment.Id">Poista</button></td>
+                    <partial name="Delete_enrollment_modal" model="enrollment" />
 
                     </td>
                 </tr>
