@@ -12,6 +12,11 @@ namespace kurssienhallinta.Models
         public string Last_name { get; set; } = null!;
         [Required]
         public string Subject { get; set; } = null!;
+
+        public string FullName 
+        {
+            get { return Teacher_code + ", " + First_name + " " + Last_name; }
+        }
     }
 
 }
