@@ -19,13 +19,13 @@
                 <th>Opiskelijan nimi</th>
                 <th>Kurssin nimi</th>
                 <th>Ilmoittautumispäivä</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var enrollment in Model)
             {
                 <tr>
-                    <td>@enrollment.Id</td>
                     <td>@enrollment.Student.Student_code</td>
                     <td>@enrollment.Student.F_Name @enrollment.Student.L_Name</td>
                     <td>@enrollment.Course.Name</td>

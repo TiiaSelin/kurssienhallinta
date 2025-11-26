@@ -34,7 +34,13 @@ namespace kurssienhallinta.Controllers
         public IActionResult Add_enrollment()
         {
             // Populate dropdown lists for the form
-            ViewBag.Students = new SelectList(_context.Students.ToList(), "Id", "Student_code");
+            ViewBag.Students = new SelectList(
+            _context.Students
+            .Select(student => new
+        {
+            Id = student.Id,
+            FullName = $"{student.Student_code}, {student.F_Name} {student.L_Name}"
+        }).ToList(), "Id", "FullName");
             ViewBag.Courses = new SelectList(_context.Courses.ToList(), "Id", "Name");
 
             return View();
