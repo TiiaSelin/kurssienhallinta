@@ -17,7 +17,7 @@ namespace kurssienhallinta.Models
         public int TeacherId { get; set; }
 
         [Required]
-        public int RoomId { get; set; }
+        public int? RoomId { get; set; }
 
 
         [ForeignKey("TeacherId")]
