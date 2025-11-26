@@ -16,7 +16,14 @@ namespace kurssienhallinta.Models
         [Required]
         public string Subject { get; set; } = null!;
 
+        public string FullName
+        {
+            get { return Teacher_code + ", " + First_name + " " + Last_name; }
+        }
+
         // Navigation property - one teacher can have many courses
+
+        [ValidateNever]
         public ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

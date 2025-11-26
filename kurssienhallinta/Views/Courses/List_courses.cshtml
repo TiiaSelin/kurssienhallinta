@@ -3,7 +3,7 @@
     ViewData["Title"] = "Kurssit.";
 }
 
-<div class="container mt-5" style="max-width: 700px;">
+<div class="container mt-5" style="max-width: 1300px;">
 <h2 class="mb-4">Kurssit.</h2>
 
     <table class="table table-striped">
@@ -39,12 +39,12 @@
                 <td>@course.Description</td>
                 <td>@course.Day_of_start.ToShortDateString()</td>
                 <td>@course.Day_of_end.ToShortDateString()</td>
-                <td>@course.Teacher.First_name</td>
+                <td>@course.Teacher.FullName</td>
                 <td>@course.Room.Name</td>
                 <td><a asp-controller="Courses" asp-action="Edit_course" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Muokkaa</a></td>
-                <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=#deleteModal-@course.Id>Poista</button></td>
+                <td><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@course.Id">Poista</button></td>
             </tr>
-
+            <partial name="Delete_course_modal" model="course" />
             }
         </tbody>
     </table>
