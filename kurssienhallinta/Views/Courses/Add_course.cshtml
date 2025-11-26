@@ -29,16 +29,16 @@
     </div>
 
     <div class="mb-3">
-        <label for="teacher" class="form-label fw-semibold">Kurssin opettaja</label>
-        <select id="teacher" class="from-select">
-        <option selected disabled>Valitse opettaja</option>
+        <label asp-for="TeacherId" class="form-label fw-semibold">Kurssin opettaja</label>
+        <select asp-for = "TeacherId" asp-items = "ViewBag.Teachers" class="form-select">
+        <option value = "" selected disabled>Valitse opettaja</option>
         </select>
     </div>
 
     <div class="mb-3">
-        <label for="room" class="from-label fw-semibold">Tila</label>
-        <select id="room" class="from-select">
-        <option selected disabled>Valitse tila</option>
+        <label asp-for = "RoomId" class="from-label fw-semibold">Tila</label>
+        <select asp-for = "RoomId" asp-items = "ViewBag.Rooms" class="form-select">
+        <option value = "" selected disabled>Valitse tila</option>
         </select>
     </div>
 
