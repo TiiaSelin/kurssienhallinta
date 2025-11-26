@@ -30,14 +30,14 @@ public IActionResult List_courses()
     [HttpGet]
     public IActionResult Add_course()
     {
-        ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "First_name");
+        ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "FullName");
         ViewBag.Rooms = new SelectList(_context.Rooms, "Id", "Name");
 
         return View();
     }
-    
-[HttpPost]
-public IActionResult Add_course(Course course)
+
+    [HttpPost]
+    public IActionResult Add_course(Course course)
     {
         if (ModelState.IsValid)
         {
@@ -55,10 +55,64 @@ public IActionResult Add_course(Course course)
             return RedirectToAction("List_courses");
         }
 
-        ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "First_name");
+        ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "FullName");
         ViewBag.Rooms = new SelectList(_context.Rooms, "Id", "Name");
 
         return View(course);
+    }
+    
+     [HttpGet]
+    public IActionResult Edit_course(int id)
+    {
+        var selected_course = _context.Courses.FirstOrDefault(course => course.Id == id);
+
+        if (selected_course == null)
+        {
+            return NotFound();
+        }
+
+        ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "FullName");
+        ViewBag.Rooms = new SelectList(_context.Rooms, "Id", "Name");
+
+        return View(selected_course);
+    }
+    [HttpPost]
+    public IActionResult Edit_course(Course course)
+    {
+
+        course.Day_of_start = DateTime.SpecifyKind(
+            course.Day_of_start,
+            DateTimeKind.Utc
+            );
+        course.Day_of_end = DateTime.SpecifyKind(
+            course.Day_of_end,
+            DateTimeKind.Utc
+            );
+
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "FullName");
+            ViewBag.Rooms = new SelectList(_context.Rooms, "Id", "Name");
+            return View(course);
+        }
+
+        _context.Courses.Update(course);
+        _context.SaveChanges();
+        return RedirectToAction("List_courses");
+    }
+
+    [HttpPost]
+    public IActionResult Delete_course(int id, bool confirm = false)
+    {
+
+        var course = _context.Courses.FirstOrDefault(c => c.Id == id);
+        if (course == null)
+        {
+            return NotFound();
+        }
+        _context.Courses.Remove(course);
+        _context.SaveChanges();
+        return RedirectToAction("List_courses");
     }
 
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
