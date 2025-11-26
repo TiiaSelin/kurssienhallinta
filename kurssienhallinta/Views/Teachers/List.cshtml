@@ -22,9 +22,12 @@
                 <td>@teacher.Subject</td>
                 <td>@teacher.Teacher_code</td>
                 <td>
+                
+                    <a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-sm btn-secondary">Tiedot</a>
                     <a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">Muokkaa</a>
                     <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
                         data-bs-target="#deleteModal-@teacher.Id">Poista</button>
+
                 </td>
             </tr>
             <partial name="Delete_teacher_modal" model="teacher" />
