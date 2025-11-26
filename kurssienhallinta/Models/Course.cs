@@ -12,11 +12,7 @@ namespace kurssienhallinta.Models
         public string Description { get; set; }
         public DateTime Day_of_start { get; set; }
         public DateTime Day_of_end { get; set; }
-        
-        [Required]
-        public int? TeacherId { get; set; }
-
-        [Required]
+        public int? TeacherId { get; set; }  
         public int? RoomId { get; set; }
 
 
