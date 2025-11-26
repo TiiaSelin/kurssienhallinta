@@ -3,7 +3,7 @@ using kurssienhallinta.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 
-public class ControllersTest
+public class HomeControllersTest
 {
     [Fact]
     public void HomeControllerTest()
