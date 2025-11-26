@@ -1,6 +1,52 @@
-@{
-    ViewData["Title"] = "Kurssikirjautumiset.";
-}
-<h1>@ViewData["Title"]</h1>
+@model IEnumerable<kurssienhallinta.Models.Enrollment>
 
-<p>Tänne kurssikirjautumiset.</p>
+@{
+    ViewData["Title"] = "Ilmoittautumiset";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Ilmoittautumiset</h2>
+
+    <a asp-action="Add_enrollment" class="btn btn-primary mb-3">
+        <i class="bi bi-plus-circle"></i> Lisää uusi ilmoittautuminen
+    </a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Opiskelijan tunnus</th>
+                <th>Opiskelijan nimi</th>
+                <th>Kurssin nimi</th>
+                <th>Ilmoittautumispäivä</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model)
+            {
+                <tr>
+                    <td>@enrollment.Student.Student_code</td>
+                    <td>@enrollment.Student.F_Name @enrollment.Student.L_Name</td>
+                    <td>@enrollment.Course.Name</td>
+                    <td>@enrollment.EnrollmentDate.ToShortDateString()</td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@enrollment.Id" class="btn btn-sm btn-primary">
+                            Muokkaa
+                        </a>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal-@enrollment.Id">
+                            Poista kurssilta
+                        </button>
+
+                        <partial name="Delete_enrollment_modal" model="enrollment" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
