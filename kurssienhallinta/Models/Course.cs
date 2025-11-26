@@ -14,7 +14,7 @@ namespace kurssienhallinta.Models
         public DateTime Day_of_end { get; set; }
         
         [Required]
-        public int TeacherId { get; set; }
+        public int? TeacherId { get; set; }
 
         [Required]
         public int? RoomId { get; set; }
@@ -22,11 +22,11 @@ namespace kurssienhallinta.Models
 
         [ForeignKey("TeacherId")]
         [ValidateNever]
-        public Teacher Teacher { get; set; }
+        public Teacher? Teacher { get; set; }
 
         [ForeignKey("RoomId")]
         [ValidateNever]
-        public Room Room { get; set; }
+        public Room? Room { get; set; }
 
     }
 }
