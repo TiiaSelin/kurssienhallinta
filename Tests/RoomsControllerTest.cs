@@ -122,4 +122,26 @@ public class RoomsControllersTest
         Assert.Equal(50, room_in_db.Capacity);
         Assert.Equal("ty_0", room_in_db.Room_code);
     }
+    [Fact]
+    public void Test_Delete_room()
+    {
+        var context = DbContextFactory.CreateInMemoryDbContext();
+        var logger = NullLogger<RoomsController>.Instance;
+        var controller = new RoomsController(context, logger);
+
+        context.Rooms.Add(new Room{Id = 1, Name = "Poistettava tila.", Capacity = 0, Room_code = "pt_0"});
+        context.Rooms.Add(new Room{Id = 2, Name = "Rusty Bucket Bay", Capacity = 40, Room_code = "rb_0"});
+        context.Rooms.Add(new Room{Id = 3, Name = "Ananaskissa's medieval castle", Capacity = 300, Room_code = "am_0"});
+        context.Rooms.Add(new Room{Id = 4, Name = "Velukotivirta's glade of harmony", Capacity = 20, Room_code = "vg_0"});
+        context.Rooms.Add(new Room{Id = 5, Name = "Emetsuz's BMW garage", Capacity = 5, Room_code = "eb_0"});
+        context.SaveChanges();
+
+        var result = controller.Delete_room(1, confirm: true);
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("List_rooms", redirect.ActionName);
+
+        Assert.Equal(4, context.Rooms.Count());
+        var room_in_db = context.Rooms.First(room => room.Id == 2);
+        Assert.Equal("Rusty Bucket Bay", room_in_db.Name);
+    }
 }
