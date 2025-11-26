@@ -27,8 +27,21 @@
                 <td>@student.Year</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-primary">Muokkaa</a>
+                    <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
+                        data-bs-target="#deleteStudentModal-@student.Id">Poista</button>
                 </td>
             </tr>
+            <partial name="Delete_student_modal" model="student" />
         }
     </tbody>
 </table>
+
+<style>
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .modal-footer {
+        border-top: none;
+    }
+</style>
