@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using kurssienhallinta.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace kurssienhallinta.Controllers;
 
@@ -26,13 +27,16 @@ public IActionResult List_courses()
         return View(courses);
     }
 
-[HttpGet]
-public IActionResult Add_course()
+    [HttpGet]
+    public IActionResult Add_course()
     {
+        ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "First_name");
+        ViewBag.Rooms = new SelectList(_context.Rooms, "Id", "Name");
+
         return View();
     }
+    
 [HttpPost]
-
 public IActionResult Add_course(Course course)
     {
         if (ModelState.IsValid)
@@ -50,6 +54,10 @@ public IActionResult Add_course(Course course)
             _context.SaveChanges();
             return RedirectToAction("List_courses");
         }
+
+        ViewBag.Teachers = new SelectList(_context.Teachers, "Id", "First_name");
+        ViewBag.Rooms = new SelectList(_context.Rooms, "Id", "Name");
+
         return View(course);
     }
 
