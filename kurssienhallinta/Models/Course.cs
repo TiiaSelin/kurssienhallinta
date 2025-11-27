@@ -25,6 +25,8 @@ namespace kurssienhallinta.Models
         public Room? Room { get; set; }
         [ValidateNever]
         public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        public ICollection<CourseSession> Sessions {get; set;} = new List<CourseSession>();
+
     }
 
 }
