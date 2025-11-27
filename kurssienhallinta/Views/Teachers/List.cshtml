@@ -1,9 +1,9 @@
-@{
-    ViewData["Title"] = "Opettajat.";
-}
-<h1>@ViewData["Title"]</h1>
 
-<table class="table">
+
+<div class="container mt-5" style="max-width: 100rem;">
+<h2 class="mb-4">Opettajat</h2>
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Etunimi</th>
@@ -11,6 +11,8 @@
             <th>Aine</th>
             <th>Tunnus</th>
             <th>Toiminnot</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -21,20 +23,17 @@
                 <td>@teacher.Last_name</td>
                 <td>@teacher.Subject</td>
                 <td>@teacher.Teacher_code</td>
-                <td>
-                
-                    <a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-sm btn-secondary">Tiedot</a>
-                    <a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">Muokkaa</a>
-                    <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
-                        data-bs-target="#deleteModal-@teacher.Id">Poista</button>
-
-                </td>
+                <td><a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-sm btn-success">Tiedot</a></td>
+                <td><a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">Muokkaa</a></td>
+                <td><button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal-@teacher.Id">Poista</button></td>
             </tr>
             <partial name="Delete_teacher_modal" model="teacher" />
 
         }
     </tbody>
 </table>
+
 
 
 <style>
