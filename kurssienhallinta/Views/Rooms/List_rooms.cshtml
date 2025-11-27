@@ -17,9 +17,7 @@
             <th>
                 Tunnus.
             </th>
-            <th></th>
             <th>Toiminnot.</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -29,9 +27,10 @@
             <td>@room.Name</td>
             <td>@room.Capacity</td>
             <td>@room.Room_code</td>
-            <td><a asp-controller="Rooms" asp-action="Room_details" asp-route-id="@room.Id" class="btn btn-success btn-sm">Tiedot.</a></td>
-            <td><a asp-controller="Rooms" asp-action="Edit_room" asp-route-id="@room.Id" class="btn btn-primary btn-sm">Muokkaa</a></td>
-            <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@room.Id">Poista</button></td>
+            <td><a asp-controller="Rooms" asp-action="Room_details" asp-route-id="@room.Id" class="btn btn-success btn-sm">Tiedot.</a>
+            <a asp-controller="Rooms" asp-action="Edit_room" asp-route-id="@room.Id" class="btn btn-primary btn-sm">Muokkaa</a>
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@room.Id">Poista</button>
+            </td>
         </tr>
         <partial name="Delete_room_modal" model="room" />
     }

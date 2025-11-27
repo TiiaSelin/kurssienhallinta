@@ -24,9 +24,9 @@ namespace kurssienhallinta.Models
 
             modelBuilder.Entity<Course>()
             .HasOne(course => course.Room)
-            .WithMany()
+            .WithMany(c => c.Courses)
             .HasForeignKey(course => course.RoomId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Enrollment>()
             .HasOne(e => e.Student)
@@ -36,7 +36,7 @@ namespace kurssienhallinta.Models
 
             modelBuilder.Entity<Enrollment>()
             .HasOne(e => e.Course)
-            .WithMany()
+            .WithMany(c => c.Enrollments)
             .HasForeignKey(e => e.CourseId)
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -127,23 +127,6 @@ namespace kurssienhallinta.Models
                     Year = 2
                 }
             );
-
-            modelBuilder.Entity<Enrollment>()
-          .HasOne(e => e.Student)
-          .WithMany()
-          .HasForeignKey(e => e.StudentId)
-          .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Enrollment>()
-          .HasOne(e => e.Course)
-          .WithMany()
-          .HasForeignKey(e => e.CourseId)
-          .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Enrollment>()
-          .Property(e => e.EnrollmentDate)
-          .HasColumnType("timestamp without time zone");
-
 
             modelBuilder.Entity<Enrollment>().HasData(
             new Enrollment
