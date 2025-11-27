@@ -1,47 +1,44 @@
-
-
 <div class="container mt-5" style="max-width: 100rem;">
-<h2 class="mb-4">Opettajat</h2>
+    <h2 class="mb-4">Opettajat</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Etunimi</th>
-            <th>Sukunimi</th>
-            <th>Aine</th>
-            <th>Tunnus</th>
-            <th>Toiminnot</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var teacher in Model)
-        {
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@teacher.First_name</td>
-                <td>@teacher.Last_name</td>
-                <td>@teacher.Subject</td>
-                <td>@teacher.Teacher_code</td>
-                <td><a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-sm btn-success">Tiedot</a></td>
-                <td><a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">Muokkaa</a></td>
-                <td><button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
-                        data-bs-target="#deleteModal-@teacher.Id">Poista</button></td>
+                <th>Etunimi</th>
+                <th>Sukunimi</th>
+                <th>Aine</th>
+                <th>Tunnus</th>
+                <th>Toiminnot</th>
             </tr>
-            <partial name="Delete_teacher_modal" model="teacher" />
+        </thead>
+        <tbody>
+            @foreach (var teacher in Model)
+            {
+                <tr>
+                    <td>@teacher.First_name</td>
+                    <td>@teacher.Last_name</td>
+                    <td>@teacher.Subject</td>
+                    <td>@teacher.Teacher_code</td>
+                    <td><a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-sm btn-success">Tiedot</a>
+                        <a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">Muokkaa</a>
+                        <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal-@teacher.Id">Poista</button>
+                    </td>
+                </tr>
+                <partial name="Delete_teacher_modal" model="teacher" />
 
+            }
+        </tbody>
+    </table>
+
+
+
+    <style>
+        .modal-header {
+            border-bottom: none;
         }
-    </tbody>
-</table>
 
-
-
-<style>
-    .modal-header {
-        border-bottom: none;
-    }
-
-    .modal-footer {
-        border-top: none;
-    }
-</style>
+        .modal-footer {
+            border-top: none;
+        }
+    </style>
