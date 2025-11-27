@@ -101,6 +101,24 @@ public IActionResult List_courses()
         return RedirectToAction("List_courses");
     }
 
+    [HttpGet]
+    public IActionResult Details_course(int id)
+    {
+        var course = _context.Courses
+            .Include(c => c.Teacher)
+            .Include(c => c.Room)
+            .Include(c => c.Enrollments)
+                .ThenInclude(e => e.Student)
+            .FirstOrDefault(c => c.Id == id);
+
+        if (course == null)
+        {
+            return NotFound();
+        }
+
+        return View(course);
+    }
+
     [HttpPost]
     public IActionResult Delete_course(int id, bool confirm = false)
     {

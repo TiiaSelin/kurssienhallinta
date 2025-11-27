@@ -28,6 +28,7 @@
                     Tila.
                 </th>
                 <th></th>
+                <th>Toiminnot</th>
                 <th></th>
             </tr>
         </thead>
@@ -41,6 +42,7 @@
                 <td>@course.Day_of_end.ToShortDateString()</td>
                 <td>@(course.Teacher?.FullName ?? "Ei opettajaa")</td>
                 <td>@(course.Room?.Name ?? "Ei tilaa")</td>
+                <td><a asp-action="Details_course" asp-route-id="@course.Id" class="btn btn-sm btn-success">Tiedot</a></td>
                 <td><a asp-controller="Courses" asp-action="Edit_course" asp-route-id="@course.Id" class="btn btn-primary btn-sm">Muokkaa</a></td>
                 <td><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@course.Id">Poista</button></td>
             </tr>

@@ -19,6 +19,7 @@
             </th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
             <td>@room.Name</td>
             <td>@room.Capacity</td>
             <td>@room.Room_code</td>
+            <td></td>
             <td><a asp-controller="Rooms" asp-action="Edit_room" asp-route-id="@room.Id" class="btn btn-primary btn-sm">Muokkaa</a></td>
             <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@room.Id">Poista</button></td>
         </tr>
