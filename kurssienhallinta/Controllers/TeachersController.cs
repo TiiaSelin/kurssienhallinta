@@ -74,40 +74,49 @@ public class TeachersController : Controller
     }
 
     // ==== DETAILS ====
-
     [HttpGet]
     public IActionResult Details(int id)
     {
         var teacher = _context.Teachers
-            .Include(teacher => teacher.Courses)  // Load related courses
-                 .ThenInclude(course => course.Room)  // Load rooms through courses
-            .FirstOrDefault(teacher => teacher.Id == id);
+            .Include(t => t.Courses)
+                .ThenInclude(c => c.Room)
+            .FirstOrDefault(t => t.Id == id);
 
         if (teacher == null)
             return NotFound();
 
-        var courseItems = teacher.Courses
+        // Get course IDs taught by the teacher
+        var courseIds = teacher.Courses.Select(c => c.Id).ToList();
 
-       .Select(course => new ScheduleItem
-       {
-           Id = course.Id,
-           Name = course.Name,
-           Description = course.Description,
-           Day_of_start = course.Day_of_start,
-           Day_of_end = course.Day_of_end,
-           TeacherId = course.TeacherId,
-           RoomId = course.RoomId,
-           Start_time = course.Start_time,
-           End_time = course.End_time
-       })
-       .ToList();
+        // Load all CourseSessions for this teacher
+        var sessions = _context.CourseSessions
+            .Include(cs => cs.Course)
+            .Where(cs => courseIds.Contains(cs.CourseId))
+            .ToList();
 
-        var weeklySchedule = courseItems
-        .GroupBy(course => course.Day_of_start.DayOfWeek.ToString())
-        .ToDictionary(
-            group => group.Key,
-            group => group.OrderBy(course => course.Start_time).ToList()
-        );
+        // Convert to ScheduleItem list
+        var scheduleItems = sessions.Select(cs => new ScheduleItem
+        {
+            Id = cs.CourseId,
+            Name = cs.Course.Name,
+            Description = cs.Course.Description,
+            Day_of_start = cs.Course.Day_of_start,
+            Day_of_end = cs.Course.Day_of_end,
+            TeacherId = cs.Course.TeacherId,
+            RoomId = cs.Course.RoomId,
+            Start_time = cs.Time_of_Start,
+            End_time = cs.Time_of_End
+        }).ToList();
+
+        // Build weekly schedule dictionary grouped by weekday
+        var weeklySchedule = scheduleItems
+            .GroupBy(si => si.Weekday = sessions
+                .First(s => s.CourseId == si.Id && s.Time_of_Start == si.Start_time)
+                .Weekday)
+            .ToDictionary(
+                g => g.Key,
+                g => g.OrderBy(si => si.Start_time).ToList()
+            );
 
         var viewModel = new TeacherScheduleViewModel
         {
