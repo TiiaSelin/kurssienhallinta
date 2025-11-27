@@ -118,6 +118,39 @@ public IActionResult List_courses()
 
         return View(course);
     }
+    [HttpGet]
+    public IActionResult Add_session(int id)
+    {
+        var selected_course = _context.Courses
+        .Include(c => c.Teacher)
+        .FirstOrDefault(course => course.Id == id);
+
+        if (selected_course == null)
+        {
+            return NotFound();
+        }
+        var session = new CourseSession
+        {
+            CourseId = selected_course.Id
+        };
+
+        ViewBag.CourseName = selected_course.Name;
+        ViewBag.TeacherName = selected_course.Teacher?.FullName ?? "Ei opettajaa";
+
+        return View(session);
+    }
+    [HttpPost]
+    public IActionResult Add_session(CourseSession coursesession)
+    {
+
+        if (ModelState.IsValid)
+        {
+            _context.CourseSessions.Add(coursesession);
+            _context.SaveChanges();
+            return RedirectToAction("List_courses");
+        }
+        return View(coursesession);
+    }
 
     [HttpPost]
     public IActionResult Delete_course(int id, bool confirm = false)

@@ -12,6 +12,7 @@ namespace kurssienhallinta.Models
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<CourseSession> CourseSessions {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +44,12 @@ namespace kurssienhallinta.Models
             modelBuilder.Entity<Enrollment>()
             .Property(e => e.EnrollmentDate)
             .HasColumnType("timestamp without time zone");
+
+            modelBuilder.Entity<CourseSession>()
+            .HasOne(c => c.Course)
+            .WithMany(s => s.Sessions)
+            .HasForeignKey(c => c.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Course>().HasData(
                 new Course

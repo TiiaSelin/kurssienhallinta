@@ -12,6 +12,8 @@
     <p><strong>Huone:</strong> @(Model.Room?.Name ?? "Tietoja ei saatavilla")</p>
 </div>
 
+<a asp-controller="Courses" asp-action="Add_session" asp-route-id="@Model.Id" class="btn btn-primary btn-sm">Lisää sessio.</a>
+
 <h3 class="mb-3">Oppilaat</h3>
 
 @if (Model.Enrollments.Any())
