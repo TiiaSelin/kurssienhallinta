@@ -15,17 +15,34 @@ namespace kurssienhallinta.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Course>()
-          .HasOne(t => t.Teacher)
-          .WithMany()
-          .HasForeignKey(t => t.TeacherId)
-          .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(course => course.Teacher)
+            .WithMany(teacher => teacher.Courses)
+            .HasForeignKey(course => course.TeacherId)
+            .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Course>()
-          .HasOne(r => r.Room)
-          .WithMany(c => c.Courses)
-          .HasForeignKey(r => r.RoomId)
-          .OnDelete(DeleteBehavior.SetNull);
+            .HasOne(course => course.Room)
+            .WithMany()
+            .HasForeignKey(course => course.RoomId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrollment>()
+            .HasOne(e => e.Student)
+            .WithMany()
+            .HasForeignKey(e => e.StudentId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrollment>()
+            .HasOne(e => e.Course)
+            .WithMany()
+            .HasForeignKey(e => e.CourseId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrollment>()
+            .Property(e => e.EnrollmentDate)
+            .HasColumnType("timestamp without time zone");
 
             modelBuilder.Entity<Course>().HasData(
                 new Course
@@ -50,6 +67,27 @@ namespace kurssienhallinta.Models
                     RoomId = 1
                 }
             );
+
+            modelBuilder.Entity<Teacher>().HasData(
+               new Teacher
+               {
+                   Id = 1,
+                   Teacher_code = "A10",
+                   First_name = "Ville",
+                   Last_name = "Virtanen",
+                   Subject = "Matematiikka"
+               },
+               new Teacher
+               {
+                   Id = 2,
+                   Teacher_code = "B10",
+                   First_name = "Anna",
+                   Last_name = "Korhonen",
+                   Subject = "Web-ohjelmointi"
+               }
+
+           );
+
             modelBuilder.Entity<Room>().HasData(
                 new Room
                 {
@@ -67,25 +105,7 @@ namespace kurssienhallinta.Models
                 }
             );
 
-            modelBuilder.Entity<Teacher>().HasData(
-                new Teacher
-                {
-                    Id = 1,
-                    Teacher_code = "A10",
-                    First_name = "Ville",
-                    Last_name = "Virtanen",
-                    Subject = "Matematiikka"
-                },
-                new Teacher
-                {
-                    Id = 2,
-                    Teacher_code = "B10",
-                    First_name = "Anna",
-                    Last_name = "Korhonen",
-                    Subject = "Web-ohjelmointi"
-                }
 
-            );
 
             modelBuilder.Entity<Student>().HasData(
                 new Student
@@ -116,7 +136,7 @@ namespace kurssienhallinta.Models
 
             modelBuilder.Entity<Enrollment>()
           .HasOne(e => e.Course)
-          .WithMany(c => c.Enrollments)
+          .WithMany()
           .HasForeignKey(e => e.CourseId)
           .OnDelete(DeleteBehavior.Restrict);
 
@@ -126,21 +146,21 @@ namespace kurssienhallinta.Models
 
 
             modelBuilder.Entity<Enrollment>().HasData(
-          new Enrollment
-          {
-              Id = 1,
-              StudentId = 1,  // Sieni Mies
-              CourseId = 2,   // Sienestyskurssi
-              EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 15), DateTimeKind.Utc)
-          },
-          new Enrollment
-          {
-              Id = 2,
-              StudentId = 2,  // Fun Guy
-              CourseId = 1,   // C# kurssi
-              EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 10), DateTimeKind.Utc)
-          }
-      );
+            new Enrollment
+                {
+                    Id = 1,
+                    StudentId = 1,  // Sieni Mies
+                    CourseId = 2,   // Sienestyskurssi
+                    EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 15), DateTimeKind.Utc)
+                },
+                new Enrollment
+                {
+                    Id = 2,
+                    StudentId = 2,  // Fun Guy
+                    CourseId = 1,   // C# kurssi
+                    EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 10), DateTimeKind.Utc)
+                }
+            );
 
         }
 

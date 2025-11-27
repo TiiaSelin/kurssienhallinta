@@ -11,7 +11,13 @@ var connectionString = Environment.GetEnvironmentVariable("Connection__Norsu") ?
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+
+    options.UseNpgsql(connectionString);
+    // options.LogTo(Console.WriteLine);
+
+});
 
 var app = builder.Build();
 
