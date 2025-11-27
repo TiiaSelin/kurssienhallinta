@@ -10,8 +10,11 @@ namespace kurssienhallinta.Models.ViewModels
         public DateTime Day_of_end { get; set; }
         public int? TeacherId { get; set; }
         public int? RoomId { get; set; }
+        public Room? Room { get; set; }
         public TimeSpan Start_time { get; set; }
         public TimeSpan End_time { get; set; }
+
+        
     }
     public class TeacherScheduleViewModel
     {

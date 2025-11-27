@@ -178,6 +178,9 @@ public class CoursesController : Controller
         Console.WriteLine("ModelState invalid, returning view");
         return View(coursesession);
     }
+
+    // ==== DELETE ==== 
+    
     [HttpPost]
     public IActionResult Delete_course(int id, bool confirm = false)
     {

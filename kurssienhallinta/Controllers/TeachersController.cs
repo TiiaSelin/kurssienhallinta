@@ -87,12 +87,10 @@ public class TeachersController : Controller
         if (teacher == null)
             return NotFound();
 
-        // Get sessions directly from loaded courses (no DB query needed)
         var sessions = teacher.Courses
             .SelectMany(c => c.Sessions)
             .ToList();
 
-        // Convert to ScheduleItem list
         var scheduleItems = sessions.Select(coursesession => new ScheduleItem
         {
             Id = coursesession.CourseId,
@@ -104,21 +102,39 @@ public class TeachersController : Controller
             RoomId = coursesession.Course.RoomId,
             Start_time = coursesession.Time_of_start,
             End_time = coursesession.Time_of_end,
-            Weekday = coursesession.WeekDay.ToString()
+            Weekday = coursesession.WeekDay.ToString(),
+            Room = coursesession.Course.Room
         }).ToList();
 
-        // Build weekly schedule dictionary grouped by weekday
         var weeklySchedule = scheduleItems
             .GroupBy(si => si.Weekday)
             .ToDictionary(g => g.Key, g => g.OrderBy(si => si.Start_time).ToList());
+
+        var allDays = new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
+        foreach (var day in allDays)
+        {
+            if (!weeklySchedule.ContainsKey(day))
+                weeklySchedule[day] = new List<ScheduleItem>();
+        }
 
         var viewModel = new TeacherScheduleViewModel
         {
             Teacher = teacher,
             WeeklySchedule = weeklySchedule
         };
-
         return View(viewModel);
+        /*
+        Palautetaan TeacherScheduleViewModel, joka sisältää Dictionary<string, List<ScheduleItem>> tähän tyyliin:
+
+        WeeklySchedule = {
+            "Monday": [
+                ScheduleItem { Name="Math", Start_time=09:00, End_time=11:00 },
+                ScheduleItem { Name="Physics", Start_time=14:00, End_time=15:00 }
+            ],
+            "Tuesday": [
+                ScheduleItem { Name="English", Start_time=10:00, End_time=12:00 }
+            ],   
+         */
     }
     // ==== DELETE ====
 
