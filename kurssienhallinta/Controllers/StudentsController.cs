@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using kurssienhallinta.Models;
 
 namespace kurssienhallinta.Controllers;
@@ -67,6 +68,25 @@ public class StudentsController : Controller
         _context.Students.Update(student);
         _context.SaveChanges();
         return RedirectToAction("List");
+    }
+
+
+
+    [HttpGet]
+    public IActionResult Details(int id)
+    {
+        var student = _context.Students.FirstOrDefault(s => s.Id == id);
+        if (student == null)
+            return NotFound();
+
+        var enrollments = _context.Enrollments
+            .Include(e => e.Course)
+            .Where(e => e.StudentId == id)
+            .ToList();
+
+        ViewBag.Enrollments = enrollments;
+
+        return View(student);
     }
 
 
