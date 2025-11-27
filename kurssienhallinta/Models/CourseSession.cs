@@ -8,10 +8,16 @@ namespace kurssienhallinta.Models
     public class CourseSession
     {
         public int Id { get; set; }
-        public string CourseId { get; set; }
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
+
+        [Column("WeekDay")]
         public string Weekday { get; set; }
-         public TimeSpan Time_of_Start { get; set; }
-        public TimeSpan Time_of_End { get; set; }
-       
+
+        [Column("Time_of_start")]
+        public TimeSpan Time_of_start { get; set; }
+
+        [Column("Time_of_end")]
+        public TimeSpan Time_of_end { get; set; }
     }
 }

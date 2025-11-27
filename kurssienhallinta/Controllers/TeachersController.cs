@@ -78,20 +78,18 @@ public class TeachersController : Controller
     public IActionResult Details(int id)
     {
         var teacher = _context.Teachers
-            .Include(t => t.Courses)
-                .ThenInclude(c => c.Room)
-            .FirstOrDefault(t => t.Id == id);
+           .Include(teacher => teacher.Courses)
+                .ThenInclude(course => course.Sessions)
+            .Include(teacher => teacher.Courses)
+                .ThenInclude(course => course.Room)      
+            .FirstOrDefault(teacher => teacher.Id == id);
 
         if (teacher == null)
             return NotFound();
 
-        // Get course IDs taught by the teacher
-        var courseIds = teacher.Courses.Select(c => c.Id).ToList();
-
-        // Load all CourseSessions for this teacher
-        var sessions = _context.CourseSessions
-            .Include(cs => cs.Course)
-            .Where(cs => courseIds.Contains(cs.CourseId))
+        // Get sessions directly from loaded courses (no DB query needed)
+        var sessions = teacher.Courses
+            .SelectMany(c => c.Sessions)
             .ToList();
 
         // Convert to ScheduleItem list
@@ -104,19 +102,15 @@ public class TeachersController : Controller
             Day_of_end = cs.Course.Day_of_end,
             TeacherId = cs.Course.TeacherId,
             RoomId = cs.Course.RoomId,
-            Start_time = cs.Time_of_Start,
-            End_time = cs.Time_of_End
+            Start_time = cs.Time_of_start,
+            End_time = cs.Time_of_end,
+            Weekday = cs.Weekday
         }).ToList();
 
         // Build weekly schedule dictionary grouped by weekday
         var weeklySchedule = scheduleItems
-            .GroupBy(si => si.Weekday = sessions
-                .First(s => s.CourseId == si.Id && s.Time_of_Start == si.Start_time)
-                .Weekday)
-            .ToDictionary(
-                g => g.Key,
-                g => g.OrderBy(si => si.Start_time).ToList()
-            );
+            .GroupBy(si => si.Weekday)
+            .ToDictionary(g => g.Key, g => g.OrderBy(si => si.Start_time).ToList());
 
         var viewModel = new TeacherScheduleViewModel
         {
@@ -126,7 +120,6 @@ public class TeachersController : Controller
 
         return View(viewModel);
     }
-
     // ==== DELETE ====
 
     [HttpPost]
