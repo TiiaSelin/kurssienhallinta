@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using kurssienhallinta.Models;
 using Microsoft.EntityFrameworkCore;
+using kurssienhallinta.Models.ViewModels;
 
 namespace kurssienhallinta.Controllers;
 
@@ -82,7 +83,39 @@ public class TeachersController : Controller
                  .ThenInclude(course => course.Room)  // Load rooms through courses
             .FirstOrDefault(teacher => teacher.Id == id);
 
-        return View(teacher);
+        if (teacher == null)
+            return NotFound();
+
+        var courseItems = teacher.Courses
+
+       .Select(course => new ScheduleItem
+       {
+           Id = course.Id,
+           Name = course.Name,
+           Description = course.Description,
+           Day_of_start = course.Day_of_start,
+           Day_of_end = course.Day_of_end,
+           TeacherId = course.TeacherId,
+           RoomId = course.RoomId,
+           Start_time = course.Start_time,
+           End_time = course.End_time
+       })
+       .ToList();
+
+        var weeklySchedule = courseItems
+        .GroupBy(course => course.Day_of_start.DayOfWeek.ToString())
+        .ToDictionary(
+            group => group.Key,
+            group => group.OrderBy(course => course.Start_time).ToList()
+        );
+
+        var viewModel = new TeacherScheduleViewModel
+        {
+            Teacher = teacher,
+            WeeklySchedule = weeklySchedule
+        };
+
+        return View(viewModel);
     }
 
     // ==== DELETE ====

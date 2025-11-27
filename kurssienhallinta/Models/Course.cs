@@ -8,14 +8,14 @@ namespace kurssienhallinta.Models
     public class Course
     {
         public int Id { get; set; }
-        public string Name { get; set;  }
-        public string Description { get; set; } 
+        public string Name { get; set; }
+        public string Description { get; set; }
         public DateTime Day_of_start { get; set; }
         public DateTime Day_of_end { get; set; }
-        public int? TeacherId { get; set; }  
+       
+        public int? TeacherId { get; set; }
         public int? RoomId { get; set; }
-
-
+        
         [ForeignKey("TeacherId")]
         [ValidateNever]
         public Teacher? Teacher { get; set; }
@@ -23,6 +23,7 @@ namespace kurssienhallinta.Models
         [ForeignKey("RoomId")]
         [ValidateNever]
         public Room? Room { get; set; }
+        public ICollection<CourseSession> Sessions {get; set;} = new List<CourseSession>();
 
     }
 }

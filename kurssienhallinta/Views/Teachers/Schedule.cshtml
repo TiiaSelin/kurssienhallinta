@@ -1,0 +1,59 @@
+
+@model kurssienhallinta.Models.ViewModels.TeacherScheduleViewModel
+
+<h2>@Model.Teacher.FullName - Weekly Schedule</h2>
+
+<table class="schedule-table">
+    <thead>
+        <tr>
+            <th>Time</th>
+            @foreach (var day in Model.WeeklySchedule.Keys.OrderBy(day => GetDayOrder(day)))
+            {
+                <th>@day</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var timeSlot in GetAllTimeSlots())
+        {
+            <tr>
+                <td class="time-slot">@timeSlot.ToString(@"hh\:mm")</td>
+                @foreach (var day in Model.WeeklySchedule.Keys.OrderBy(day => GetDayOrder(day)))
+                {
+                    var courseForSlot = Model.WeeklySchedule[day]
+                        .FirstOrDefault(course => course.Start_time == timeSlot);
+                    
+                    <td class="course-cell">
+                        @if (courseForSlot != null)
+                        {
+                            <div class="course">
+                                @courseForSlot.Name - @courseForSlot.Name
+                            </div>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@functions {
+    private int GetDayOrder(string day) => day switch
+    {
+        "Monday" => 1,
+        "Tuesday" => 2,
+        "Wednesday" => 3,
+        "Thursday" => 4,
+        "Friday" => 5,
+        _ => 6
+    };
+
+    private List<TimeSpan> GetAllTimeSlots()
+    {
+        return Model.WeeklySchedule.Values
+            .SelectMany(courses => courses.Select(course => course.Start_time))
+            .Distinct()
+            .OrderBy(time => time)
+            .ToList();
+    }
+}
