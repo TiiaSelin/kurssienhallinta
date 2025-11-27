@@ -8,7 +8,8 @@
 <h2 class="mb-4">@Model.Name</h2>
 
 <div class="mb-4">
-    <p><strong>Opettajan tunnus ja nimi:</strong> @Model.Teacher.FullName</p>
+    <p><strong>Opettajan tunnus ja nimi:</strong> @(Model.Teacher?.FullName ?? "Tietoja ei saatavilla")</p>
+    <p><strong>Huone:</strong> @(Model.Room?.Name ?? "Tietoja ei saatavilla")</p>
 </div>
 
 <h3 class="mb-3">Oppilaat</h3>
