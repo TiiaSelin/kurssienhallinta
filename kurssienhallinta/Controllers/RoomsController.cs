@@ -85,6 +85,16 @@ public class RoomsController : Controller
         _context.SaveChanges();
         return RedirectToAction("List_rooms");
     }
+    [HttpGet]
+    public IActionResult Room_details(int id)
+    {
+        var room = _context.Rooms
+            .Include(room => room.Courses)
+                 .ThenInclude(course => course.Teacher)
+            .FirstOrDefault(room => room.Id == id);
+
+        return View(room);
+    }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
