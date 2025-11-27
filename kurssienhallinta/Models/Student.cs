@@ -15,5 +15,10 @@ namespace kurssienhallinta.Models
         public DateTime Birthday { get; set; }
         [Required]
         public int Year { get; set; }
+
+        public string FullName
+        {
+            get { return F_Name + " " + L_Name; }
+        }
     }
 }
