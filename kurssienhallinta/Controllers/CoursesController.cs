@@ -17,8 +17,8 @@ public class CoursesController : Controller
         _logger = logger;
     }
 
-[HttpGet]
-public IActionResult List_courses()
+    [HttpGet]
+    public IActionResult List_courses()
     {
         var courses = _context.Courses
         .Include(c => c.Teacher)
@@ -60,8 +60,8 @@ public IActionResult List_courses()
 
         return View(course);
     }
-    
-     [HttpGet]
+
+    [HttpGet]
     public IActionResult Edit_course(int id)
     {
         var selected_course = _context.Courses.FirstOrDefault(course => course.Id == id);
@@ -119,6 +119,65 @@ public IActionResult List_courses()
         return View(course);
     }
 
+    // ==== ADD SESSION ====
+
+    [HttpGet]
+    public IActionResult Add_session(int id)
+    {
+        var selected_course = _context.Courses
+        .Include(c => c.Teacher)
+        .FirstOrDefault(course => course.Id == id);
+
+        if (selected_course == null)
+        {
+            return NotFound();
+        }
+        var session = new CourseSession
+        {
+            CourseId = selected_course.Id
+        };
+
+        ViewBag.CourseName = selected_course.Name;
+        ViewBag.TeacherName = selected_course.Teacher?.FullName ?? "Ei opettajaa";
+
+        return View(session);
+    }
+    [HttpPost]
+    public IActionResult Add_session(CourseSession coursesession)
+    {
+        coursesession.Id = 0;
+        
+        Console.WriteLine($"Id: {coursesession.Id}");
+        Console.WriteLine($"CourseId: {coursesession.CourseId}");
+        Console.WriteLine($"WeekDay: {coursesession.WeekDay}");
+        Console.WriteLine($"Time_of_start: {coursesession.Time_of_start}");
+        Console.WriteLine($"Time_of_end: {coursesession.Time_of_end}");
+        Console.WriteLine($"ModelState.IsValid: {ModelState.IsValid}");
+
+        if (!ModelState.IsValid)
+        {
+            foreach (var modelState in ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    Console.WriteLine($"Validation Error: {error.ErrorMessage}");
+                    if (error.Exception != null)
+                        Console.WriteLine($"Exception: {error.Exception.Message}");
+                }
+            }
+        }
+
+        if (ModelState.IsValid)
+        {
+            _context.CourseSessions.Add(coursesession);
+            _context.SaveChanges();
+            Console.WriteLine("Session saved successfully!");
+            return RedirectToAction("List_courses");
+        }
+
+        Console.WriteLine("ModelState invalid, returning view");
+        return View(coursesession);
+    }
     [HttpPost]
     public IActionResult Delete_course(int id, bool confirm = false)
     {
@@ -133,7 +192,7 @@ public IActionResult List_courses()
         return RedirectToAction("List_courses");
     }
 
-[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -57,3 +57,50 @@ body {
   color: inherit !important;
   background-color: inherit !important;
 }
+
+.schedule-table {
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-table th {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.schedule-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: center;
+  height: 80px;
+}
+
+.time-slot {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  width: 80px;
+}
+
+.course-cell {
+  background-color: #ffffff;
+  vertical-align: middle;
+}
+
+.course {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.course:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}

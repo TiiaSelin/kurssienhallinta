@@ -1,14 +1,14 @@
 @model kurssienhallinta.Models.ViewModels.TeacherScheduleViewModel
 
-<h2>@Model.Teacher.FullName - Weekly Schedule</h2>
+<h2>Viikkoaikataulu</h2>
 
 <table class="schedule-table">
     <thead>
-        <tr>
+        <tr> 
             <th>Time</th>
             @foreach (var day in Model.WeeklySchedule.Keys.OrderBy(day => GetDayOrder(day)))
             {
-                <th>@day</th>
+                <th>@day</th> <!-- Maanantai – Perjantai -->
             }
         </tr>
     </thead>
@@ -18,20 +18,9 @@
             <tr>
                 <td class="time-slot">@timeSlot.ToString(@"hh\:mm")</td>
                 @foreach (var day in Model.WeeklySchedule.Keys.OrderBy(day => GetDayOrder(day)))
-                {
-                    var courseForSlot = Model.WeeklySchedule[day]
-                    .FirstOrDefault(course => course.Start_time == timeSlot);
-
-                    <td class="course-cell">
-                        @if (courseForSlot != null)
-                        {
-                            <div class="course">
-                                @courseForSlot.Name (@courseForSlot.Start_time.ToString(@"hh\:mm") -
-                                @courseForSlot.End_time.ToString(@"hh\:mm"))
-                            </div>
-                        }
-                    </td>
-                }
+{
+    <th>@day</th>
+}
             </tr>
         }
     </tbody>
@@ -48,14 +37,14 @@
         _ => 6
     };
 
-
     // Helper function, joka auttaa kalenterinäkymän luomisessa. Luo List-olion kaikista kurssin ajoista.
     private List<TimeSpan> GetAllTimeSlots()
     {
-        return Model.WeeklySchedule.Values
-        .SelectMany(courses => courses.Select(course => course.Start_time))
-        .Distinct() // Poistaa kopiot
-        .OrderBy(time => time) // Sort by time
-        .ToList();
+        var slots = new List<TimeSpan>();
+        for (int hour = 8; hour <= 16; hour++)
+        {
+            slots.Add(new TimeSpan(hour, 0, 0));
+        }
+        return slots;
     }
 }

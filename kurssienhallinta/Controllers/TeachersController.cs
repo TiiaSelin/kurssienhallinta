@@ -78,11 +78,11 @@ public class TeachersController : Controller
     public IActionResult Details(int id)
     {
         var teacher = _context.Teachers
-           .Include(teacher => teacher.Courses)
-                .ThenInclude(course => course.Sessions)
-            .Include(teacher => teacher.Courses)
-                .ThenInclude(course => course.Room)      
-            .FirstOrDefault(teacher => teacher.Id == id);
+            .Include(t => t.Courses)
+                .ThenInclude(c => c.Sessions)
+            .Include(t => t.Courses)
+                .ThenInclude(c => c.Room)
+            .FirstOrDefault(t => t.Id == id);
 
         if (teacher == null)
             return NotFound();
@@ -93,18 +93,18 @@ public class TeachersController : Controller
             .ToList();
 
         // Convert to ScheduleItem list
-        var scheduleItems = sessions.Select(cs => new ScheduleItem
+        var scheduleItems = sessions.Select(coursesession => new ScheduleItem
         {
-            Id = cs.CourseId,
-            Name = cs.Course.Name,
-            Description = cs.Course.Description,
-            Day_of_start = cs.Course.Day_of_start,
-            Day_of_end = cs.Course.Day_of_end,
-            TeacherId = cs.Course.TeacherId,
-            RoomId = cs.Course.RoomId,
-            Start_time = cs.Time_of_start,
-            End_time = cs.Time_of_end,
-            Weekday = cs.Weekday
+            Id = coursesession.CourseId,
+            Name = coursesession.Course.Name,
+            Description = coursesession.Course.Description,
+            Day_of_start = coursesession.Course.Day_of_start,
+            Day_of_end = coursesession.Course.Day_of_end,
+            TeacherId = coursesession.Course.TeacherId,
+            RoomId = coursesession.Course.RoomId,
+            Start_time = coursesession.Time_of_start,
+            End_time = coursesession.Time_of_end,
+            Weekday = coursesession.WeekDay.ToString()
         }).ToList();
 
         // Build weekly schedule dictionary grouped by weekday
