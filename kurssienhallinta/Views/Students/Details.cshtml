@@ -1,0 +1,47 @@
+@model kurssienhallinta.Models.Student
+
+@{
+    ViewData["Title"] = "Opiskelijan tiedot";
+    var enrollments = ViewBag.Enrollments as List<kurssienhallinta.Models.Enrollment>;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">@Model.F_Name @Model.L_Name</h2>
+
+    <div class="mb-4">
+        <p><strong>Opiskelijatunnus:</strong> @Model.Student_code</p>
+        <p><strong>Syntymäpäivä:</strong> @Model.Birthday.ToShortDateString()</p>
+        <p><strong>Vuosikurssi:</strong> @Model.Year</p>
+    </div>
+
+    <h3 class="mb-3">Opiskelijan kurssit</h3>
+
+    @if (enrollments != null && enrollments.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Kurssin nimi</th>
+                    <th>Kuvaus</th>
+                    <th>Alkamispäivä</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in enrollments)
+                {
+                    <tr>
+                        <td>@e.Course.Name</td>
+                        <td>@e.Course.Description</td>
+                        <td>@e.Course.Day_of_start.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="alert alert-info">Opiskelija ei ole ilmoittautunut kursseille.</p>
+    }
+
+    <a asp-action="List" class="btn btn-secondary mt-3">Takaisin</a>
+</div>

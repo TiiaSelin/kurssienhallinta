@@ -23,7 +23,9 @@ namespace kurssienhallinta.Models
         [ForeignKey("RoomId")]
         [ValidateNever]
         public Room? Room { get; set; }
-        public ICollection<CourseSession> Sessions {get; set;} = new List<CourseSession>();
-
+        [ValidateNever]
+        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
+
 }
+

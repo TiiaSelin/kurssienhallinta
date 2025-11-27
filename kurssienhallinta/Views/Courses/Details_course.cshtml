@@ -1,0 +1,44 @@
+@model kurssienhallinta.Models.Course
+
+@{
+    ViewData["Title"] = "Kurssin tiedot";
+}
+
+<div class="container mt-5" style="max-width: 1000rem" ">
+<h2 class="mb-4">@Model.Name</h2>
+
+<div class="mb-4">
+    <p><strong>Opettajan tunnus ja nimi:</strong> @(Model.Teacher?.FullName ?? "Tietoja ei saatavilla")</p>
+    <p><strong>Huone:</strong> @(Model.Room?.Name ?? "Tietoja ei saatavilla")</p>
+</div>
+
+<h3 class="mb-3">Oppilaat</h3>
+
+@if (Model.Enrollments.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Oppilaan nimi</th>
+                <th>Opiskelijanumero</th>
+                <th>Syntymäpäivä</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Enrollments)
+            {
+                <tr>
+                    <td>@e.Student.FullName</td>
+                    <td>@e.Student.Student_code</td>
+                    <td>@e.Student.Birthday</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="alert alert-info">Kurssilla ei ole vielä oppilaita.</p>
+}
+
+
