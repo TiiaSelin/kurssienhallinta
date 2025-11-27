@@ -3,21 +3,21 @@
     ViewData["Title"] = "Tilat.";
 }
 <div class="container mt-5" style="max-width: 100rem;">
-<h2 class="mb-4">Tilat.</h2>
+<h2 class="mb-4">Tilat</h2>
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>
-                Nimi.
+                Nimi
             </th>
             <th>
-                Kapasiteetti.
+                Kapasiteetti
             </th>
             <th>
-                Tunnus.
+                Tunnus
             </th>
-            <th>Toiminnot.</th>
+            <th>Toiminnot</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
             <td>@room.Name</td>
             <td>@room.Capacity</td>
             <td>@room.Room_code</td>
-            <td><a asp-controller="Rooms" asp-action="Room_details" asp-route-id="@room.Id" class="btn btn-success btn-sm">Tiedot.</a>
+            <td><a asp-controller="Rooms" asp-action="Room_details" asp-route-id="@room.Id" class="btn btn-success btn-sm">Tiedot</a>
             <a asp-controller="Rooms" asp-action="Edit_room" asp-route-id="@room.Id" class="btn btn-primary btn-sm">Muokkaa</a>
             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@room.Id">Poista</button>
             </td>
