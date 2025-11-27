@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using kurssienhallinta.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace kurssienhallinta.Controllers;
 
@@ -71,7 +72,20 @@ public class TeachersController : Controller
         return View(teacher);
     }
 
+    // ==== DETAILS ====
 
+    [HttpGet]
+    public IActionResult Details(int id)
+    {
+        var teacher = _context.Teachers
+            .Include(teacher => teacher.Courses)  // Load related courses
+                 .ThenInclude(course => course.Room)  // Load rooms through courses
+            .FirstOrDefault(teacher => teacher.Id == id);
+
+        return View(teacher);
+    }
+
+    // ==== DELETE ====
 
     [HttpPost]
     public IActionResult Delete(int id)
@@ -86,12 +100,12 @@ public class TeachersController : Controller
         return RedirectToAction("List");
     }
 
-
-
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+
+
 }

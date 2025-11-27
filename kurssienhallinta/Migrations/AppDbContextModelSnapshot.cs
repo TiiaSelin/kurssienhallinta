@@ -46,7 +46,7 @@ namespace kurssienhallinta.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
 
                     b.HasData(
                         new
@@ -64,48 +64,6 @@ namespace kurssienhallinta.Migrations
                             Day_of_start = new DateTime(1900, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Opetellaan tunnistamaan sieniä, syömään sieniä, arvostamaan sieniä, rihmastoitumaan.",
                             Name = "Sienestyskurssi"
-                        });
-                });
-
-            modelBuilder.Entity("kurssienhallinta.Models.Enrollment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EnrollmentDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Enrollments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CourseId = 2,
-                            EnrollmentDate = new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            StudentId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CourseId = 1,
-                            EnrollmentDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            StudentId = 2
                         });
                 });
 
@@ -130,7 +88,7 @@ namespace kurssienhallinta.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
 
                     b.HasData(
                         new
@@ -146,57 +104,6 @@ namespace kurssienhallinta.Migrations
                             Capacity = 1,
                             Name = "Kapselihotelli",
                             Room_code = "Kp0"
-                        });
-                });
-
-            modelBuilder.Entity("kurssienhallinta.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("F_Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("L_Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Student_code")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Birthday = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            F_Name = "Sieni",
-                            L_Name = "Mies",
-                            Student_code = "SM0",
-                            Year = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Birthday = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            F_Name = "Fun",
-                            L_Name = "Guy",
-                            Student_code = "FG0",
-                            Year = 2
                         });
                 });
 
@@ -226,7 +133,7 @@ namespace kurssienhallinta.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
 
                     b.HasData(
                         new
@@ -245,25 +152,6 @@ namespace kurssienhallinta.Migrations
                             Subject = "Web-ohjelmointi",
                             Teacher_code = "B10"
                         });
-                });
-
-            modelBuilder.Entity("kurssienhallinta.Models.Enrollment", b =>
-                {
-                    b.HasOne("kurssienhallinta.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("kurssienhallinta.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }
