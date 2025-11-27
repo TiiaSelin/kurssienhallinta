@@ -25,17 +25,25 @@
                     <th>Alkamispäivä</th>
                     <th>Päättymispäivä</th>
                     <th>Opettaja</th>
+                    <th>Osallistujien määrä</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var course in Model.Courses)
                 {
-                    <tr>
+                    int enroll_Count = course.Enrollments.Count();
+                    bool over_capacity = enroll_Count > Model.Capacity;
+                    <tr class="@(over_capacity ? "table-danger": "")">
                         <td>@course.Name</td>
                         <td>@course.Description</td>
                         <td>@course.Day_of_start.ToShortDateString()</td>
                         <td>@course.Day_of_end.ToShortDateString()</td>
                         <td>@(course.Teacher?.FullName ?? "Ei opettajaa.")</td>
+                        <td>@enroll_Count / @Model.Capacity
+                        @if (over_capacity) {
+                            <span>⚠️ Liikaa osallistujia!</span>
+                        }
+                        </td>
                     </tr>
                 }
             </tbody>

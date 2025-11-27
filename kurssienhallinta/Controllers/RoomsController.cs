@@ -90,7 +90,9 @@ public class RoomsController : Controller
     {
         var room = _context.Rooms
             .Include(room => room.Courses)
-                 .ThenInclude(course => course.Teacher)
+                .ThenInclude(course => course.Teacher)
+            .Include(room => room.Courses)
+                .ThenInclude(course => course.Enrollments)
             .FirstOrDefault(room => room.Id == id);
 
         return View(room);
