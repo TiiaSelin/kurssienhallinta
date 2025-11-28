@@ -2,13 +2,27 @@
 
 <h2>Viikkoaikataulu</h2>
 
-<div style="display: flex; gap: 20px; padding: 20px;">
-    <!-- Aika vasemmalla, käyttää alhaalla olevaa GetAllTimeSlots-apufunktiota luodakseen ajat -->
-    <div>
-        <div style="font-weight: bold; margin-bottom: 40px;">Time</div>
+<!-- Week Navigation -->
+<div class="week-navigation">
+    <a asp-action="Details" asp-route-id="@Model.Teacher?.Id" asp-route-weekOffset="@(Model.WeekOffset - 1)"
+        class="btn btn-secondary">← Edellinen viikko</a>
+
+    <div class="week-info">
+        <strong>Viikko @GetWeekNumber(Model.WeekStart)</strong>
+        <p>@Model.WeekStart.ToString("dd.MM.yyyy") - @Model.WeekEnd.ToString("dd.MM.yyyy")</p>
+    </div>
+
+    <a asp-action="Details" asp-route-id="@Model.Teacher?.Id" asp-route-weekOffset="@(Model.WeekOffset + 1)"
+        class="btn btn-secondary">Seuraava viikko →</a>
+</div>
+
+<div class="schedule-container">
+    <!-- Aika vasemmalla, käyttää alhaalla olevaa GetAllTimeSlots-apufunktiota luodakseen kellonajat -->
+    <div class="time-column">
+        <div class="time-header">Time</div>
         @foreach (var timeSlot in GetAllTimeSlots())
         {
-            <div style="height: 80px; display: flex; align-items: center; border-bottom: 1px solid #ccc;">
+            <div class="time-slot">
                 @timeSlot.ToString(@"hh\:mm")
             </div>
         }
@@ -17,8 +31,8 @@
     <!-- Käytä GetAllDays palauttaakseen Maanantai – Perjantai -->
     @foreach (var day in GetAllDays())
     {
-        <div style="min-width: 150px;">
-            <div style="font-weight: bold; margin-bottom: 40px; text-align: center;">@day</div>
+        <div class="day-column">
+            <div class="day-header">@day</div>
 
             <!-- Käy läpi GetAllTimeSlots Maanantai – Perjantai kloajat 08:00-16:00 -->
             @foreach (var timeSlot in GetAllTimeSlots())
@@ -27,7 +41,7 @@
                 ? Model.WeeklySchedule[day].FirstOrDefault(c => c.Start_time == timeSlot)
                 : null;
 
-                <!-- Tarkista onko jo varattu, ei voi tulla päällekäisyyksiä -->
+                <!-- Tarkista onko jo varattu, siten ei voi tulla päällekäisyyksiä -->
                 var isAlreadySpanned = Model.WeeklySchedule.ContainsKey(day)
                 ? Model.WeeklySchedule[day].Any(c => c.Start_time < timeSlot && c.End_time > timeSlot)
                 : false;
@@ -40,8 +54,7 @@
                         var hours = (int)(course.End_time - course.Start_time).TotalHours;
                         var height = hours * 80;
 
-                        <div
-                            style="height: @(height)px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 8px; border-radius: 4px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 12px;">
+                        <div class="course-block" style="height: @(height)px;">
                             <div>
                                 <strong>@course.Name</strong>
                                 <p>@course.Room?.Name</p>
@@ -51,7 +64,7 @@
                     }
                     else
                     {
-                        <div style="height: 80px; border-bottom: 1px solid #eee;"></div>
+                        <div class="empty-slot"></div>
                     }
                 }
             }
@@ -71,5 +84,13 @@
         for (int hour = 8; hour <= 15; hour++)
             slots.Add(new TimeSpan(hour, 0, 0));
         return slots;
+    }
+
+    private int GetWeekNumber(DateTime date)
+    {
+        return System.Globalization.CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
+            date,
+            System.Globalization.CalendarWeekRule.FirstFourDayWeek,
+            DayOfWeek.Monday);
     }
 }

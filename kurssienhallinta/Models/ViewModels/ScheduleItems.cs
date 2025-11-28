@@ -3,9 +3,9 @@ namespace kurssienhallinta.Models.ViewModels
     public class ScheduleItem
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Weekday { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public string? Weekday { get; set; }
         public DateTime Day_of_start { get; set; }
         public DateTime Day_of_end { get; set; }
         public int? TeacherId { get; set; }
@@ -14,23 +14,32 @@ namespace kurssienhallinta.Models.ViewModels
         public TimeSpan Start_time { get; set; }
         public TimeSpan End_time { get; set; }
 
-        
+
     }
     public class TeacherScheduleViewModel
     {
-        public Teacher Teacher { get; set; }
-        public Dictionary<string, List<ScheduleItem>> WeeklySchedule { get; set; } // Melkein sama kuin ICollection mutta helpompi tulostaa kamaa for each-lauseella
+        public Teacher? Teacher { get; set; }
+        public DateTime WeekStart { get; set; }
+        public DateTime WeekEnd { get; set; }
+        public int WeekOffset { get; set; }
+        public Dictionary<string, List<ScheduleItem>>? WeeklySchedule { get; set; } // Melkein sama kuin ICollection mutta helpompi tulostaa kamaa for each-lauseella
     }
 
     public class StudentScheduleViewModel
     {
         public Student Student { get; set; }
+        public DateTime WeekStart { get; set; }
+        public DateTime WeekEnd { get; set; }
+        public int WeekOffset { get; set; }
         public Dictionary<string, List<ScheduleItem>> WeeklySchedule { get; set; }
     }
 
     public class RoomScheduleViewModel
     {
         public Room Room { get; set; }
+        public DateTime WeekStart { get; set; }
+        public DateTime WeekEnd { get; set; }
+        public int WeekOffset { get; set; }
         public Dictionary<string, List<ScheduleItem>> WeeklySchedule { get; set; }
     }
 }
