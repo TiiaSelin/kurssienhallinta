@@ -1,0 +1,41 @@
+@model kurssienhallinta.Models.CourseSession
+@{
+    ViewData["Title"] = "Lisää kurssisessio.";
+}
+<div class="container mt-5" style="max-width: 1000rem;">
+    <h2 class="mb-4">Lisää uusi kurssisessio</h2>
+    <p><strong>Kurssi: </strong>@ViewBag.CourseName</p>
+    <p><strong>Opettaja: </strong>@ViewBag.TeacherName</p>
+    <p>Täytä alla olevat tiedot lisätäksesi uuden kurssisession järjestelmään.</p>
+
+    <form asp-action="Add_session" method="post">
+        <input type="hidden" asp-for="CourseId" />
+        <div class="row mb-3">
+            <section class="col">
+                <label asp-for="WeekDay" class="form-label fw-semibold">Viikonpäivä.</label>
+                <select asp-for="WeekDay" class="form-select">
+                    <option value="1">Maanantai.</option>
+                    <option value="2">Tiistai.</option>
+                    <option value="3">Keskiviikko.</option>
+                    <option value="4">Torstai.</option>
+                    <option value="5">Perjantai.</option>
+                </select>
+            </section>
+        </div <div class="row mb-3">
+        <section class="col">
+            <label asp-for="Time_of_start" class="form-label fw-semibold">Aloitusaika.</label>
+            <input asp-for="Time_of_start" type="time" class="form-control" step="3600">
+        </section>
+        <section class="col">
+            <label asp-for="Time_of_end" class="form-label fw-semibold">Lopetusaika.</label>
+            <input asp-for="Time_of_end" type="time" class="form-control" step="3600">
+        </section>
+</div>
+<div class="mt-4">
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i>Lisää sessio
+    </button>
+    <a asp-action="Details_course" asp-route-id="@Model.CourseId" class="btn btn-secondary ms-2">Peruuta</a>
+</div>
+</form>
+</div>

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using kurssienhallinta.Models;
 using Microsoft.EntityFrameworkCore;
+using kurssienhallinta.Models.ViewModels;
 
 namespace kurssienhallinta.Controllers;
 
@@ -73,18 +74,78 @@ public class TeachersController : Controller
     }
 
     // ==== DETAILS ====
-
     [HttpGet]
-    public IActionResult Details(int id)
+    public IActionResult Details(int id, int weekOffset = 0)
     {
-        var teacher = _context.Teachers
-            .Include(teacher => teacher.Courses)  // Load related courses
-                 .ThenInclude(course => course.Room)  // Load rooms through courses
+        var teacher = _context.Teachers // Vaihtuu
+            .Include(teacher => teacher.Courses)
+                .ThenInclude(course => course.Sessions)
+            .Include(teacher => teacher.Courses)
+                .ThenInclude(course => course.Room)
             .FirstOrDefault(teacher => teacher.Id == id);
 
-        return View(teacher);
-    }
+        if (teacher == null) // Vaihtuu
+            return NotFound();
 
+        var today = DateTime.Now;
+        var daysOfWeek = (int)today.DayOfWeek;
+        var mondayThisWeek = today.AddDays(-(daysOfWeek == 0 ? 6 : daysOfWeek - 1)).Date;
+        var weekStart = mondayThisWeek.AddDays(weekOffset * 7);
+        var weekEnd = weekStart.AddDays(6);
+
+        var sessions = teacher.Courses // Vaihtuu
+            .SelectMany(course => course.Sessions)
+            .ToList();
+
+        var scheduleItems = sessions.Select(cs => new ScheduleItem // Ei vaihdu
+        {
+            Id = cs.CourseId,
+            Name = cs.Course.Name,
+            Description = cs.Course.Description,
+            Day_of_start = cs.Course.Day_of_start,
+            Day_of_end = cs.Course.Day_of_end,
+            TeacherId = cs.Course.TeacherId,
+            RoomId = cs.Course.RoomId,
+            Start_time = cs.Time_of_start,
+            End_time = cs.Time_of_end,
+            Weekday = cs.WeekDay.ToString(),
+            Room = cs.Course.Room
+        }).ToList();
+
+        var weeklySchedule = scheduleItems
+            .GroupBy(si => si.Weekday)
+            .ToDictionary(g => g.Key, g => g.OrderBy(si => si.Start_time).ToList());
+
+        var allDays = new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
+        foreach (var day in allDays)
+        {
+            if (!weeklySchedule.ContainsKey(day))
+                weeklySchedule[day] = new List<ScheduleItem>();
+        }
+
+        var viewModel = new TeacherScheduleViewModel // Vaihtuu
+        {
+            Teacher = teacher, // Vaihtuu
+            WeeklySchedule = weeklySchedule,
+            WeekStart = weekStart,
+            WeekEnd = weekEnd,
+            WeekOffset = weekOffset
+        };
+
+        return View(viewModel);
+    }
+        /*
+        Palautetaan ViewModel, joka sisältää Dictionary<string, List<ScheduleItem>> tähän tyyliin:
+
+        WeeklySchedule = {
+            "Monday": [
+                ScheduleItem { Name="Math", Start_time=09:00, End_time=11:00 },
+                ScheduleItem { Name="Physics", Start_time=14:00, End_time=15:00 }
+            ],
+            "Tuesday": [
+                ScheduleItem { Name="English", Start_time=10:00, End_time=12:00 }
+            ],   
+         */
     // ==== DELETE ====
 
     [HttpPost]

@@ -12,10 +12,11 @@ namespace kurssienhallinta.Models
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<CourseSession> CourseSessions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<Course>()
             .HasOne(course => course.Teacher)
             .WithMany(teacher => teacher.Courses)
@@ -43,6 +44,13 @@ namespace kurssienhallinta.Models
             modelBuilder.Entity<Enrollment>()
             .Property(e => e.EnrollmentDate)
             .HasColumnType("timestamp without time zone");
+
+            modelBuilder.Entity<CourseSession>()
+            .ToTable("CourseSessions")
+            .HasOne(c => c.Course)
+            .WithMany(s => s.Sessions)
+            .HasForeignKey(c => c.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Course>().HasData(
                 new Course
@@ -130,12 +138,12 @@ namespace kurssienhallinta.Models
 
             modelBuilder.Entity<Enrollment>().HasData(
             new Enrollment
-                {
-                    Id = 1,
-                    StudentId = 1,  // Sieni Mies
-                    CourseId = 2,   // Sienestyskurssi
-                    EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 15), DateTimeKind.Utc)
-                },
+            {
+                Id = 1,
+                StudentId = 1,  // Sieni Mies
+                CourseId = 2,   // Sienestyskurssi
+                EnrollmentDate = DateTime.SpecifyKind(new DateTime(2025, 1, 15), DateTimeKind.Utc)
+            },
                 new Enrollment
                 {
                     Id = 2,

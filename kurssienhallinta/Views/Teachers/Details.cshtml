@@ -1,20 +1,20 @@
-@model kurssienhallinta.Models.Teacher
+@model kurssienhallinta.Models.ViewModels.TeacherScheduleViewModel
 
 @{
     ViewData["Title"] = "Opettajan tiedot";
 }
 
 <div class="container mt-5">
-    <h2 class="mb-4">@Model.First_name @Model.Last_name</h2>
-    
+    <h2 class="mb-4">@Model.Teacher.First_name @Model.Teacher.Last_name</h2>
+
     <div class="mb-4">
-        <p><strong>Opettajatunnus:</strong> @Model.Teacher_code</p>
-        <p><strong>Opetettava aine:</strong> @Model.Subject</p>
+        <p><strong>Opettajatunnus:</strong> @Model.Teacher.Teacher_code</p>
+        <p><strong>Opetettava aine:</strong> @Model.Teacher.Subject</p>
     </div>
 
     <h3 class="mb-3">Opettajan kurssit</h3>
 
-    @if (Model.Courses.Any())
+    @if (Model.Teacher.Courses.Any())
     {
         <table class="table table-striped">
             <thead>
@@ -27,14 +27,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var course in Model.Courses)
+                @foreach (var course in Model.Teacher.Courses)
                 {
                     <tr>
                         <td>@course.Name</td>
                         <td>@course.Description</td>
                         <td>@course.Day_of_start.ToShortDateString()</td>
                         <td>@course.Day_of_end.ToShortDateString()</td>
-                        <td>@course.Room.Name</td>
+                        <td>@course.Room?.Name</td>
                     </tr>
                 }
             </tbody>
@@ -45,5 +45,8 @@
         <p class="alert alert-info">Opettajalla ei ole vielä kursseja.</p>
     }
 
+    @await Html.PartialAsync("Schedule", Model)
+
     <a asp-action="List" class="btn btn-secondary mt-3">Takaisin</a>
+    
 </div>

@@ -57,3 +57,170 @@ body {
   color: inherit !important;
   background-color: inherit !important;
 }
+
+.schedule-table {
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-table th {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.schedule-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  text-align: center;
+  height: 80px;
+}
+
+.time-slot {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  width: 80px;
+}
+
+.course-cell {
+  background-color: #ffffff;
+  vertical-align: middle;
+}
+
+.course {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.course:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Schedule Container */
+.schedule-container {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Week Navigation */
+.week-navigation {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.week-info {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  text-align: center;
+  flex: 0.5;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.week-info strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.week-info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Time Column */
+.time-column {
+  min-width: 80px;
+  margin-left: 6rem
+}
+
+.time-header {
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.time-slot {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  padding: 0 10px;
+}
+
+/* Day Columns */
+.day-column {
+  min-width: 150px;
+}
+
+.day-header {
+  font-weight: bold;
+  margin-bottom: 0.7rem;
+  text-align: center;
+  padding: 10px;
+  background-color: #667eea;
+  border-radius: 4px;
+  color: white;
+}
+
+/* Empty Slot */
+.empty-slot {
+  height: 4.95rem;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+/* Course Block */
+.course-block {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.course-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.course-block div {
+  width: 100%;
+}
+
+.course-block strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.course-block p {
+  margin: 2px 0;
+  font-size: 11px;
+  opacity: 0.95;
+}
