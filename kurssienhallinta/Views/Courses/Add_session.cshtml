@@ -1,4 +1,5 @@
 @model kurssienhallinta.Models.CourseSession
+@using kurssienhallinta.General
 @{
     ViewData["Title"] = "Lisää kurssisessio.";
 }
@@ -24,11 +25,21 @@
         </div <div class="row mb-3">
         <section class="col">
             <label asp-for="Time_of_start" class="form-label fw-semibold">Aloitusaika.</label>
-            <input asp-for="Time_of_start" type="time" class="form-control" step="3600">
+            @Html.DropDownListFor(
+                model => model.Time_of_start,
+                TimeOptions.FullHourSlots(),
+                "Valitse aika:", 
+                new { @class = "form-select" }
+            )
         </section>
         <section class="col">
             <label asp-for="Time_of_end" class="form-label fw-semibold">Lopetusaika.</label>
-            <input asp-for="Time_of_end" type="time" class="form-control" step="3600">
+            @Html.DropDownListFor(
+                model => model.Time_of_end,
+                TimeOptions.FullHourSlots(),
+                "Valitse aika:", 
+                new { @class = "form-select" }
+            )
         </section>
 </div>
 <div class="mt-4">
