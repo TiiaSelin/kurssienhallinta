@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace kurssienhallinta.General
+namespace kurssienhallinta.Services
 {
     public static class TimeOptions
     {
