@@ -147,12 +147,12 @@ public class CoursesController : Controller
     {
         coursesession.Id = 0;
         
-        Console.WriteLine($"Id: {coursesession.Id}");
-        Console.WriteLine($"CourseId: {coursesession.CourseId}");
-        Console.WriteLine($"WeekDay: {coursesession.WeekDay}");
-        Console.WriteLine($"Time_of_start: {coursesession.Time_of_start}");
-        Console.WriteLine($"Time_of_end: {coursesession.Time_of_end}");
-        Console.WriteLine($"ModelState.IsValid: {ModelState.IsValid}");
+        // Console.WriteLine($"Id: {coursesession.Id}");
+        // Console.WriteLine($"CourseId: {coursesession.CourseId}");
+        // Console.WriteLine($"WeekDay: {coursesession.WeekDay}");
+        // Console.WriteLine($"Time_of_start: {coursesession.Time_of_start}");
+        // Console.WriteLine($"Time_of_end: {coursesession.Time_of_end}");
+        // Console.WriteLine($"ModelState.IsValid: {ModelState.IsValid}");
 
         if (!ModelState.IsValid)
         {

@@ -13,6 +13,7 @@ namespace kurssienhallinta.Models.ViewModels
         public Room? Room { get; set; }
         public TimeSpan Start_time { get; set; }
         public TimeSpan End_time { get; set; }
+        public string? TeacherName { get; set; }
 
 
     }
