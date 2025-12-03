@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using kurssienhallinta.Models;
+using kurssienhallinta.Models.ViewModels;
 
 namespace kurssienhallinta.Controllers;
 
@@ -9,12 +10,14 @@ public class RoomsController : Controller
 {
     private readonly AppDbContext _context;
     private readonly ILogger<RoomsController> _logger;
+    private readonly ScheduleService _scheduleService;
 
-    public RoomsController(AppDbContext context, ILogger<RoomsController> logger)
-    {
-        _context = context;
-        _logger = logger;
-    }
+        public RoomsController(AppDbContext context, ILogger<RoomsController> logger, ScheduleService scheduleService)
+        {
+            _context = context;
+            _logger = logger;
+            _scheduleService = scheduleService;
+        }
 
     [HttpGet]
     public IActionResult List_rooms()
@@ -86,16 +89,21 @@ public class RoomsController : Controller
         return RedirectToAction("List_rooms");
     }
     [HttpGet]
-    public IActionResult Room_details(int id)
+    public IActionResult Room_details(int id, int weekOffset = 0)
     {
         var room = _context.Rooms
             .Include(room => room.Courses)
-                .ThenInclude(course => course.Teacher)
+                .ThenInclude(course => course.Sessions)
             .Include(room => room.Courses)
-                .ThenInclude(course => course.Enrollments)
+                .ThenInclude(course => course.Teacher)
             .FirstOrDefault(room => room.Id == id);
 
-        return View(room);
+        if (room == null)
+            return NotFound();
+        
+        var viewModel = _scheduleService.BuildRoomSchedule(room, weekOffset);
+
+        return View(viewModel);
     }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

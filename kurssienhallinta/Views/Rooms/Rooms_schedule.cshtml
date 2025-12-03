@@ -1,0 +1,90 @@
+@model kurssienhallinta.Models.ViewModels.RoomScheduleViewModel
+
+<h2>Viikkoaikataulu</h2>
+
+<div class="week-navigation">
+    <a asp-action="Room_details" asp-route-id="@Model.Room?.Id" asp-route-weekOffset="@(Model.WeekOffset - 1)"
+        class="btn btn-secondary">← Edellinen viikko</a>
+
+    <div class="week-info">
+        <strong>Viikko @GetWeekNumber(Model.WeekStart)</strong>
+        <p>@Model.WeekStart.ToString("dd.MM.yyyy") - @Model.WeekEnd.ToString("dd.MM.yyyy")</p>
+    </div>
+
+    <a asp-action="Room_details" asp-route-id="@Model.Room?.Id" asp-route-weekOffset="@(Model.WeekOffset + 1)"
+        class="btn btn-secondary">Seuraava viikko →</a>
+</div>
+
+<div class="schedule-container">
+    <div class="time-column">
+        <div class="time-header">Aika.</div>
+        @foreach (var timeSlot in GetAllTimeSlots())
+        {
+            <div class="time-slot">
+                @timeSlot.ToString(@"hh\:mm")
+            </div>
+        }
+    </div>
+
+    @foreach (var day in GetAllDays())
+    {
+        <div class="day-column">
+            <div class="day-header">@day</div>
+
+            @foreach (var timeSlot in GetAllTimeSlots())
+            {
+                var course = Model.WeeklySchedule.ContainsKey(day)
+                ? Model.WeeklySchedule[day].FirstOrDefault(c => c.Start_time == timeSlot)
+                : null;
+
+                var isAlreadySpanned = Model.WeeklySchedule.ContainsKey(day)
+                ? Model.WeeklySchedule[day].Any(c => c.Start_time < timeSlot && c.End_time > timeSlot)
+                : false;
+
+                @if (!isAlreadySpanned)
+                {
+                    @if (course != null)
+                    {
+                        var hours = (int)(course.End_time - course.Start_time).TotalHours;
+                        var height = hours * 80;
+
+                        <div class="course-block" style="height: @(height)px;">
+                            <div>
+                                <strong>@course.Name</strong>
+                                <p>@course.TeacherName</p>
+                                <p>@course.Start_time.ToString(@"hh\:mm")-@course.End_time.ToString(@"hh\:mm")</p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-slot"></div>
+                    }
+                }
+            }
+        </div>
+    }
+</div>
+
+@functions {
+    private List<string> GetAllDays()
+    {
+        return new List<string> { "Maanantai.", "Tiistai.", "Keskiviikko.", "Torstai.", "Perjantai." };
+    }
+
+    private List<TimeSpan> GetAllTimeSlots()
+    {
+        var slots = new List<TimeSpan>();
+        for (int hour = 8; hour <= 15; hour++)
+            slots.Add(new TimeSpan(hour, 0, 0));
+        return slots;
+    }
+
+    private int GetWeekNumber(DateTime date)
+    {
+        return System.Globalization.CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
+            date,
+            System.Globalization.CalendarWeekRule.FirstFourDayWeek,
+            DayOfWeek.Monday);
+    }
+}

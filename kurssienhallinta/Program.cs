@@ -18,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     // options.LogTo(Console.WriteLine);
 
 });
+builder.Services.AddScoped<ScheduleService>();
 
 var app = builder.Build();
 
