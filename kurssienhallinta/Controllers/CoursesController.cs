@@ -102,21 +102,26 @@ public class CoursesController : Controller
     }
 
     [HttpGet]
-    public IActionResult Details_course(int id)
+    public IActionResult Details_course(int id, int weekOffset = 0)
     {
         var course = _context.Courses
             .Include(c => c.Teacher)
             .Include(c => c.Room)
+            .Include(c => c.Sessions)
             .Include(c => c.Enrollments)
                 .ThenInclude(e => e.Student)
             .FirstOrDefault(c => c.Id == id);
+            
 
         if (course == null)
         {
             return NotFound();
         }
+        var scheduleService = new ScheduleService();
 
-        return View(course);
+        var viewModel = scheduleService.BuildCourseSchedule(course, weekOffset);
+
+        return View(viewModel);
     }
 
     // ==== ADD SESSION ====
