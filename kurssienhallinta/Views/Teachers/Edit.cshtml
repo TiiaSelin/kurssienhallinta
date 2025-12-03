@@ -1,0 +1,40 @@
+@model kurssienhallinta.Models.Teacher
+
+@{
+    ViewData["Title"] = "Muokkaa opettajaa";
+}
+
+<div class="container mt-5" style="max-width: 700px;">
+    <h2 class="mb-4">Muokkaa opettajan tietoja</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row mb-3">
+            <section class="col">
+                <label asp-for="First_name" class="form-label fw-semibold">Opettajan etunimi</label>
+                <input asp-for="First_name" class="form-control" />
+            </section>
+
+            <section class="col">
+                <label asp-for="Last_name" class="form-label fw-semibold">Opettajan sukunimi</label>
+                <input asp-for="Last_name" class="form-control" />
+            </section>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Subject" class="form-label fw-semibold">Aine</label>
+            <input asp-for="Subject" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Teacher_code" class="form-label fw-semibold">Tunnus</label>
+            <input asp-for="Teacher_code" class="form-control" />
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
+            <a asp-action="List" class="btn btn-secondary ms-2">Peruuta</a>
+        </div>
+    </form>
+</div>

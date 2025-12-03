@@ -18,51 +18,6 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Kurssit()
-    {
-        return View();
-    }
-
-    public IActionResult Lisaa_kurssi()
-    {
-        return View();
-    }
-
-    public IActionResult Tilat()
-    {
-        return View();
-    }
-    public IActionResult Lisaa_tila()
-    {
-        return View();
-    }
-
-    public IActionResult Opiskelijat()
-    {
-        return View();
-    }
-    public IActionResult Lisaa_opiskelija()
-    {
-        return View();
-    }
-    public IActionResult Opettajat()
-    {
-        return View();
-    }
-    public IActionResult Lisaa_opettaja()
-    {
-        return View();
-    }
-
-    public IActionResult Kirjautumiset()
-    {
-        return View();
-    }
-    public IActionResult Lisaa_kirjautuminen()
-    {
-        return View();
-    }
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

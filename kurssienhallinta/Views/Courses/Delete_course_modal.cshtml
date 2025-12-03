@@ -1,0 +1,27 @@
+@model kurssienhallinta.Models.Course
+@{
+    ViewData["Title"] = "Poista kurssi.";
+}
+
+<div class = "modal fade" id="deleteModal-@Model.Id" aria-labelledby="deleteModalLabel-@Model.Id" aria-hidden="true">
+    <section class="modal-dialog">
+        <div class="modal-content">
+            <aside class="modal-header">
+                <h4 id="modalTitle-@Model.Id" class="modal-title">Poista kurssi.</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </aside>
+            <aside class="modal-body">
+                Haluatko poistaa kurssin @Model.Name?   
+            </aside>
+            <aside class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Peruuta
+                </button>
+                <form asp-action="Delete_course" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger">Poista</button>
+                </form>
+            </aside>
+        </div>
+    </section>
+</div>

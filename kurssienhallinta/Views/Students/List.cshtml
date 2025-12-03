@@ -1,0 +1,50 @@
+@model IEnumerable<kurssienhallinta.Models.Student>
+
+@{
+    ViewData["Title"] = "Opiskelijat";
+}
+
+<h2>Opiskelijat</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Etunimi</th>
+            <th>Sukunimi</th>
+            <th>Opiskelijanumero</th>
+            <th>Syntymäpäivä</th>
+            <th>Vuosikurssi</th>
+            <th>Toiminnot</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.F_Name</td>
+                <td>@student.L_Name</td>
+                <td>@student.Student_code</td>
+                <td>@student.Birthday.ToShortDateString()</td>
+                <td>@student.Year</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@student.Id" class="btn btn-sm btn-success me-2">Tiedot</a>
+                    <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-sm btn-primary">Muokkaa</a>
+                    <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
+                        data-bs-target="#deleteStudentModal-@student.Id">Poista</button>
+                </td>
+            </tr>
+            <partial name="Delete_student_modal" model="student" />
+        }
+    </tbody>
+</table>
+
+<style>
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .modal-footer {
+        border-top: none;
+    }
+</style>

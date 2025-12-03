@@ -1,0 +1,50 @@
+@model kurssienhallinta.Models.Course
+@{
+    ViewData["Title"] = "Muokkaa kurssia.";
+}   
+
+<div class="container mt-5" style="max-width: 1000rem;">
+<h2 class="mb-4">Muokkaa kurssia</h2>  
+
+<form asp-action="Edit_course" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for = "Name" for="courseName" class="form-label fw-semibold">Kurssin nimi</label>
+        <input asp-for = "Name" type="text" class="form-control" rows="3">
+    </div>
+    <div class="mb-3">
+        <label asp-for = "Description" class="form-label fw-semibold">Kurssin kuvaus</label>
+        <input asp-for = "Description" type="text" class="form-control" rows="3">
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <label asp-for = "Day_of_start" class="form-label fw-semibold">Aloituspäivämäärä</label>
+            <input asp-for = "Day_of_start" type="date" class="form-control">
+        </div>
+        <div class="col">
+            <label asp-for = "Day_of_end" class="form-label fw-semibold">Lopetuspäivämäärä</label>
+            <input asp-for = "Day_of_end" type="date" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TeacherId" class="form-label fw-semibold">Kurssin opettaja</label>
+        <select asp-for = "TeacherId" asp-items = "ViewBag.Teachers" class="form-select">
+        <option value = "" selected disabled>Valitse opettaja</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for = "RoomId" class="from-label fw-semibold">Tila</label>
+        <select asp-for = "RoomId" asp-items = "ViewBag.Rooms" class="form-select">
+        <option value = "" selected disabled>Valitse tila</option>
+        </select>   
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i>Tallenna muutokset
+        </button>
+        <a asp-action="List_courses" class="btn btn-secondary ms-2">Peruuta</a>
+    </div>
+</form>
+</div>

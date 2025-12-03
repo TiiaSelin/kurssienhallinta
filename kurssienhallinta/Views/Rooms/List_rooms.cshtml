@@ -1,0 +1,38 @@
+@model IEnumerable<kurssienhallinta.Models.Room>
+@{
+    ViewData["Title"] = "Tilat.";
+}
+<div class="container mt-5" style="max-width: 100rem;">
+<h2 class="mb-4">Tilat</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nimi
+            </th>
+            <th>
+                Kapasiteetti
+            </th>
+            <th>
+                Tunnus
+            </th>
+            <th>Toiminnot</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var room in Model)
+    {
+        <tr>
+            <td>@room.Name</td>
+            <td>@room.Capacity</td>
+            <td>@room.Room_code</td>
+            <td><a asp-controller="Rooms" asp-action="Room_details" asp-route-id="@room.Id" class="btn btn-success btn-sm">Tiedot</a>
+            <a asp-controller="Rooms" asp-action="Edit_room" asp-route-id="@room.Id" class="btn btn-primary btn-sm">Muokkaa</a>
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-@room.Id">Poista</button>
+            </td>
+        </tr>
+        <partial name="Delete_room_modal" model="room" />
+    }
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+@model kurssienhallinta.Models.Room
+@{
+    ViewData["Title"] = "Lisää tila.";
+}
+<div class="container mt-5" style="max-width: 700px;">
+<h2 class="mb-4">Lisää uusi tila.</h2>
+<p>Täytä alla olevat tiedot lisätäksesi uuden tilan järjestelmään.</p>
+
+<form asp-action="Add_room" method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label fw-semibold">Tilan nimi.</label>
+        <input asp-for="Name" type="text" class="form-control" rows="3">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Capacity" class="form-label fw-semibold">Tilan kapasiteetti.</label>
+        <input asp-for="Capacity" type="number" class="form-control" rows="3">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Room_code" class="form-label fw-semibold">Tilan tunnus.</label>
+        <input asp-for="Room_code" type="text" class="form-control" rows="3">
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>Lisää tila
+        </button>
+        <a asp-action="index" class="btn btn-secondary ms-2">Peruuta</a>
+    </div>
+</form>
+</div>

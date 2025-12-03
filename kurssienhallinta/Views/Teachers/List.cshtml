@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Opettajat";
+}
+
+<div class="container mt-5" style="max-width: 100rem;">
+    <h2 class="mb-4">Opettajat</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Etunimi</th>
+                <th>Sukunimi</th>
+                <th>Aine</th>
+                <th>Tunnus</th>
+                <th>Toiminnot</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teacher in Model)
+            {
+                <tr>
+                    <td>@teacher.First_name</td>
+                    <td>@teacher.Last_name</td>
+                    <td>@teacher.Subject</td>
+                    <td>@teacher.Teacher_code</td>
+                    <td><a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-sm btn-success">Tiedot</a>
+                        <a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">Muokkaa</a>
+                        <button class="btn btn-sm btn-danger ms-2" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal-@teacher.Id">Poista</button>
+                    </td>
+                </tr>
+                <partial name="Delete_teacher_modal" model="teacher" />
+
+            }
+        </tbody>
+    </table>
+
+
+
+    <style>
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+    </style>

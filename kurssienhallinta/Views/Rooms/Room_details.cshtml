@@ -1,0 +1,60 @@
+@model kurssienhallinta.Models.ViewModels.RoomScheduleViewModel
+
+@{
+    ViewData["Title"] = "Tilan tiedot";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">@Model.Room.Name </h2>
+    
+    <div class="mb-4">
+        <p><strong>Tilan nimi:</strong> @Model.Room.Name</p>
+        <p><strong>Tilan kapasiteetti:</strong> @Model.Room.Capacity</p>
+        <p><strong>Tilan tunnus:</strong> @Model.Room.Room_code</p>
+    </div>
+
+    <h3 class="mb-3">Tilassa pidettävät kurssit</h3>
+
+    @if (Model.Room.Courses.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Kurssin nimi</th>
+                    <th>Kuvaus</th>
+                    <th>Alkamispäivä</th>
+                    <th>Päättymispäivä</th>
+                    <th>Opettaja</th>
+                    <th>Osallistujien määrä</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model.Room.Courses)
+                {
+                    int enroll_Count = course.Enrollments.Count();
+                    bool over_capacity = enroll_Count > Model.Room.Capacity;
+                    <tr class="@(over_capacity ? "table-danger": "")">
+                        <td>@course.Name</td>
+                        <td>@course.Description</td>
+                        <td>@course.Day_of_start.ToShortDateString()</td>
+                        <td>@course.Day_of_end.ToShortDateString()</td>
+                        <td>@(course.Teacher?.FullName ?? "Ei opettajaa.")</td>
+                        <td>@enroll_Count / @Model.Room.Capacity
+                        @if (over_capacity) {
+                            <span>⚠️ Liikaa osallistujia!</span>
+                        }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="alert alert-info">Tilassa ei ole kursseja.</p>
+    }
+
+    @await Html.PartialAsync("Rooms_schedule", Model)
+
+    <a asp-action="List_rooms" class="btn btn-secondary mt-3">Takaisin</a>
+</div>
