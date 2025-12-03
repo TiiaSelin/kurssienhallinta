@@ -1,6 +1,5 @@
 @model kurssienhallinta.Models.ViewModels.StudentScheduleViewModel
 
-
 @{
     ViewData["Title"] = "Opiskelijan tiedot";
 }
@@ -16,14 +15,14 @@
 
     <h3 class="mb-3">Opiskelijan kurssit</h3>
 
-    @if (Model.Student.Enrollments != null && Model.Student.Enrollments.Any())
+    @if (Model.Student.Enrollments.Any())
     {
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Kurssin nimi</th>
-                    <th>Kuvaus</th>
-                    <th>Alkamispäivä</th>
+                    <th>Opettaja</th>
+                    <th>Tila</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,8 +30,8 @@
                 {
                     <tr>
                         <td>@e.Course.Name</td>
-                        <td>@e.Course.Description</td>
-                        <td>@e.Course.Day_of_start.ToShortDateString()</td>
+                        <td>@(e.Course.Teacher?.FullName ?? "Ei opettajaa")</td>
+                        <td>@(e.Course.Room?.Name ?? "Ei tilaa")</td>
                     </tr>
                 }
             </tbody>
