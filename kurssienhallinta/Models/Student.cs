@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 using System.ComponentModel.DataAnnotations;
 
 namespace kurssienhallinta.Models
@@ -20,5 +22,10 @@ namespace kurssienhallinta.Models
         {
             get { return F_Name + " " + L_Name; }
         }
+
+        [ValidateNever]
+        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
+
+
 }

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using kurssienhallinta.Models;
+using kurssienhallinta.Models.ViewModels;
 
 namespace kurssienhallinta.Controllers;
 
@@ -16,7 +17,7 @@ public class StudentsController : Controller
         _logger = logger;
     }
 
-
+    // ==== LIST ====
     [HttpGet]
     public IActionResult List()
     {
@@ -24,44 +25,35 @@ public class StudentsController : Controller
         return View(students);
     }
 
-
+    // ==== ADD ====
     [HttpGet]
-    public IActionResult Add_student()
-    {
-        return View();
-    }
-
+    public IActionResult Add_student() => View();
 
     [HttpPost]
     public IActionResult Add_student(Student student)
     {
-        if (ModelState.IsValid)
-        {
+        if (!ModelState.IsValid) return View(student);
 
-            student.Birthday = DateTime.SpecifyKind(student.Birthday, DateTimeKind.Utc);
+        student.Birthday = DateTime.SpecifyKind(student.Birthday, DateTimeKind.Utc);
 
-            _context.Students.Add(student);
-            _context.SaveChanges();
-            return RedirectToAction("List");
-        }
-        return View(student);
+        _context.Students.Add(student);
+        _context.SaveChanges();
+        return RedirectToAction("List");
     }
 
+    // ==== EDIT ====
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var student = _context.Students.FirstOrDefault(s => s.Id == id);
-        if (student == null)
-            return NotFound();
-
+        var student = _context.Students.Find(id);
+        if (student == null) return NotFound();
         return View(student);
     }
 
     [HttpPost]
     public IActionResult Edit(Student student)
     {
-        if (!ModelState.IsValid)
-            return View(student);
+        if (!ModelState.IsValid) return View(student);
 
         student.Birthday = DateTime.SpecifyKind(student.Birthday, DateTimeKind.Utc);
 
@@ -70,42 +62,50 @@ public class StudentsController : Controller
         return RedirectToAction("List");
     }
 
-
-
-    [HttpGet]
-    public IActionResult Details(int id)
-    {
-        var student = _context.Students.FirstOrDefault(s => s.Id == id);
-        if (student == null)
-            return NotFound();
-
-        var enrollments = _context.Enrollments
-            .Include(e => e.Course)
-            .Where(e => e.StudentId == id)
-            .ToList();
-
-        ViewBag.Enrollments = enrollments;
-
-        return View(student);
-    }
-
-
-
+    // ==== DELETE ====
     [HttpPost]
     public IActionResult Delete(int id)
     {
         var student = _context.Students.Find(id);
+        if (student == null) return NotFound();
+
+        _context.Students.Remove(student);
+        _context.SaveChanges();
+        return RedirectToAction("List");
+    }
+
+    // ==== DETAILS ====
+    [HttpGet]
+    public async Task<IActionResult> Details(int id, int weekOffset = 0)
+    {
+        // Hae opiskelija
+        var student = await _context.Students
+            .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                    .ThenInclude(c => c.Sessions)
+            .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                    .ThenInclude(c => c.Room)
+            .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                    .ThenInclude(c => c.Teacher)
+            .FirstOrDefaultAsync(s => s.Id == id);
 
         if (student == null)
             return NotFound();
 
-        _context.Students.Remove(student);
-        _context.SaveChanges();
+        // Luo ScheduleService-instanse (voit tehdä tämän myös dependency injectionilla)
+        var scheduleService = new ScheduleService();
 
-        return RedirectToAction("List");
+        // Luo ViewModel opiskelijan aikataululle
+        var viewModel = scheduleService.BuildStudentSchedule(student, weekOffset);
+
+        return View(viewModel);
     }
 
 
+
+    // ==== ERROR ====
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

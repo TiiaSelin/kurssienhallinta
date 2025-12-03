@@ -9,22 +9,22 @@ public class ScheduleService
         int daysOfWeek = (int)today.DayOfWeek;
         var mondayThisWeek = today.AddDays(-(daysOfWeek == 0 ? 6 : daysOfWeek - 1)).Date;
         var weekStart = mondayThisWeek.AddDays(offset * 7);
-        return(weekStart, weekStart.AddDays(6));
+        return (weekStart, weekStart.AddDays(6));
     }
     private static string ConvertWeekday(DayOfWeek day)
     {
         switch (day)
         {
             case DayOfWeek.Monday:
-                return "Maanantai.";
+                return "Maanantai";
             case DayOfWeek.Tuesday:
-                return "Tiistai.";
+                return "Tiistai";
             case DayOfWeek.Wednesday:
-                return "Keskiviikko.";
+                return "Keskiviikko";
             case DayOfWeek.Thursday:
-                return "Torstai.";
+                return "Torstai";
             case DayOfWeek.Friday:
-                return "Perjantai.";
+                return "Perjantai";
             default:
                 return "";
         }
@@ -66,4 +66,31 @@ public class ScheduleService
             WeekOffset = weekOffset
         };
     }
+
+
+    // ====== Opiskelijoiden viikkonäkymä ======
+    public StudentScheduleViewModel BuildStudentSchedule(Student student, int weekOffset)
+    {
+        var (weekStart, weekEnd) = CalculateWeekRange(weekOffset);
+
+        var sessions = student.Enrollments
+            .SelectMany(e => e.Course.Sessions)
+            .ToList();
+
+        var scheduleItems = sessions.Select(ConvertScheduleItem).ToList();
+
+        var weeklySchedule = scheduleItems
+            .GroupBy(si => si.Weekday)
+            .ToDictionary(g => g.Key, g => g.OrderBy(si => si.Start_time).ToList());
+
+        return new StudentScheduleViewModel
+        {
+            Student = student,
+            WeeklySchedule = weeklySchedule,
+            WeekStart = weekStart,
+            WeekEnd = weekEnd,
+            WeekOffset = weekOffset
+        };
+    }
+
 }

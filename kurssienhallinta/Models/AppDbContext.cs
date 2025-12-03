@@ -31,7 +31,7 @@ namespace kurssienhallinta.Models
 
             modelBuilder.Entity<Enrollment>()
             .HasOne(e => e.Student)
-            .WithMany()
+            .WithMany(s => s.Enrollments)
             .HasForeignKey(e => e.StudentId)
             .OnDelete(DeleteBehavior.Restrict);
 

@@ -1,9 +1,10 @@
-@model kurssienhallinta.Models.ViewModels.RoomScheduleViewModel
+@model kurssienhallinta.Models.ViewModels.StudentScheduleViewModel
 
 <h2>Viikkoaikataulu</h2>
 
+<!-- Week Navigation -->
 <div class="week-navigation">
-    <a asp-action="Room_details" asp-route-id="@Model.Room?.Id" asp-route-weekOffset="@(Model.WeekOffset - 1)"
+    <a asp-action="Details" asp-route-id="@Model.Student?.Id" asp-route-weekOffset="@(Model.WeekOffset - 1)"
         class="btn btn-secondary">← Edellinen viikko</a>
 
     <div class="week-info">
@@ -11,13 +12,14 @@
         <p>@Model.WeekStart.ToString("dd.MM.yyyy") - @Model.WeekEnd.ToString("dd.MM.yyyy")</p>
     </div>
 
-    <a asp-action="Room_details" asp-route-id="@Model.Room?.Id" asp-route-weekOffset="@(Model.WeekOffset + 1)"
+    <a asp-action="Details" asp-route-id="@Model.Student?.Id" asp-route-weekOffset="@(Model.WeekOffset + 1)"
         class="btn btn-secondary">Seuraava viikko →</a>
 </div>
 
 <div class="schedule-container">
+    <!-- Aika vasemmalla -->
     <div class="time-column">
-        <div class="time-header">Aika.</div>
+        <div class="time-header">Aika</div>
         @foreach (var timeSlot in GetAllTimeSlots())
         {
             <div class="time-slot">
@@ -26,6 +28,7 @@
         }
     </div>
 
+    <!-- Päivät -->
     @foreach (var day in GetAllDays())
     {
         <div class="day-column">
@@ -33,10 +36,13 @@
 
             @foreach (var timeSlot in GetAllTimeSlots())
             {
+                // Etsi kurssi, jonka Start_time osuu tähän aikaruutuun
                 var course = Model.WeeklySchedule.ContainsKey(day)
-                ? Model.WeeklySchedule[day].FirstOrDefault(c => c.Start_time == timeSlot)
+                ? Model.WeeklySchedule[day]
+                .FirstOrDefault(c => c.Start_time.Hours == timeSlot.Hours && c.Start_time.Minutes == timeSlot.Minutes)
                 : null;
 
+                // Tarkista onko aika jo varattu pidemmällä kurssilla
                 var isAlreadySpanned = Model.WeeklySchedule.ContainsKey(day)
                 ? Model.WeeklySchedule[day].Any(c => c.Start_time < timeSlot && c.End_time > timeSlot)
                 : false;
@@ -45,14 +51,14 @@
                 {
                     @if (course != null)
                     {
-                        var hours = (int)(course.End_time - course.Start_time).TotalHours;
-                        var height = hours * 80;
+                        var hours = (course.End_time - course.Start_time).TotalHours;
+                        var height = hours * 80; // 80px per tunti, voit säätää
 
                         <div class="course-block" style="height: @(height)px;">
                             <div>
                                 <strong>@course.Name</strong>
-                                <p>@course.TeacherName</p>
-                                <p>@course.Start_time.ToString(@"hh\:mm")-@course.End_time.ToString(@"hh\:mm")</p>
+                                <p>@course.Room?.Name</p>
+                                <p>@course.Start_time.ToString(@"hh\:mm") - @course.End_time.ToString(@"hh\:mm")</p>
                             </div>
                         </div>
                     }
