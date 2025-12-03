@@ -19,7 +19,8 @@ public class RoomsControllersTest
 
         // Create controller instance with context defined above and mock logger.
         var logger = NullLogger<RoomsController>.Instance;
-        var controller = new RoomsController(context, logger);
+        var scheduleService = new ScheduleService();
+        var controller = new RoomsController(context, logger, scheduleService);
 
         // Define and test that the view works.
         var result = controller.List_rooms() as ViewResult;
@@ -37,7 +38,8 @@ public class RoomsControllersTest
     {
         var context = DbContextFactory.CreateInMemoryDbContext();
         var logger = NullLogger<RoomsController>.Instance;
-        var controller = new RoomsController(context, logger);
+        var scheduleService = new ScheduleService();
+        var controller = new RoomsController(context, logger, scheduleService);
 
         var room = new Room
         {
@@ -56,7 +58,8 @@ public class RoomsControllersTest
     {
         var context = DbContextFactory.CreateInMemoryDbContext();
         var logger = NullLogger<RoomsController>.Instance;
-        var controller = new RoomsController(context, logger);
+        var scheduleService = new ScheduleService();
+        var controller = new RoomsController(context, logger, scheduleService);
 
         // Failed validation must be defined manually in unit test.
         controller.ModelState.AddModelError("Name", "Required");
@@ -79,7 +82,8 @@ public class RoomsControllersTest
     {
         var context = DbContextFactory.CreateInMemoryDbContext();
         var logger = NullLogger<RoomsController>.Instance;
-        var controller = new RoomsController(context, logger);
+        var scheduleService = new ScheduleService();
+        var controller = new RoomsController(context, logger, scheduleService);
 
         context.Rooms.Add(new Room{Id = 1, Name = "Tyhjiö", Capacity = 0, Room_code = "ty_0"});
         context.SaveChanges();
@@ -97,7 +101,8 @@ public class RoomsControllersTest
     {
         var context = DbContextFactory.CreateInMemoryDbContext();
         var logger = NullLogger<RoomsController>.Instance;
-        var controller = new RoomsController(context, logger);
+        var scheduleService = new ScheduleService();
+        var controller = new RoomsController(context, logger, scheduleService);
 
         var room_to_edit = new Room
         {
@@ -127,7 +132,8 @@ public class RoomsControllersTest
     {
         var context = DbContextFactory.CreateInMemoryDbContext();
         var logger = NullLogger<RoomsController>.Instance;
-        var controller = new RoomsController(context, logger);
+        var scheduleService = new ScheduleService();
+        var controller = new RoomsController(context, logger, scheduleService);
 
         context.Rooms.Add(new Room{Id = 1, Name = "Poistettava tila.", Capacity = 0, Room_code = "pt_0"});
         context.Rooms.Add(new Room{Id = 2, Name = "Rusty Bucket Bay", Capacity = 40, Room_code = "rb_0"});

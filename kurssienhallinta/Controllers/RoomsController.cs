@@ -12,12 +12,12 @@ public class RoomsController : Controller
     private readonly ILogger<RoomsController> _logger;
     private readonly ScheduleService _scheduleService;
 
-    public RoomsController(AppDbContext context, ILogger<RoomsController> logger, ScheduleService scheduleService)
-    {
-        _context = context;
-        _logger = logger;
-        _scheduleService = scheduleService;
-    }
+        public RoomsController(AppDbContext context, ILogger<RoomsController> logger, ScheduleService scheduleService)
+        {
+            _context = context;
+            _logger = logger;
+            _scheduleService = scheduleService;
+        }
 
     [HttpGet]
     public IActionResult List_rooms()

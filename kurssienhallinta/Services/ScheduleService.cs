@@ -39,7 +39,8 @@ public class ScheduleService
             Start_time = session.Time_of_start,
             End_time = session.Time_of_end,
             Weekday = ConvertWeekday(session.WeekDay),
-            Room = session.Course.Room
+            Room = session.Course.Room,
+            TeacherName = session.Course.Teacher?.FullName
         };
     }
     public RoomScheduleViewModel BuildRoomSchedule(Room room, int weekOffset)
