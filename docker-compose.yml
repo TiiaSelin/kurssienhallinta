@@ -1,0 +1,7 @@
+services:
+  kurssienhallinta:
+    build: .
+    ports:
+      - "5226:5226"
+    env_file:
+      - kurssienhallinta/.env
