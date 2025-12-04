@@ -294,4 +294,48 @@ public class EnrollmentsControllersTest
         var saved = context.Enrollments.First(e => e.Id == 101);
         Assert.Equal(new DateTime(2025, 1, 1), saved.EnrollmentDate);
     }
+
+    [Fact]
+    public void Test_Delete_Success()
+    {
+        // Arrange
+        var context = DbContextFactory.CreateInMemoryDbContext();
+        var logger = NullLogger<EnrollmentsController>.Instance;
+        var scheduleService = new ScheduleService();
+        var controller = new EnrollmentsController(context, logger, scheduleService);
+
+        context.Enrollments.Add(new Enrollment
+        {
+            Id = 100,
+            StudentId = 1,
+            CourseId = 10,
+            EnrollmentDate = DateTime.Now
+        });
+
+        context.SaveChanges();
+
+        // Act
+        var result = controller.Delete_enrollment(100, true);
+
+        // Assert
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("List", redirect.ActionName);
+        Assert.Empty(context.Enrollments);
+    }
+
+    [Fact]
+    public void Test_Delete_NotFound()
+    {
+        // Arrange
+        var context = DbContextFactory.CreateInMemoryDbContext();
+        var logger = NullLogger<EnrollmentsController>.Instance;
+        var scheduleService = new ScheduleService();
+        var controller = new EnrollmentsController(context, logger, scheduleService);
+
+        // Act
+        var result = controller.Delete_enrollment(999);
+
+        // Assert
+        Assert.IsType<NotFoundResult>(result);
+    }
 }

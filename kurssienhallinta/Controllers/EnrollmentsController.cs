@@ -119,4 +119,6 @@ namespace kurssienhallinta.Controllers
             return RedirectToAction("List");
         }
     }
+
+    
 }
