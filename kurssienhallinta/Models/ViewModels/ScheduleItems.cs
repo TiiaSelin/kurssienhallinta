@@ -43,4 +43,13 @@ namespace kurssienhallinta.Models.ViewModels
         public int WeekOffset { get; set; }
         public Dictionary<string, List<ScheduleItem>> WeeklySchedule { get; set; }
     }
+
+    public class CourseScheduleViewModel
+    {
+        public Course Course { get; set; }
+        public DateTime WeekStart { get; set; }
+        public DateTime WeekEnd { get; set; }
+        public int WeekOffset { get; set; }
+        public Dictionary<string, List<ScheduleItem>> WeeklySchedule { get; set; }
+    }
 }

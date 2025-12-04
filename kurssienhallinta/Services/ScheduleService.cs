@@ -92,5 +92,29 @@ public class ScheduleService
             WeekOffset = weekOffset
         };
     }
+    
+    // ====== Kurssin viikkonäkymä ======
+    public CourseScheduleViewModel BuildCourseSchedule(Course course, int weekOffset)
+
+    {
+        var (weekStart, weekEnd) = CalculateWeekRange(weekOffset);
+
+        var sessions = course.Sessions.ToList();
+
+        var scheduleItems = sessions.Select(ConvertScheduleItem).ToList();
+
+        var weeklySchedule = scheduleItems
+            .GroupBy(si => si.Weekday)
+            .ToDictionary(g => g.Key, g => g.OrderBy(si => si.Start_time).ToList());
+
+        return new CourseScheduleViewModel
+        {
+            Course = course,
+            WeeklySchedule = weeklySchedule,
+            WeekStart = weekStart,
+            WeekEnd = weekEnd,
+            WeekOffset = weekOffset
+        };
+    }
 
 }
