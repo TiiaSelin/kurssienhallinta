@@ -141,6 +141,8 @@ public class EnrollmentsControllersTest
         );
     }
 
+    // ==== TEST ADD ENROLLMENT ====
+
     [Fact]
     public void Test_Add_enrollment_success()
     {
@@ -187,6 +189,8 @@ public class EnrollmentsControllersTest
         Assert.Equal("List", redirect.ActionName);
         Assert.Equal(1, context.Enrollments.Count());
     }
+
+    // ==== TEST EDIT ENROLLMENT ====
 
     [Fact]
     public void Test_Edit_enrollment()
@@ -294,6 +298,8 @@ public class EnrollmentsControllersTest
         var saved = context.Enrollments.First(e => e.Id == 101);
         Assert.Equal(new DateTime(2025, 1, 1), saved.EnrollmentDate);
     }
+
+    // ==== TEST DELETE ====
 
     [Fact]
     public void Test_Delete_Success()
