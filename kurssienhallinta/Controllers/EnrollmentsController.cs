@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using kurssienhallinta.Models;
+using kurssienhallinta.Services;
 
 namespace kurssienhallinta.Controllers
 {
@@ -9,14 +10,16 @@ namespace kurssienhallinta.Controllers
     {
         private readonly AppDbContext _context;
         private readonly ILogger<EnrollmentsController> _logger;
+        private readonly ScheduleService _scheduleService;
 
-        public EnrollmentsController(AppDbContext context, ILogger<EnrollmentsController> logger)
+        public EnrollmentsController(AppDbContext context, ILogger<EnrollmentsController> logger, ScheduleService scheduleService)
         {
             _context = context;
             _logger = logger;
+            _scheduleService = scheduleService;
         }
 
-        // GET: Enrollments/List
+        // ==== LIST ====
         [HttpGet]
         public IActionResult List()
         {
@@ -29,7 +32,8 @@ namespace kurssienhallinta.Controllers
             return View(enrollments);
         }
 
-        // GET: Enrollments/Add_enrollment
+        // ==== ADD ====
+
         [HttpGet]
         public IActionResult Add_enrollment()
         {
@@ -46,7 +50,6 @@ namespace kurssienhallinta.Controllers
             return View();
         }
 
-        // POST: Enrollments/Add_enrollment
         [HttpPost]
         public IActionResult Add_enrollment(Enrollment enrollment)
         {
