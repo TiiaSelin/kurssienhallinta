@@ -12,8 +12,9 @@
         <p><strong>Huone:</strong> @(Model.Course.Room?.Name ?? "Tietoja ei saatavilla")</p>
     </div>
 
-    <a asp-controller="Courses" asp-action="Add_session" asp-route-id="@Model.Course.Id" class="btn btn-primary btn-sm">Lisää
-        sessio.</a>
+    <a asp-controller="Courses" asp-action="Add_session" asp-route-id="@Model.Course.Id"
+        class="btn btn-primary btn-sm">Lisää
+        sessio</a>
 
     <h3 class="mb-3">Oppilaat</h3>
 

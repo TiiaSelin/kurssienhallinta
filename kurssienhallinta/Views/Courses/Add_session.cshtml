@@ -13,7 +13,7 @@
         <input type="hidden" asp-for="CourseId" />
         <div class="row mb-3">
             <section class="col">
-                <label asp-for="WeekDay" class="form-label fw-semibold">Viikonpäivä.</label>
+                <label asp-for="WeekDay" class="form-label fw-semibold">Viikonpäivä</label>
                 <select asp-for="WeekDay" class="form-select">
                     <option value="1">Maanantai</option>
                     <option value="2">Tiistai</option>
@@ -24,7 +24,7 @@
             </section>
         </div <div class="row mb-3">
         <section class="col">
-            <label asp-for="Time_of_start" class="form-label fw-semibold">Aloitusaika.</label>
+            <label asp-for="Time_of_start" class="form-label fw-semibold">Aloitusaika</label>
             @Html.DropDownListFor(
             model => model.Time_of_start,
                         TimeOptions.FullHourSlots(),
@@ -33,7 +33,7 @@
                         )
         </section>
         <section class="col">
-            <label asp-for="Time_of_end" class="form-label fw-semibold">Lopetusaika.</label>
+            <label asp-for="Time_of_end" class="form-label fw-semibold">Lopetusaika</label>
             @Html.DropDownListFor(
                         model => model.Time_of_end,
                         TimeOptions.FullHourSlots(),
